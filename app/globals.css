@@ -16,10 +16,11 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
-    --foreground: #ededed;
+    --background: #ffffff;  
+    --foreground: #171717; /* 👈 negro en vez de blanco */
   }
 }
+
 
 body {
   background: var(--background);
