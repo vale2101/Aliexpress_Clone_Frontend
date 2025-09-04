@@ -12,7 +12,18 @@
   --font-mono: var(--font-geist-mono);
 }
 
+<<<<<<< HEAD
 html, body { height: 100%; }
+=======
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff;  
+    --foreground: #171717; /* 👈 negro en vez de blanco */
+  }
+}
+
+
+>>>>>>> 30f26dd0dbefb73c868a32cd07201045f686351b
 body {
   background: var(--color-background);
   color: var(--color-foreground);
