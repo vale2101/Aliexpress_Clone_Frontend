@@ -5,14 +5,16 @@ import IconGroup from "../molecules/IconGroup";
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="flex items-center justify-between px-6 py-3 shadow-md bg-white">
-      <div className="flex items-center gap-6">
+    <nav className="bg-white">
+      <div className="container-xl flex items-center gap-6 h-16">
         <Logo />
-        <SearchBar />
+        {/* el buscador ahora ocupa todo el espacio central */}
+        <div className="flex-1">
+          <SearchBar />
+        </div>
+        <IconGroup />
       </div>
-      <IconGroup />
     </nav>
   );
 };
-
 export default Navbar;
