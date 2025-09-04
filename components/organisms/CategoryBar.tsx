@@ -1,17 +1,18 @@
 import React from "react";
 
-const CategoriesBar: React.FC = () => {
-  const items = [
-    "Packs de ofertas",
-    "Choice",
-    "SuperOfertas",
-    "AliExpress Business",
-    "Telefonía y comunicación",
-    "Accesorios",
-    "Bisutería y relojes",
-    "Más",
-  ];
+const items = [
+  { label: "Packs de ofertas", href: "/ofertas" },
+  { label: "Choice", href: "/choice" },
+  { label: "SuperOfertas", href: "/superofertas" },
+  { label: "AliExpress Business", href: "/business" },
+  { label: "Informática y escuela", href: "/informatica" },
+  { label: "Telefonía y comunicación", href: "/telefonia" },
+  { label: "Accesorios", href: "/accesorios" },
+  { label: "Bisutería y relojes", href: "/bisuteria" },
+  { label: "Más", href: "/mas" },
+];
 
+const CategoriesBar: React.FC = () => {
   return (
     <div className="w-full border-b bg-white">
       <div className="container-xl flex items-center gap-6 h-12">
@@ -24,15 +25,15 @@ const CategoriesBar: React.FC = () => {
 
         {/* Links (una sola línea, sin cortes) */}
         <nav className="flex flex-1 items-center gap-8 lg:gap-10 xl:gap-12 text-sm font-medium text-gray-800 whitespace-nowrap overflow-x-auto no-scrollbar">
-          {items.map((item) => (
+          {items.map((it) => (
             <a
-              key={item}
-              href="#"
+              key={it.label}
+              href={it.href}
               className={`inline-flex items-center px-1 hover:text-orange-500 transition ${
-                item === "Packs de ofertas" ? "text-red-500" : ""
+                it.label === "Packs de ofertas" ? "text-red-500" : ""
               }`}
             >
-              {item}
+              {it.label}
             </a>
           ))}
         </nav>

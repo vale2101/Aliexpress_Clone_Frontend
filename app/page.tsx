@@ -1,6 +1,13 @@
-import HomePage from "../components/pages/HomePage";
+import HeroBanner from "../components/organisms/HeroBanner";
+import BenefitsStrip from "../components/organisms/BenefitsStrip";
+import OffersCarousel from "../components/organisms/OffersCarousel";
 
-function App() {
-  return <HomePage />;
+export default function Home() {
+  return (
+    <>
+      <HeroBanner />
+      <BenefitsStrip />
+      <OffersCarousel />
+    </>
+  );
 }
-export default App;
