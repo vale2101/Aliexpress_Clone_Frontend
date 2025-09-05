@@ -1,7 +1,7 @@
 import React from "react";
 
-type CardProps = { title: string; price: string; img: string; store?: string; };
-const Item = ({title, price, img, store}: CardProps) => (
+type CardProps = { title: string; price: string; img: string; store?: string };
+const Item = ({ title, price, img, store }: CardProps) => (
   <div className="rounded-xl border bg-white p-3 shadow-soft transition hover:-translate-y-0.5">
     <div className="aspect-square overflow-hidden rounded-lg bg-neutral-50">
       <img src={img} alt={title} className="h-full w-full object-cover" />
@@ -24,12 +24,13 @@ const OffersCarousel = () => {
     { title:"Gafas IA Xiaomi",                price:"$299.000", img:"https://picsum.photos/seed/6/600/600" },
   ];
   return (
-    <section className="container-xl py-8">
+    <section className="mx-auto max-w-7xl px-4 py-8">
       <h2 className="mb-4 text-xl font-bold">Ofertas de hoy</h2>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        {items.map((it,i)=><Item key={i} {...it} />)}
+        {items.map((it, i) => <Item key={i} {...it} />)}
       </div>
     </section>
   );
 };
+
 export default OffersCarousel;

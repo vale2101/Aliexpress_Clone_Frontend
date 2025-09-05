@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface LanguageContextType {
   language: string;
@@ -16,7 +16,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// Traducciones
+// Traducciones (ES/EN)
 const translations = {
   es: {
     'search.placeholder': 'gafas ia inteligentes xiaomi',
@@ -64,31 +64,9 @@ const translations = {
     'modal.state': 'State/Province',
     'modal.city': 'City',
   },
-  pt: {
-    'search.placeholder': 'óculos inteligentes ia xiaomi',
-    'header.download_app': 'Baixar App',
-    'header.login': 'Entrar',
-    'header.cart': 'Carrinho',
-    'header.all_categories': 'Todas as categorias',
-    'header.packs_offers': 'Pacotes de ofertas',
-    'header.choice': 'Choice',
-    'header.super_offers': 'Super Ofertas',
-    'header.business': 'AliExpress Business',
-    'header.computing': 'Informática e escola',
-    'header.telephony': 'Telefonia e comunicação',
-    'header.accessories': 'Acessórios',
-    'header.jewelry': 'Joias e relógios',
-    'header.more': 'Mais',
-    'modal.send_to': 'Enviar para',
-    'modal.language': 'Idioma',
-    'modal.currency': 'Moeda',
-    'modal.save': 'Salvar',
-    'modal.country': 'País',
-    'modal.state': 'Estado/Província',
-    'modal.city': 'Cidade',
-  }
-};
+} as const;
 
+// Países por idioma visible (solo ES/EN)
 const countries = {
   es: [
     { code: 'CO', name: 'Colombia', flag: '🇨🇴' },
@@ -102,12 +80,9 @@ const countries = {
     { code: 'GB', name: 'United Kingdom', flag: '🇬🇧' },
     { code: 'AU', name: 'Australia', flag: '🇦🇺' },
   ],
-  pt: [
-    { code: 'BR', name: 'Brasil', flag: '🇧🇷' },
-    { code: 'PT', name: 'Portugal', flag: '🇵🇹' },
-  ]
-};
+} as const;
 
+// Estados por código de país
 const states = {
   CO: ['Caldas', 'Antioquia', 'Cundinamarca', 'Valle del Cauca'],
   MX: ['Jalisco', 'Nuevo León', 'CDMX', 'Puebla'],
@@ -117,10 +92,9 @@ const states = {
   CA: ['Ontario', 'Quebec', 'British Columbia', 'Alberta'],
   GB: ['England', 'Scotland', 'Wales', 'Northern Ireland'],
   AU: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia'],
-  BR: ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Bahia'],
-  PT: ['Lisboa', 'Porto', 'Braga', 'Coimbra'],
-};
+} as const;
 
+// Ciudades por nombre de estado
 const cities = {
   'Caldas': ['Manizales', 'Pensilvania', 'La Dorada'],
   'Antioquia': ['Medellín', 'Bello', 'Itagüí'],
@@ -135,7 +109,7 @@ const cities = {
   'Santa Fe': ['Rosario', 'Santa Fe', 'Rafaela'],
   'Mendoza': ['Mendoza', 'San Rafael', 'Godoy Cruz'],
   'Madrid': ['Madrid', 'Alcalá de Henares', 'Móstoles'],
-  'Cataluña': ['Barcelona', 'L\'Hospitalet', 'Badalona'],
+  'Cataluña': ['Barcelona', "L'Hospitalet", 'Badalona'],
   'Andalucía': ['Sevilla', 'Málaga', 'Córdoba'],
   'Valencia': ['Valencia', 'Alicante', 'Elche'],
   'California': ['Los Angeles', 'San Francisco', 'San Diego'],
@@ -154,16 +128,9 @@ const cities = {
   'Victoria': ['Melbourne', 'Geelong', 'Ballarat'],
   'Queensland': ['Brisbane', 'Gold Coast', 'Townsville'],
   'Western Australia': ['Perth', 'Fremantle', 'Rockingham'],
-  'São Paulo': ['São Paulo', 'Guarulhos', 'Campinas'],
-  'Rio de Janeiro': ['Rio de Janeiro', 'Niterói', 'Nova Iguaçu'],
-  'Minas Gerais': ['Belo Horizonte', 'Uberlândia', 'Contagem'],
-  'Bahia': ['Salvador', 'Feira de Santana', 'Vitória da Conquista'],
-  'Lisboa': ['Lisboa', 'Sintra', 'Cascais'],
-  'Porto': ['Porto', 'Vila Nova de Gaia', 'Matosinhos'],
-  'Braga': ['Braga', 'Guimarães', 'Barcelos'],
-  'Coimbra': ['Coimbra', 'Figueira da Foz', 'Cantanhede'],
-};
+} as const;
 
+// Monedas por idioma visible
 const currencies = {
   es: [
     { code: 'COP', name: 'Peso colombiano', symbol: '$' },
@@ -177,69 +144,67 @@ const currencies = {
     { code: 'GBP', name: 'British Pound', symbol: '£' },
     { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
   ],
-  pt: [
-    { code: 'BRL', name: 'Real brasileiro', symbol: 'R$' },
-    { code: 'EUR', name: 'Euro', symbol: '€' },
-  ]
-};
+} as const;
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState('es');
+  const [language, setLanguageState] = useState('es'); // default ES
   const [currency, setCurrencyState] = useState('COP');
   const [country, setCountryState] = useState('Colombia');
   const [state, setStateState] = useState('Caldas');
   const [city, setCityState] = useState('Manizales');
 
   useEffect(() => {
-    // Cargar configuración guardada
     const saved = localStorage.getItem('userPreferences');
     if (saved) {
-      const prefs = JSON.parse(saved);
-      setLanguageState(prefs.language || 'es');
-      setCurrencyState(prefs.currency || 'COP');
-      setCountryState(prefs.country || 'Colombia');
-      setStateState(prefs.state || 'Caldas');
-      setCityState(prefs.city || 'Manizales');
+      try {
+        const prefs = JSON.parse(saved);
+        const lang = ['es','en'].includes(prefs.language) ? prefs.language : 'es';
+        setLanguageState(lang);
+        setCurrencyState(prefs.currency || 'COP');
+        setCountryState(prefs.country || 'Colombia');
+        setStateState(prefs.state || 'Caldas');
+        setCityState(prefs.city || 'Manizales');
+      } catch {
+        // mantener defaults
+      }
     }
   }, []);
 
-  const setLanguage = (lang: string) => {
-    setLanguageState(lang);
-    localStorage.setItem('userPreferences', JSON.stringify({
-      language: lang,
+  const persist = (next: {
+    language?: string; currency?: string; country?: string; state?: string; city?: string;
+  }) => {
+    const toSave = {
+      language,
       currency,
       country,
       state,
-      city
-    }));
+      city,
+      ...next,
+    };
+    localStorage.setItem('userPreferences', JSON.stringify(toSave));
+  };
+
+  const setLanguage = (lang: string) => {
+    const safe = ['es','en'].includes(lang) ? lang : 'es';
+    setLanguageState(safe);
+    persist({ language: safe });
   };
 
   const setCurrency = (curr: string) => {
     setCurrencyState(curr);
-    localStorage.setItem('userPreferences', JSON.stringify({
-      language,
-      currency: curr,
-      country,
-      state,
-      city
-    }));
+    persist({ currency: curr });
   };
 
   const setLocation = (newCountry: string, newState: string, newCity: string) => {
     setCountryState(newCountry);
     setStateState(newState);
     setCityState(newCity);
-    localStorage.setItem('userPreferences', JSON.stringify({
-      language,
-      currency,
-      country: newCountry,
-      state: newState,
-      city: newCity
-    }));
+    persist({ country: newCountry, state: newState, city: newCity });
   };
 
   const t = (key: string): string => {
-    return translations[language as keyof typeof translations]?.[key as keyof typeof translations[typeof language]] || key;
+    const dict = translations[language as 'es'|'en'] || translations.es;
+    return (dict as Record<string,string>)[key] ?? translations.es[key as keyof typeof translations.es] ?? key;
   };
 
   return (

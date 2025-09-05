@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLanguage, countries, states, cities, currencies } from "../../contexts/LanguageContext";
 import { X } from "lucide-react";
 
@@ -22,11 +22,11 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
     t 
   } = useLanguage();
 
-  const [selectedCountry, setSelectedCountry] = useState(country);
-  const [selectedState, setSelectedState] = useState(state);
-  const [selectedCity, setSelectedCity] = useState(city);
-  const [selectedLanguage, setSelectedLanguage] = useState(language);
-  const [selectedCurrency, setSelectedCurrency] = useState(currency);
+  const [selectedCountry, setSelectedCountry] = useState(country || "");
+  const [selectedState, setSelectedState] = useState(state || "");
+  const [selectedCity, setSelectedCity] = useState(city || "");
+  const [selectedLanguage, setSelectedLanguage] = useState(language || "es");
+  const [selectedCurrency, setSelectedCurrency] = useState(currency || "COP");
 
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [showStateDropdown, setShowStateDropdown] = useState(false);
@@ -34,16 +34,34 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
 
-  const currentCountries = countries[selectedLanguage as keyof typeof countries] || countries.es;
-  const currentStates = states[selectedCountry as keyof typeof states] || [];
-  const currentCities = cities[selectedState as keyof typeof cities] || [];
-  const currentCurrencies = currencies[selectedLanguage as keyof typeof currencies] || currencies.es;
+  // Listas según idioma seleccionado
+  const currentCountries =
+    countries[selectedLanguage as keyof typeof countries] || countries.es;
+
+  // ⚠️ Obtener código del país desde el nombre para indexar estados
+  const countryObj = currentCountries.find(c => c.name === selectedCountry);
+  const currentStates = countryObj
+    ? (states as any)[countryObj.code] || []
+    : [];
+
+  const currentCities = (cities as any)[selectedState] || [];
+  const currentCurrencies =
+    currencies[selectedLanguage as keyof typeof currencies] || currencies.es;
 
   const languages = [
     { code: 'es', name: 'Español', flag: '🇪🇸' },
     { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'pt', name: 'Português', flag: '🇧🇷' },
   ];
+
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedLanguage(language || "es");
+      setSelectedCurrency(currency || "COP");
+      setSelectedCountry(country || "");
+      setSelectedState(state || "");
+      setSelectedCity(city || "");
+    }
+  }, [isOpen, language, currency, country, state, city]);
 
   const handleSave = () => {
     setLanguage(selectedLanguage);
@@ -72,6 +90,10 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
 
   const handleLanguageChange = (newLanguage: string) => {
     setSelectedLanguage(newLanguage);
+    // al cambiar idioma reiniciamos selección territorial (los nombres cambian)
+    setSelectedCountry('');
+    setSelectedState('');
+    setSelectedCity('');
     setShowLanguageDropdown(false);
   };
 
@@ -108,7 +130,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
             >
               <div className="flex items-center gap-2">
                 <span className="text-lg">
-                  {currentCountries.find(c => c.name === selectedCountry)?.flag || '🇨🇴'}
+                  {countryObj?.flag || '🌍'}
                 </span>
                 <span>{selectedCountry || t('modal.country')}</span>
               </div>
@@ -117,14 +139,14 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
             
             {showCountryDropdown && (
               <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
-                {currentCountries.map((country) => (
+                {currentCountries.map((c) => (
                   <button
-                    key={country.code}
-                    onClick={() => handleCountryChange(country.name)}
+                    key={c.code}
+                    onClick={() => handleCountryChange(c.name)}
                     className="w-full text-left p-3 hover:bg-gray-100 flex items-center gap-2"
                   >
-                    <span className="text-lg">{country.flag}</span>
-                    <span>{country.name}</span>
+                    <span className="text-lg">{c.flag}</span>
+                    <span>{c.name}</span>
                   </button>
                 ))}
               </div>
@@ -144,13 +166,13 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
             
             {showStateDropdown && currentStates.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
-                {currentStates.map((state) => (
+                {currentStates.map((st: string) => (
                   <button
-                    key={state}
-                    onClick={() => handleStateChange(state)}
+                    key={st}
+                    onClick={() => handleStateChange(st)}
                     className="w-full text-left p-3 hover:bg-gray-100"
                   >
-                    {state}
+                    {st}
                   </button>
                 ))}
               </div>
@@ -170,13 +192,13 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
             
             {showCityDropdown && currentCities.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto">
-                {currentCities.map((city) => (
+                {currentCities.map((ct: string) => (
                   <button
-                    key={city}
-                    onClick={() => handleCityChange(city)}
+                    key={ct}
+                    onClick={() => handleCityChange(ct)}
                     className="w-full text-left p-3 hover:bg-gray-100"
                   >
-                    {city}
+                    {ct}
                   </button>
                 ))}
               </div>
@@ -194,16 +216,16 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
             >
               <div className="flex items-center gap-2">
                 <span className="text-lg">
-                  {languages.find(l => l.code === selectedLanguage)?.flag || '🇪🇸'}
+                  {selectedLanguage === 'en' ? '🇺🇸' : '🇪🇸'}
                 </span>
-                <span>{languages.find(l => l.code === selectedLanguage)?.name || 'Español'}</span>
+                <span>{selectedLanguage === 'en' ? 'English' : 'Español'}</span>
               </div>
               <span className="text-gray-400">▼</span>
             </button>
             
             {showLanguageDropdown && (
               <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-                {languages.map((lang) => (
+                {[{code:'es',name:'Español',flag:'🇪🇸'},{code:'en',name:'English',flag:'🇺🇸'}].map((lang) => (
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
@@ -249,7 +271,7 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
           </div>
         </div>
 
-        {/* Botón Guardar */}
+        {/* Guardar */}
         <button
           onClick={handleSave}
           className="w-full bg-gray-800 text-white py-3 px-4 rounded-lg hover:bg-gray-900 transition-colors font-medium"
