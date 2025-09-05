@@ -86,8 +86,22 @@ export default function OfferSection({
       <Swiper
         modules={[Navigation]}
         navigation
-        spaceBetween={16}
+        spaceBetween={12}
         slidesPerView={2}
+        breakpoints={{
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 12,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 16,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 16,
+          },
+        }}
       >
         {products.map((p, i) => (
           <SwiperSlide key={i}>

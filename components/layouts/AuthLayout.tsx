@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function AuthTemplate({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-gray-50">
       {children}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface LanguageContextType {
   language: string;
@@ -16,7 +16,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// Traducciones (ES/EN)
+// Traducciones
 const translations = {
   es: {
     'search.placeholder': 'gafas ia inteligentes xiaomi',
@@ -40,6 +40,35 @@ const translations = {
     'modal.country': 'País',
     'modal.state': 'Estado/Provincia',
     'modal.city': 'Ciudad',
+    'hero.promo_ends': 'La Promo Termina: 6 sept., 01:59 (GMT-5)',
+    'hero.discount': 'Hasta -60% dto.',
+    'hero.ends_in': 'Termina en',
+    'benefits.free_shipping': 'Envío gratis',
+    'benefits.free_shipping_subtitle': 'En muchos artículos Choice',
+    'benefits.fast_delivery': 'Entrega rápida',
+    'benefits.fast_delivery_subtitle': 'Reembolso por fallo de entrega',
+    'benefits.protected_purchases': 'Compras protegidas',
+    'business.title': 'AliExpress Business',
+    'business.tax_exemptions': 'Exenciones fiscales',
+    'business.express_payments': 'Pagos Express',
+    'business.financial_support': 'Apoyo financiero',
+    'business.buy': 'Comprar',
+    'business.direct_supply': 'Suministro directo de fábrica',
+    'business.local_warehouses': 'Almacenes locales en todo el mundo',
+    'business.dropshipping_items': 'Artículos de dropshipping de valor',
+    'business.custom_sourcing': 'Servicio de abastecimiento personalizado',
+    'promo.title': 'Viva',
+    'promo.subtitle': 'Tu elección de moda',
+    'promo.buy': 'Comprar',
+    'batch_saving.title': 'Zona ahorro en lote',
+    'buy_again.title': 'Volver a comprar',
+    'buy_again.similar_items': 'Artículos similares',
+    'buy_again.seen_before': 'Visto antes',
+    'buy_again.individual_price': 'precio individual',
+    'buy_again.quantity_savings': 'Ahorro por cantidad',
+    'buy_again.sold': 'vendidos',
+    'hero.orders_from': 'pedidos +',
+    'hero.code': 'Código:',
   },
   en: {
     'search.placeholder': 'smart ai glasses xiaomi',
@@ -63,10 +92,90 @@ const translations = {
     'modal.country': 'Country',
     'modal.state': 'State/Province',
     'modal.city': 'City',
+    'hero.promo_ends': 'Promo Ends: Sep 6, 01:59 (GMT-5)',
+    'hero.discount': 'Up to -60% off',
+    'hero.ends_in': 'Ends in',
+    'benefits.free_shipping': 'Free shipping',
+    'benefits.free_shipping_subtitle': 'On many Choice items',
+    'benefits.fast_delivery': 'Fast delivery',
+    'benefits.fast_delivery_subtitle': 'Refund for delivery failure',
+    'benefits.protected_purchases': 'Protected purchases',
+    'business.title': 'AliExpress Business',
+    'business.tax_exemptions': 'Tax exemptions',
+    'business.express_payments': 'Express Payments',
+    'business.financial_support': 'Financial support',
+    'business.buy': 'Buy',
+    'business.direct_supply': 'Direct factory supply',
+    'business.local_warehouses': 'Local warehouses worldwide',
+    'business.dropshipping_items': 'Value dropshipping items',
+    'business.custom_sourcing': 'Custom sourcing service',
+    'promo.title': 'Viva',
+    'promo.subtitle': 'Your fashion choice',
+    'promo.buy': 'Buy',
+    'batch_saving.title': 'Batch saving zone',
+    'buy_again.title': 'Buy again',
+    'buy_again.similar_items': 'Similar items',
+    'buy_again.seen_before': 'Seen before',
+    'buy_again.individual_price': 'individual price',
+    'buy_again.quantity_savings': 'Quantity savings',
+    'buy_again.sold': 'sold',
+    'hero.orders_from': 'orders +',
+    'hero.code': 'Code:',
   },
-} as const;
+  pt: {
+    'search.placeholder': 'óculos inteligentes ia xiaomi',
+    'header.download_app': 'Baixar App',
+    'header.login': 'Entrar',
+    'header.cart': 'Carrinho',
+    'header.all_categories': 'Todas as categorias',
+    'header.packs_offers': 'Pacotes de ofertas',
+    'header.choice': 'Choice',
+    'header.super_offers': 'Super Ofertas',
+    'header.business': 'AliExpress Business',
+    'header.computing': 'Informática e escola',
+    'header.telephony': 'Telefonia e comunicação',
+    'header.accessories': 'Acessórios',
+    'header.jewelry': 'Joias e relógios',
+    'header.more': 'Mais',
+    'modal.send_to': 'Enviar para',
+    'modal.language': 'Idioma',
+    'modal.currency': 'Moeda',
+    'modal.save': 'Salvar',
+    'modal.country': 'País',
+    'modal.state': 'Estado/Província',
+    'modal.city': 'Cidade',
+    'hero.promo_ends': 'A Promo Termina: 6 set., 01:59 (GMT-5)',
+    'hero.discount': 'Até -60% dto.',
+    'hero.ends_in': 'Termina em',
+    'benefits.free_shipping': 'Frete grátis',
+    'benefits.free_shipping_subtitle': 'Em muitos itens Choice',
+    'benefits.fast_delivery': 'Entrega rápida',
+    'benefits.fast_delivery_subtitle': 'Reembolso por falha de entrega',
+    'benefits.protected_purchases': 'Compras protegidas',
+    'business.title': 'AliExpress Business',
+    'business.tax_exemptions': 'Isenções fiscais',
+    'business.express_payments': 'Pagamentos Express',
+    'business.financial_support': 'Suporte financeiro',
+    'business.buy': 'Comprar',
+    'business.direct_supply': 'Fornecimento direto da fábrica',
+    'business.local_warehouses': 'Armazéns locais em todo o mundo',
+    'business.dropshipping_items': 'Itens de dropshipping de valor',
+    'business.custom_sourcing': 'Serviço de sourcing personalizado',
+    'promo.title': 'Viva',
+    'promo.subtitle': 'Sua escolha de moda',
+    'promo.buy': 'Comprar',
+    'batch_saving.title': 'Zona de economia em lote',
+    'buy_again.title': 'Comprar novamente',
+    'buy_again.similar_items': 'Itens similares',
+    'buy_again.seen_before': 'Visto antes',
+    'buy_again.individual_price': 'preço individual',
+    'buy_again.quantity_savings': 'Economia por quantidade',
+    'buy_again.sold': 'vendidos',
+    'hero.orders_from': 'pedidos +',
+    'hero.code': 'Código:',
+  }
+};
 
-// Países por idioma visible (solo ES/EN)
 const countries = {
   es: [
     { code: 'CO', name: 'Colombia', flag: '🇨🇴' },
@@ -80,9 +189,12 @@ const countries = {
     { code: 'GB', name: 'United Kingdom', flag: '🇬🇧' },
     { code: 'AU', name: 'Australia', flag: '🇦🇺' },
   ],
-} as const;
+  pt: [
+    { code: 'BR', name: 'Brasil', flag: '🇧🇷' },
+    { code: 'PT', name: 'Portugal', flag: '🇵🇹' },
+  ]
+};
 
-// Estados por código de país
 const states = {
   CO: ['Caldas', 'Antioquia', 'Cundinamarca', 'Valle del Cauca'],
   MX: ['Jalisco', 'Nuevo León', 'CDMX', 'Puebla'],
@@ -92,9 +204,10 @@ const states = {
   CA: ['Ontario', 'Quebec', 'British Columbia', 'Alberta'],
   GB: ['England', 'Scotland', 'Wales', 'Northern Ireland'],
   AU: ['New South Wales', 'Victoria', 'Queensland', 'Western Australia'],
-} as const;
+  BR: ['São Paulo', 'Rio de Janeiro', 'Minas Gerais', 'Bahia'],
+  PT: ['Lisboa', 'Porto', 'Braga', 'Coimbra'],
+};
 
-// Ciudades por nombre de estado
 const cities = {
   'Caldas': ['Manizales', 'Pensilvania', 'La Dorada'],
   'Antioquia': ['Medellín', 'Bello', 'Itagüí'],
@@ -109,7 +222,7 @@ const cities = {
   'Santa Fe': ['Rosario', 'Santa Fe', 'Rafaela'],
   'Mendoza': ['Mendoza', 'San Rafael', 'Godoy Cruz'],
   'Madrid': ['Madrid', 'Alcalá de Henares', 'Móstoles'],
-  'Cataluña': ['Barcelona', "L'Hospitalet", 'Badalona'],
+  'Cataluña': ['Barcelona', 'L\'Hospitalet', 'Badalona'],
   'Andalucía': ['Sevilla', 'Málaga', 'Córdoba'],
   'Valencia': ['Valencia', 'Alicante', 'Elche'],
   'California': ['Los Angeles', 'San Francisco', 'San Diego'],
@@ -128,9 +241,16 @@ const cities = {
   'Victoria': ['Melbourne', 'Geelong', 'Ballarat'],
   'Queensland': ['Brisbane', 'Gold Coast', 'Townsville'],
   'Western Australia': ['Perth', 'Fremantle', 'Rockingham'],
-} as const;
+  'São Paulo': ['São Paulo', 'Guarulhos', 'Campinas'],
+  'Rio de Janeiro': ['Rio de Janeiro', 'Niterói', 'Nova Iguaçu'],
+  'Minas Gerais': ['Belo Horizonte', 'Uberlândia', 'Contagem'],
+  'Bahia': ['Salvador', 'Feira de Santana', 'Vitória da Conquista'],
+  'Lisboa': ['Lisboa', 'Sintra', 'Cascais'],
+  'Porto': ['Porto', 'Vila Nova de Gaia', 'Matosinhos'],
+  'Braga': ['Braga', 'Guimarães', 'Barcelos'],
+  'Coimbra': ['Coimbra', 'Figueira da Foz', 'Cantanhede'],
+};
 
-// Monedas por idioma visible
 const currencies = {
   es: [
     { code: 'COP', name: 'Peso colombiano', symbol: '$' },
@@ -144,67 +264,70 @@ const currencies = {
     { code: 'GBP', name: 'British Pound', symbol: '£' },
     { code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
   ],
-} as const;
+  pt: [
+    { code: 'BRL', name: 'Real brasileiro', symbol: 'R$' },
+    { code: 'EUR', name: 'Euro', symbol: '€' },
+  ]
+};
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState('es'); // default ES
+  const [language, setLanguageState] = useState('es');
   const [currency, setCurrencyState] = useState('COP');
   const [country, setCountryState] = useState('Colombia');
   const [state, setStateState] = useState('Caldas');
   const [city, setCityState] = useState('Manizales');
 
   useEffect(() => {
+    // Cargar configuración guardada
     const saved = localStorage.getItem('userPreferences');
     if (saved) {
-      try {
-        const prefs = JSON.parse(saved);
-        const lang = ['es','en'].includes(prefs.language) ? prefs.language : 'es';
-        setLanguageState(lang);
-        setCurrencyState(prefs.currency || 'COP');
-        setCountryState(prefs.country || 'Colombia');
-        setStateState(prefs.state || 'Caldas');
-        setCityState(prefs.city || 'Manizales');
-      } catch {
-        // mantener defaults
-      }
+      const prefs = JSON.parse(saved);
+      setLanguageState(prefs.language || 'es');
+      setCurrencyState(prefs.currency || 'COP');
+      setCountryState(prefs.country || 'Colombia');
+      setStateState(prefs.state || 'Caldas');
+      setCityState(prefs.city || 'Manizales');
     }
   }, []);
 
-  const persist = (next: {
-    language?: string; currency?: string; country?: string; state?: string; city?: string;
-  }) => {
-    const toSave = {
-      language,
+  const setLanguage = (lang: string) => {
+    setLanguageState(lang);
+    localStorage.setItem('userPreferences', JSON.stringify({
+      language: lang,
       currency,
       country,
       state,
-      city,
-      ...next,
-    };
-    localStorage.setItem('userPreferences', JSON.stringify(toSave));
-  };
-
-  const setLanguage = (lang: string) => {
-    const safe = ['es','en'].includes(lang) ? lang : 'es';
-    setLanguageState(safe);
-    persist({ language: safe });
+      city
+    }));
   };
 
   const setCurrency = (curr: string) => {
     setCurrencyState(curr);
-    persist({ currency: curr });
+    localStorage.setItem('userPreferences', JSON.stringify({
+      language,
+      currency: curr,
+      country,
+      state,
+      city
+    }));
   };
 
   const setLocation = (newCountry: string, newState: string, newCity: string) => {
     setCountryState(newCountry);
     setStateState(newState);
     setCityState(newCity);
-    persist({ country: newCountry, state: newState, city: newCity });
+    localStorage.setItem('userPreferences', JSON.stringify({
+      language,
+      currency,
+      country: newCountry,
+      state: newState,
+      city: newCity
+    }));
   };
 
   const t = (key: string): string => {
-    const dict = translations[language as 'es'|'en'] || translations.es;
-    return (dict as Record<string,string>)[key] ?? translations.es[key as keyof typeof translations.es] ?? key;
+    const langTranslations = translations[language as keyof typeof translations];
+    return (langTranslations as any)?.[key] || key;
   };
 
   return (

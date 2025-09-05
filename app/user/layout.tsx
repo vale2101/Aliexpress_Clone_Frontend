@@ -1,6 +1,6 @@
 import React from "react";
-import AuthTemplate from "../../components/templates/AuthTemplate";
+import AuthLayout from "../../components/layouts/AuthLayout";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <AuthTemplate>{children}</AuthTemplate>;
+  return <AuthLayout>{children}</AuthLayout>;
 }

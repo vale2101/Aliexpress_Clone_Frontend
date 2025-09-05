@@ -2,14 +2,14 @@ import React from "react";
 
 type CardProps = { title: string; price: string; img: string; store?: string };
 const Item = ({ title, price, img, store }: CardProps) => (
-  <div className="rounded-xl border bg-white p-3 shadow-soft transition hover:-translate-y-0.5">
-    <div className="aspect-square overflow-hidden rounded-lg bg-neutral-50">
-      <img src={img} alt={title} className="h-full w-full object-cover" />
+  <div className="group bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+    <div className="aspect-square overflow-hidden bg-gray-100">
+      <img src={img} alt={title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" />
     </div>
-    <div className="mt-2">
-      <p className="line-clamp-2 text-[13px] text-neutral-800">{title}</p>
-      {store && <p className="text-[12px] text-neutral-500">{store}</p>}
-      <p className="mt-1 text-lg font-bold">{price}</p>
+    <div className="p-3">
+      <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">{title}</h3>
+      {store && <p className="text-xs text-gray-500 mb-2">{store}</p>}
+      <p className="text-lg font-bold text-red-600">{price}</p>
     </div>
   </div>
 );
@@ -24,10 +24,12 @@ const OffersCarousel = () => {
     { title:"Gafas IA Xiaomi",                price:"$299.000", img:"https://picsum.photos/seed/6/600/600" },
   ];
   return (
-    <section className="mx-auto max-w-7xl px-4 py-8">
-      <h2 className="mb-4 text-xl font-bold">Ofertas de hoy</h2>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-        {items.map((it, i) => <Item key={i} {...it} />)}
+    <section className="bg-white py-8">
+      <div className="max-w-full mx-auto px-4">
+        <h2 className="mb-6 text-2xl font-bold text-gray-900">Ofertas de hoy</h2>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          {items.map((it, i) => <Item key={i} {...it} />)}
+        </div>
       </div>
     </section>
   );

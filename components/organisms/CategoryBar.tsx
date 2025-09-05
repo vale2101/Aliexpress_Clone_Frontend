@@ -6,15 +6,14 @@ import { ChevronDown } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 const getCategoryItems = (t: (key: string) => string) => [
-  { label: t('header.packs_offers'), href: "/ofertas" },
+  { label: t('header.packs_offers'), href: "/packs-ofertas" },
   { label: t('header.choice'), href: "/choice" },
   { label: t('header.super_offers'), href: "/superofertas" },
   { label: t('header.business'), href: "/business" },
+  { label: "Juguetes y juegos", href: "/juguetes" },
   { label: t('header.computing'), href: "/informatica" },
   { label: t('header.telephony'), href: "/telefonia" },
   { label: t('header.accessories'), href: "/accesorios" },
-  { label: t('header.jewelry'), href: "/bisuteria" },
-  { label: t('header.more'), href: "/mas" },
 ];
 
 const categories = [
@@ -45,17 +44,17 @@ const CategoriesBar: React.FC = () => {
 
   return (
     <div className="w-full border-b bg-white">
-      <div className="container-xl flex items-center gap-6 h-12">
+      <div className="max-w-full mx-auto px-4 flex items-center justify-center gap-6 h-10">
         {/* Botón: Todas las categorías */}
         <div 
           className="relative"
           onMouseEnter={handleCategoryHover}
           onMouseLeave={handleCategoryLeave}
         >
-          <button className="flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm hover:bg-gray-50 whitespace-nowrap transition-colors">
-            <span className="text-xl">☰</span>
-            <span>{t('header.all_categories')}</span>
-            <ChevronDown size={16} />
+          <button className="flex items-center gap-2 rounded-full border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50 whitespace-nowrap transition-colors">
+            <span className="text-lg">☰</span>
+            <span className="text-gray-700">{t('header.all_categories')}</span>
+            <ChevronDown size={14} className="text-gray-500" />
           </button>
 
           {/* Dropdown de categorías */}
@@ -86,13 +85,13 @@ const CategoriesBar: React.FC = () => {
         </div>
 
         {/* Links (una sola línea, sin cortes) */}
-        <nav className="flex flex-1 items-center gap-8 lg:gap-10 xl:gap-12 text-sm font-medium text-gray-800 whitespace-nowrap overflow-x-auto no-scrollbar">
+        <nav className="flex items-center gap-6 text-sm font-medium text-gray-700 whitespace-nowrap overflow-x-auto no-scrollbar">
           {items.map((it) => (
             <button
               key={it.label}
               onClick={() => handleCategoryClick(it.href)}
-              className={`inline-flex items-center px-1 hover:text-orange-500 transition ${
-                it.label === t('header.packs_offers') ? "text-red-500" : ""
+              className={`inline-flex items-center px-1 hover:text-orange-500 transition-colors ${
+                it.label === t('header.packs_offers') ? "text-red-500 font-semibold" : ""
               }`}
             >
               {it.label}

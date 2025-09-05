@@ -20,7 +20,11 @@ const CountdownTimer = () => {
       .padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
   };
 
-  return <span className="font-mono text-lg">{formatTime(timeLeft)}</span>;
+  return (
+    <span className="font-mono text-lg font-bold text-white">
+      {formatTime(timeLeft)}
+    </span>
+  );
 };
 
 export default CountdownTimer;
