@@ -1,13 +1,5 @@
-import HeroBanner from "../components/organisms/HeroBanner";
-import BenefitsStrip from "../components/organisms/BenefitsStrip";
-import OffersCarousel from "../components/organisms/OffersCarousel";
+import Home from "../components/pages/Home";
 
-export default function Home() {
-  return (
-    <>
-      <HeroBanner />
-      <BenefitsStrip />
-      <OffersCarousel />
-    </>
-  );
+export default function Page() {
+  return <Home />;
 }
