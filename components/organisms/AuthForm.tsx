@@ -4,8 +4,13 @@ import React, { useState } from "react";
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
 import ImageCarousel from "../molecules/ImageCarousel";
+import { useAuth } from "../../contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function AuthForm() {
+  const { login, register, isLoading, error, clearError } = useAuth();
+  const router = useRouter();
+  
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,22 +23,37 @@ export default function AuthForm() {
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("United States");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLogin) {
-      // Lógica de login
-      console.log("Login:", { email, password });
-    } else {
-      // Lógica de registro
-      console.log("Register:", { 
-        firstName, 
-        lastName, 
-        email, 
-        password, 
-        confirmPassword, 
-        phone, 
-        address 
-      });
+    clearError();
+    
+    try {
+      if (isLogin) {
+        // Lógica de login
+        await login({ email, contrasena: password });
+        router.push('/'); // Redirigir al home después del login
+      } else {
+        // Validar que las contraseñas coincidan
+        if (password !== confirmPassword) {
+          alert('Las contraseñas no coinciden');
+          return;
+        }
+        
+        // Lógica de registro
+        await register({
+          nombre: firstName,
+          apellido: lastName,
+          email,
+          contrasena: password,
+          telefono: phone,
+          rol: 1, // Rol de usuario por defecto
+          estado: 'activo'
+        });
+        router.push('/'); // Redirigir al home después del registro
+      }
+    } catch (error: any) {
+      console.error('Error en autenticación:', error);
+      // El error se maneja automáticamente en el contexto
     }
   };
 
@@ -108,6 +128,13 @@ export default function AuthForm() {
               Tu información está protegida
             </div>
           </div>
+
+          {/* Mostrar errores */}
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+              {error}
+            </div>
+          )}
 
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -223,9 +250,20 @@ export default function AuthForm() {
 
             <Button
               type="submit"
-              className="w-full bg-pink-400 hover:bg-pink-500 text-white font-semibold py-4 px-6 rounded-lg transition-colors"
+              disabled={isLoading}
+              className="w-full bg-pink-400 hover:bg-pink-500 disabled:bg-pink-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-lg transition-colors"
             >
-              {isLogin ? "Iniciar sesión" : "Registrarse"}
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  {isLogin ? "Iniciando sesión..." : "Registrando..."}
+                </div>
+              ) : (
+                isLogin ? "Iniciar sesión" : "Registrarse"
+              )}
             </Button>
           </form>
 

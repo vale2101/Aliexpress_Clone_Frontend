@@ -2,14 +2,16 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Globe, ShoppingCart, User, Smartphone } from "lucide-react";
+import { Globe, ShoppingCart, User, Smartphone, LogOut } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useAuth } from "../../contexts/AuthContext";
 import LocationModal from "../organisms/LocationModal";
 
 const IconGroup: React.FC = () => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [cartItems, setCartItems] = useState(0);
   const { t, language, currency, country } = useLanguage();
+  const { user, isAuthenticated, logout } = useAuth();
   const router = useRouter();
 
   const handleAppDownload = () => {
@@ -19,6 +21,15 @@ const IconGroup: React.FC = () => {
 
   const handleLogin = () => {
     router.push("/user");
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push("/");
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
   };
 
   const handleCart = () => {
@@ -62,14 +73,35 @@ const IconGroup: React.FC = () => {
           <span className="text-gray-400 text-xs">▼</span>
         </div>
 
-        {/* Login / Registro */}
-        <div 
-          onClick={handleLogin}
-          className="flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors"
-        >
-          <User size={18} className="text-gray-600" />
-          <span className="text-sm text-gray-700">¡Bienvenido Identifícate / Regístrate</span>
-        </div>
+        {/* Login / Registro / Usuario */}
+        {isAuthenticated ? (
+          <div className="flex items-center gap-4">
+            {/* Usuario autenticado */}
+            <div className="flex items-center gap-2">
+              <User size={18} className="text-gray-600" />
+              <span className="text-sm text-gray-700">
+                ¡Hola, {user?.nombre || 'Usuario'}!
+              </span>
+            </div>
+            
+            {/* Botón de logout */}
+            <div 
+              onClick={handleLogout}
+              className="flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors"
+            >
+              <LogOut size={16} className="text-gray-600" />
+              <span className="text-sm text-gray-700">Cerrar sesión</span>
+            </div>
+          </div>
+        ) : (
+          <div 
+            onClick={handleLogin}
+            className="flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors"
+          >
+            <User size={18} className="text-gray-600" />
+            <span className="text-sm text-gray-700">¡Bienvenido Identifícate / Regístrate</span>
+          </div>
+        )}
 
         {/* Carrito */}
         <div 
