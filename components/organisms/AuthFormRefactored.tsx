@@ -13,6 +13,7 @@ import LocationSelector from "../molecules/LocationSelector";
 import FormToggle from "../molecules/FormToggle";
 import ErrorMessage from "../atoms/ErrorMessage";
 
+
 const AuthFormRefactored: React.FC = () => {
   const { login, register, isLoading, error, clearError } = useAuth();
   const router = useRouter();

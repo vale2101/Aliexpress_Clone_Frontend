@@ -45,6 +45,8 @@ class AuthService {
   ): Promise<T> {
     const url = buildApiUrl(endpoint);
     
+    console.log(`🔄 Making request to: ${url}`);
+    
     const defaultOptions: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
@@ -52,21 +54,42 @@ class AuthService {
       credentials: 'include', // Incluir cookies en las peticiones
     };
 
-    const response = await fetch(url, {
-      ...defaultOptions,
-      ...options,
-      headers: {
-        ...defaultOptions.headers,
-        ...options.headers,
-      },
-    });
+    try {
+      const response = await fetch(url, {
+        ...defaultOptions,
+        ...options,
+        headers: {
+          ...defaultOptions.headers,
+          ...options.headers,
+        },
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `Error ${response.status}: ${response.statusText}`);
+      console.log(`📡 Response status: ${response.status}`);
+
+      if (!response.ok) {
+        let errorMessage = `Error ${response.status}: ${response.statusText}`;
+        
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+          console.error('❌ Error response:', errorData);
+        } catch (parseError) {
+          console.error('❌ Could not parse error response');
+        }
+        
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      console.log('✅ Request successful');
+      return data;
+    } catch (error) {
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        console.error('🌐 Network error - Is the backend running?');
+        throw new Error('No se puede conectar con el servidor. Verifica que el backend esté corriendo en el puerto 3001.');
+      }
+      throw error;
     }
-
-    return response.json();
   }
 
   // Login
