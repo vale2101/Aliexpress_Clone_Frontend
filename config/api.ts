@@ -1,7 +1,6 @@
-// Configuración de la API del backend
 export const API_CONFIG = {
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
-  BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001',
+  BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api',
+  BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000',
   ENDPOINTS: {
     AUTH: {
       LOGIN: '/user/login',
@@ -15,7 +14,6 @@ export const API_CONFIG = {
   }
 };
 
-// Función para construir URLs completas
 export const buildApiUrl = (endpoint: string): string => {
   return `${API_CONFIG.BASE_URL}${endpoint}`;
 };

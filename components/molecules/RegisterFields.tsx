@@ -36,7 +36,7 @@ const RegisterFields: React.FC<RegisterFieldsProps> = ({
 }) => {
   return (
     <>
-      {/* Campos de registro */}
+      {}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <FormField

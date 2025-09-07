@@ -1,6 +1,5 @@
-import { API_CONFIG, buildApiUrl } from '../config/api';
+import { API_CONFIG } from '../config/api';
 
-// Interfaces para los tipos de datos
 export interface LoginRequest {
   email: string;
   contrasena: string;
@@ -32,139 +31,88 @@ export interface AuthResponse {
 }
 
 class AuthService {
-  private baseUrl: string;
+  private loginUrl = 'http://localhost:3000/api/user/login';
+  private registerUrl = 'http://localhost:3000/api/user/createUser';
+  private profileUrl = 'http://localhost:3000/api/user/findUserById';
+  private updateUrl = 'http://localhost:3000/api/user/updateUser';
 
-  constructor() {
-    this.baseUrl = API_CONFIG.BASE_URL;
-  }
-
-  // Función para hacer peticiones HTTP
   private async makeRequest<T>(
-    endpoint: string,
+    url: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const url = buildApiUrl(endpoint);
-    
-    console.log(`🔄 Making request to: ${url}`);
-    
     const defaultOptions: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include', // Incluir cookies en las peticiones
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include', // Importante para cookies
     };
 
     try {
-      const response = await fetch(url, {
-        ...defaultOptions,
-        ...options,
-        headers: {
-          ...defaultOptions.headers,
-          ...options.headers,
-        },
-      });
-
-      console.log(`📡 Response status: ${response.status}`);
+      const response = await fetch(url, { ...defaultOptions, ...options });
 
       if (!response.ok) {
         let errorMessage = `Error ${response.status}: ${response.statusText}`;
-        
         try {
           const errorData = await response.json();
           errorMessage = errorData.message || errorMessage;
-          console.error('❌ Error response:', errorData);
-        } catch (parseError) {
-          console.error('❌ Could not parse error response');
-        }
-        
+        } catch (parseError) {}
         throw new Error(errorMessage);
       }
 
       const data = await response.json();
-      console.log('✅ Request successful');
       return data;
     } catch (error) {
       if (error instanceof TypeError && error.message.includes('fetch')) {
-        console.error('🌐 Network error - Is the backend running?');
-        throw new Error('No se puede conectar con el servidor. Verifica que el backend esté corriendo en el puerto 3001.');
+        throw new Error(
+          'No se puede conectar con el servidor. Verifica que el backend esté corriendo en el puerto 3000.'
+        );
       }
       throw error;
     }
   }
 
-  // Login
+  // LOGIN
   async login(credentials: LoginRequest): Promise<AuthResponse> {
-    try {
-      const response = await this.makeRequest<AuthResponse>(
-        API_CONFIG.ENDPOINTS.AUTH.LOGIN,
-        {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-        }
-      );
-      return response;
-    } catch (error) {
-      console.error('Error en login:', error);
-      throw error;
-    }
+    return this.makeRequest<AuthResponse>(this.loginUrl, {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    });
   }
 
-  // Registro
   async register(userData: RegisterRequest): Promise<AuthResponse> {
-    try {
-      const response = await this.makeRequest<AuthResponse>(
-        API_CONFIG.ENDPOINTS.AUTH.REGISTER,
-        {
-          method: 'POST',
-          body: JSON.stringify(userData),
-        }
-      );
-      return response;
-    } catch (error) {
-      console.error('Error en registro:', error);
-      throw error;
-    }
+    return this.makeRequest<AuthResponse>(this.registerUrl, {
+      method: 'POST',
+      body: JSON.stringify(userData),
+    });
   }
 
-  // Obtener perfil del usuario
+  // OBTENER PERFIL
   async getProfile(userId: number): Promise<{ data: User }> {
-    try {
-      const response = await this.makeRequest<{ data: User }>(
-        `${API_CONFIG.ENDPOINTS.USER.PROFILE}/${userId}`
-      );
-      return response;
-    } catch (error) {
-      console.error('Error al obtener perfil:', error);
-      throw error;
-    }
+    return this.makeRequest<{ data: User }>(`${this.profileUrl}/${userId}`);
   }
 
-  // Verificar si el usuario está autenticado
+  async updateUser(userId: number, userData: Partial<User>): Promise<AuthResponse> {
+    return this.makeRequest<AuthResponse>(`${this.updateUrl}/${userId}`, {
+      method: 'PUT',
+      body: JSON.stringify(userData),
+    });
+  }
+
+  // CHECK AUTH
   async checkAuth(): Promise<boolean> {
     try {
-      // Hacer una petición simple para verificar si hay token válido
-      const response = await fetch(buildApiUrl('/user/getUsers'), {
+      const response = await fetch('http://localhost:3000/api/user/getUsers', {
         credentials: 'include',
       });
       return response.ok;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
 
-  // Logout (limpiar cookies del lado del cliente)
+  // LOGOUT
   async logout(): Promise<void> {
-    try {
-      // El backend maneja el logout limpiando las cookies
-      // Aquí solo limpiamos el localStorage si es necesario
-      localStorage.removeItem('user');
-    } catch (error) {
-      console.error('Error en logout:', error);
-      throw error;
-    }
+    localStorage.removeItem('user');
   }
 }
 
-// Exportar una instancia singleton
 export const authService = new AuthService();
 export default authService;
