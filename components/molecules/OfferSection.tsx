@@ -6,7 +6,13 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-import { Package, Clock, Heart } from "lucide-react";
+import {
+  Package,
+  Clock,
+  Heart,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 interface Product {
   image: string;
@@ -22,7 +28,7 @@ interface OfferSectionProps {
   title: string;
   subtitle: string;
   products: Product[];
-  type: "packs" | "super" | "big"; // para diferenciar estilos
+  type: "packs" | "super" | "big";
 }
 
 export default function OfferSection({
@@ -36,7 +42,7 @@ export default function OfferSection({
   useEffect(() => {
     if (type !== "super") return;
 
-    let totalSeconds = 7 * 60 * 60; 
+    let totalSeconds = 7 * 60 * 60;
     const timer = setInterval(() => {
       totalSeconds -= 1;
       const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
@@ -47,7 +53,6 @@ export default function OfferSection({
 
     return () => clearInterval(timer);
   }, [type]);
-
 
   const styles = {
     packs: "bg-yellow-100 text-yellow-700",
@@ -62,7 +67,7 @@ export default function OfferSection({
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm">
+    <div className="bg-white p-4 rounded-lg shadow-sm relative">
       {/* 🔹 Header */}
       <div className="text-center mb-4">
         <h2 className="text-lg font-bold">
@@ -83,32 +88,39 @@ export default function OfferSection({
       </div>
 
       {/* 🔹 Carrusel */}
-      <Swiper
-        modules={[Navigation]}
-        navigation
-        spaceBetween={12}
-        slidesPerView={2}
-        breakpoints={{
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 12,
-          },
-          768: {
-            slidesPerView: 3,
-            spaceBetween: 16,
-          },
-          1024: {
-            slidesPerView: 4,
-            spaceBetween: 16,
-          },
-        }}
-      >
-        {products.map((p, i) => (
-          <SwiperSlide key={i}>
-            <ProductCard {...p} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className="relative group">
+        <Swiper
+          modules={[Navigation]}
+          navigation={{
+            prevEl: `.swiper-button-prev-${type}`,
+            nextEl: `.swiper-button-next-${type}`,
+          }}
+          spaceBetween={16}
+          slidesPerView={2} // ✅ Siempre solo 2 productos visibles
+        >
+          {products.map((p, i) => (
+            <SwiperSlide key={i}>
+              <ProductCard {...p} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* 🔹 Botones de navegación: solo aparecen al pasar sobre el carrusel */}
+        <button
+          className={`swiper-button-prev-${type} absolute top-1/2 -left-4 z-10 
+          bg-gray-800 text-white p-2 rounded-full shadow 
+          opacity-0 group-hover:opacity-100 transition duration-300`}
+        >
+          <ChevronLeft size={20} />
+        </button>
+        <button
+          className={`swiper-button-next-${type} absolute top-1/2 -right-4 z-10 
+          bg-gray-800 text-white p-2 rounded-full shadow 
+          opacity-0 group-hover:opacity-100 transition duration-300`}
+        >
+          <ChevronRight size={20} />
+        </button>
+      </div>
     </div>
   );
 }
