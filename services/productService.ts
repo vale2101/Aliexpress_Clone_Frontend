@@ -1,16 +1,21 @@
 import { API_CONFIG } from "../config/api";
 
 export interface Product {
-  id_producto: number;
+  id_producto?: number; 
   nombre: string;
   descripcion?: string;
   precio: number;
   precio_original?: number;
   descuento?: number;
-  moneda: string;
+  moneda?: string; 
   stock: number;
-  estado: "activo" | "inactivo";
-  fecha_publicacion: string;
+  estado?: "activo" | "inactivo"; 
+  fecha_publicacion?: string; 
+  material?: string;
+  color?: string;
+  peso?: number;
+  dimensiones?: string;
+  descripcionCom?: string;
 }
 
 export class ProductService {
