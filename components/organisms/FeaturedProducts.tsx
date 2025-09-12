@@ -1,58 +1,53 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../atoms/ProductCard";
+import { productService, Product } from "../../services/productService";
 
 export default function FeaturedProducts() {
-  const products = [
-    {
-      id: 1,
-      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&h=300&fit=crop&crop=center",
-      title: "Collar de oro con perlas y cuentas de colores",
-      price: "$12.488,37",
-      oldPrice: "$29.734,75",
-      discount: "-58%",
-      rating: 4.5,
-      sold: "1.000+ vendidos",
-      label: "Artículos similares"
-    },
-    {
-      id: 2,
-      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&h=300&fit=crop&crop=center",
-      title: "Anillos de plata con diseños florales",
-      price: "$14.758,97",
-      oldPrice: "$35.143,14",
-      discount: "-58%",
-      rating: 4.7,
-      sold: "370 vendidos",
-      label: "Visto antes"
-    },
-    {
-      id: 3,
-      image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&h=300&fit=crop&crop=center",
-      title: "Pulseras de materiales orgánicos blancos",
-      price: "$4.029,23",
-      oldPrice: "$30.088,47",
-      discount: "-87%",
-      rating: 4.6,
-      sold: "106 vendidos",
-      label: "Visto antes"
-    }
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fallbackImages = [
+    "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&h=300&fit=crop&crop=center",
+    "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300&h=300&fit=crop&crop=center",
+    "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=300&h=300&fit=crop&crop=center",
   ];
+
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const data = await productService.getAll();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error cargando productos destacados:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProducts();
+  }, []);
+
+  if (loading) {
+    return <p className="text-center">Cargando productos destacados...</p>;
+  }
 
   return (
     <div className="bg-white py-8">
       <div className="max-w-full mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {products.map((product) => (
+          {products.map((p, index) => (
             <ProductCard
-              key={product.id}
-              image={product.image}
-              title={product.title}
-              price={product.price}
-              oldPrice={product.oldPrice}
-              discount={product.discount}
-              rating={product.rating}
-              sold={product.sold}
-              label={product.label}
+              key={p.id_producto}
+              image={fallbackImages[index % fallbackImages.length]} 
+              title={p.nombre}
+              price={`$${p.precio} ${p.moneda}`}
+              oldPrice={
+                p.precio_original ? `$${p.precio_original} ${p.moneda}` : undefined
+              }
+              discount={p.descuento ? `-${p.descuento}%` : undefined}
+              rating={4.5} 
+              sold={`${p.stock} vendidos`}
+              label={p.estado === "activo" ? "Disponible" : "Agotado"}
             />
           ))}
         </div>
