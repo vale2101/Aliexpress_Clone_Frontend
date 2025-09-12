@@ -1,7 +1,9 @@
 import React from "react";
 import { ShoppingCart, Heart } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
+  id?: number;
   image: string;
   title: string;
   price: string;
@@ -17,6 +19,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
+  id,
   image,
   title,
   price,
@@ -30,8 +33,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
   features,
   button,
 }) => {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    if (id) {
+      router.push(`/producto/${id}`);
+    }
+  };
   return (
-    <div className="group relative bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+    <div 
+      className="group relative bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+      onClick={handleCardClick}
+    >
       {/* Imagen del producto */}
       <div className="relative aspect-square overflow-hidden">
         <img

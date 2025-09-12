@@ -36,6 +36,7 @@ export default function RecommendationsSection() {
           {products.map((p) => (
             <ProductCard
               key={p.id_producto}
+              id={p.id_producto}
               image="/placeholder.png" 
               title={p.nombre}
               price={`$${p.precio} ${p.moneda}`}

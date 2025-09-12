@@ -5,36 +5,30 @@ export default function CategoriesGrid() {
   const categories = [
     {
       id: 1,
-      name: "Juguetes y juegos",
-      image: "https://images.unsplash.com/photo-1558060370-539c4d4b7b8e?w=200&h=200&fit=crop&crop=center",
-      icon: "🧸"
-    },
-    {
-      id: 2,
       name: "Informática y escuela",
       image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200&h=200&fit=crop&crop=center",
       icon: "💻"
     },
     {
-      id: 3,
+      id: 2,
       name: "Telefonía y comunicación",
       image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200&h=200&fit=crop&crop=center",
       icon: "📱"
     },
     {
-      id: 4,
+      id: 3,
       name: "Accesorios",
       image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?w=200&h=200&fit=crop&crop=center",
       icon: "🧢"
     },
     {
-      id: 5,
+      id: 4,
       name: "Bisutería y relojes",
       image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=200&h=200&fit=crop&crop=center",
       icon: "💍"
     },
     {
-      id: 6,
+      id: 5,
       name: "Hogar y jardín",
       image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=200&h=200&fit=crop&crop=center",
       icon: "🌿"

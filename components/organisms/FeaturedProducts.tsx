@@ -38,6 +38,7 @@ export default function FeaturedProducts() {
           {products.map((p, index) => (
             <ProductCard
               key={p.id_producto}
+              id={p.id_producto}
               image={fallbackImages[index % fallbackImages.length]} 
               title={p.nombre}
               price={`$${p.precio} ${p.moneda}`}

@@ -10,7 +10,6 @@ const getCategoryItems = (t: (key: string) => string) => [
   { label: t("header.choice"), href: "/choice" },
   { label: t("header.super_offers"), href: "/superofertas" },
   { label: t("header.business"), href: "/business" },
-  { label: "Juguetes y juegos", href: "/juguetes" },
   { label: t("header.computing"), href: "/informatica" },
   { label: t("header.telephony"), href: "/telefonia" },
   { label: t("header.accessories"), href: "/accesorios" },
