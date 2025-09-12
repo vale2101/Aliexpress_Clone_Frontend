@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import ProductCard from "../atoms/ProductCard";
 
 export default function BuyAgainSection() {
   const { t } = useLanguage();
@@ -76,72 +77,20 @@ export default function BuyAgainSection() {
       
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {products.map((product) => (
-          <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-            <div className="aspect-square bg-gray-100 flex items-center justify-center relative">
-              <img 
-                src={product.image} 
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-              {product.discount && (
-                <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
-                  {product.discount}
-                </div>
-              )}
-              {product.label && (
-                <div className="absolute top-2 left-2 bg-yellow-400 text-black text-xs px-2 py-1 rounded font-semibold">
-                  {product.label}
-                </div>
-              )}
-            </div>
-            
-            <div className="p-3">
-              <h3 className="font-semibold text-gray-900 mb-2 text-sm line-clamp-2">{product.name}</h3>
-              
-              {product.features && (
-                <div className="flex flex-wrap gap-1 mb-2">
-                  {product.features.map((feature, index) => (
-                    <span key={index} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                      {feature}
-                    </span>
-                  ))}
-                </div>
-              )}
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-red-600">{product.currentPrice}</span>
-                  <span className="text-sm text-gray-500 line-through">{product.originalPrice}</span>
-                </div>
-                
-                {product.rating && (
-                  <div className="flex items-center gap-1">
-                    <div className="flex">
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i} className={`text-xs ${i < Math.floor(product.rating!) ? 'text-yellow-400' : 'text-gray-300'}`}>
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                    <span className="text-xs text-gray-600">{product.rating}</span>
-                    {product.sold && (
-                      <span className="text-xs text-gray-500">• {product.sold}</span>
-                    )}
-                  </div>
-                )}
-                
-                <div className="text-xs text-gray-600">
-                  {product.label}
-                </div>
-                
-                {product.button && (
-                  <button className="w-full text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-3 rounded transition-colors">
-                    {product.button}
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            image={product.image}
+            title={product.name}
+            price={product.currentPrice}
+            oldPrice={product.originalPrice}
+            discount={product.discount}
+            rating={product.rating}
+            sold={product.sold}
+            label={product.label}
+            features={product.features}
+            button={product.button}
+          />
         ))}
       </div>
     </div>

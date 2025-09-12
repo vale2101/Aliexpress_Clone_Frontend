@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 interface Product {
+  id?: number;
   image: string;
   title: string;
   price: string;
@@ -100,7 +101,7 @@ export default function OfferSection({
         >
           {products.map((p, i) => (
             <SwiperSlide key={i}>
-              <ProductCard {...p} />
+              <ProductCard {...p} id={p.id || i + 1} />
             </SwiperSlide>
           ))}
         </Swiper>

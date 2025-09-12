@@ -68,7 +68,7 @@ const PurchaseSidebar: React.FC<PurchaseSidebarProps> = ({
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600">Envío</span>
-            <span className="font-medium">{currency}11.882,18</span>
+            <span className="font-medium">COP11.882,18</span>
           </div>
           
           <div className="flex items-center justify-between text-sm">

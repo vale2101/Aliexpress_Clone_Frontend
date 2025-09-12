@@ -21,18 +21,17 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   };
 
   return (
-    <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+    <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
       <button
         onClick={() => router.push("/")}
-        className="flex items-center hover:text-orange-600 transition-colors"
+        className="hover:text-orange-600 transition-colors"
       >
-        <Home className="w-4 h-4 mr-1" />
         Inicio
       </button>
       
       {items.map((item, index) => (
         <React.Fragment key={index}>
-          <ChevronRight className="w-4 h-4 text-gray-400" />
+          <span className="text-gray-400">&gt;</span>
           {item.href ? (
             <button
               onClick={() => handleClick(item.href)}

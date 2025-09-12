@@ -27,14 +27,22 @@ const Price: React.FC<PriceProps> = ({
     (typeof originalPrice === 'number' ? originalPrice : parseFloat(originalPrice.toString())) : 
     undefined;
 
+  // Formatear precio según la moneda
+  const formatPrice = (price: number, currency: string) => {
+    if (currency === 'COP') {
+      return `COP${price.toLocaleString('es-CO', { minimumFractionDigits: 2 })}`;
+    }
+    return `${currency}${price.toFixed(2)}`;
+  };
+
   return (
     <div className="flex items-center gap-2">
       <span className={`font-bold text-red-600 ${sizeClasses[size]}`}>
-        {currency}{numericPrice.toFixed(2)}
+        {formatPrice(numericPrice, currency)}
       </span>
       {numericOriginalPrice && (
         <span className="text-gray-400 line-through text-lg">
-          {currency}{numericOriginalPrice.toFixed(2)}
+          {formatPrice(numericOriginalPrice, currency)}
         </span>
       )}
       {discount && (

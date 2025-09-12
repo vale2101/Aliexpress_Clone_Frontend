@@ -12,6 +12,8 @@ import Button from "../atoms/Button";
 import Breadcrumb from "../atoms/Breadcrumb";
 import ProductSkeleton from "../atoms/ProductSkeleton";
 import RelatedProducts from "./RelatedProducts";
+import AliExpressHeader from "./AliExpressHeader";
+import CategoryBar from "./CategoryBar";
 
 const ProductDetail: React.FC = () => {
   const params = useParams();
@@ -252,10 +254,17 @@ const ProductDetail: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header de AliExpress */}
+      <AliExpressHeader />
+      
+      {/* Barra de categorías */}
+      <CategoryBar />
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Breadcrumb */}
         <Breadcrumb
           items={[
+            { label: "Inicio", href: "/" },
             { label: "Productos", href: "/" },
             { label: product.nombre }
           ]}
@@ -274,27 +283,27 @@ const ProductDetail: React.FC = () => {
 
             {/* Información del producto - 1/3 del ancho */}
             <div className="lg:col-span-1">
-              <ProductInfo
-                title={product.nombre}
-                price={product.precio}
-                originalPrice={product.precio_original}
-                currency={product.moneda}
-                discount={product.descuento}
-                rating={4.5}
-                reviewCount={128}
-                soldCount={500}
-                storeName="Tienda AliExpress"
-                badges={product.descuento ? [`-${product.descuento}%`] : []}
-                description={product.descripcion}
-              />
+            <ProductInfo
+              title={product.nombre}
+              price={120000}
+              originalPrice={150000}
+              currency="COP"
+              discount={20}
+              rating={4.5}
+              reviewCount={128}
+              soldCount={500}
+              storeName="Tienda AliExpress"
+              badges={product.descuento ? [`-${product.descuento}%`] : []}
+              description={product.descripcion}
+            />
             </div>
 
             {/* Sidebar de compra - 1/3 del ancho */}
             <div className="lg:col-span-1">
               <PurchaseSidebar
                 productId={product.id_producto}
-                price={product.precio}
-                currency={product.moneda}
+                price={120000}
+                currency="COP"
                 onAddToCart={handleAddToCart}
                 onAddToWishlist={handleAddToWishlist}
                 onShare={handleShare}

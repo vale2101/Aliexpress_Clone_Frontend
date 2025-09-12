@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import ProductCard from "../atoms/ProductCard";
 
 export default function BatchSavingZone() {
   const { t } = useLanguage();
@@ -68,35 +69,16 @@ export default function BatchSavingZone() {
       
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {products.map((product) => (
-          <div key={product.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-            <div className="aspect-square bg-gray-100 flex items-center justify-center">
-              <img 
-                src={product.image} 
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            <div className="p-3">
-              <h3 className="font-semibold text-gray-900 mb-2 text-sm line-clamp-2">{product.name}</h3>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-red-600">{product.price}</span>
-                  <span className="text-xs text-gray-500">{product.minQuantity}</span>
-                </div>
-                
-                <div className="text-xs text-gray-600">
-                  <span className="line-through">{product.individualPrice}</span>
-                  <span className="ml-1">{t('buy_again.individual_price')}</span>
-                </div>
-                
-                <div className="text-xs text-green-600 font-medium">
-                  {product.savings}
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            image={product.image}
+            title={product.name}
+            price={product.price}
+            oldPrice={product.individualPrice}
+            label={product.minQuantity}
+            savings={product.savings}
+          />
         ))}
       </div>
     </div>
