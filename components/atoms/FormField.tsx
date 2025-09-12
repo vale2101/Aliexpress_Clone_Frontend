@@ -1,31 +1,32 @@
-import React from 'react';
-import Input from './Input';
+import React from "react";
 
 interface FormFieldProps {
+  label: string;
   type: string;
-  placeholder: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
   required?: boolean;
   className?: string;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
+  label,
   type,
-  placeholder,
   value,
   onChange,
+  placeholder,
   required = false,
-  className = "w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+  className = ""
 }) => {
   return (
-    <Input
+    <input
       type={type}
-      placeholder={placeholder}
       value={value}
       onChange={onChange}
+      placeholder={placeholder}
       required={required}
-      className={className}
+      className={`w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${className}`}
     />
   );
 };

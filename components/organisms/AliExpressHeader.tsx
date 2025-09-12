@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Search, Camera, ChevronDown, User, ShoppingCart, QrCode, MapPin } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useAuth } from "../../contexts/AuthContext";
+import Logo from "../atoms/Logo";
 
 const AliExpressHeader: React.FC = () => {
   const { t } = useLanguage();
@@ -19,12 +20,7 @@ const AliExpressHeader: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo y menú hamburguesa */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="text-2xl font-bold text-black">
-                AliExpress
-                <span className="text-yellow-500 text-sm ml-1">✓</span>
-              </div>
-            </div>
+            <Logo />
             <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200">
               <div className="flex flex-col gap-1">
                 <div className="w-4 h-0.5 bg-gray-600"></div>

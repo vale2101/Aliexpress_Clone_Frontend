@@ -1,28 +1,29 @@
-import React from 'react';
+import React from "react";
 
 interface SocialButtonProps {
-  onClick: () => void;
+  provider: string;
   icon: React.ReactNode;
-  text: string;
+  onClick: () => void;
   className?: string;
 }
 
 const SocialButton: React.FC<SocialButtonProps> = ({
-  onClick,
+  provider,
   icon,
-  text,
-  className = "w-full bg-white border border-gray-300 text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-50 flex items-center justify-center transition-colors duration-200"
+  onClick,
+  className = ""
 }) => {
   return (
     <button
-      type="button"
       onClick={onClick}
-      className={className}
+      className={`w-full flex items-center justify-center gap-2 px-3 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50 transition-colors ${className}`}
     >
-      <div className="w-5 h-5 mr-3">
+      <div className="w-5 h-5 flex items-center justify-center">
         {icon}
       </div>
-      {text}
+      <span className="text-sm text-gray-700">
+        Continuar con {provider}
+      </span>
     </button>
   );
 };

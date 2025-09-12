@@ -3,7 +3,8 @@ import CategoryBar from "../organisms/CategoryBar";
 import HeroBanner from "../organisms/HeroBanner";
 import BenefitsStrip from "../organisms/BenefitsStrip";
 import AliExpressBusinessBanner from "../organisms/AliExpressBusinessBanner";
-import ProductSectionsContainer from "../molecules/ProductSectionsContainer";
+import BatchSavingZone from "../organisms/BatchSavingZone";
+import BuyAgainSection from "../organisms/BuyAgainSection";
 import PromotionalBanner from "../organisms/PromotionalBanner";
 import FeaturedProducts from "../organisms/FeaturedProducts";
 import CategoriesGrid from "../organisms/CategoriesGrid";
@@ -24,8 +25,19 @@ export default function Home() {
       {/* Banner de AliExpress Business */}
       <AliExpressBusinessBanner />
       
-      {/* Contenedor molecular para las secciones de productos */}
-      <ProductSectionsContainer />
+      {/* Secciones de productos */}
+      <div className="bg-gray-50 py-12">
+        <div className="max-w-full mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-6">
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <BatchSavingZone />
+            </div>
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <BuyAgainSection />
+            </div>
+          </div>
+        </div>
+      </div>
       
       {/* Banner promocional Viva */}
       <PromotionalBanner />

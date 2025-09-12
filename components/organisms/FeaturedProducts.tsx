@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ProductCard from "../atoms/ProductCard";
+import ProductCard from "../molecules/ProductCard";
 import { productService, Product } from "../../services/productService";
 
 export default function FeaturedProducts() {

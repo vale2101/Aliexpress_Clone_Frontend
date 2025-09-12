@@ -1,6 +1,11 @@
 import React from "react";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
+import ActionButton from "../atoms/ActionButton";
+import DiscountBadge from "../atoms/DiscountBadge";
+import ProductLabel from "../atoms/ProductLabel";
+import Price from "../atoms/Price";
+import Rating from "../atoms/Rating";
 
 interface ProductCardProps {
   id?: number;
@@ -56,27 +61,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Botones de acción */}
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="flex flex-col gap-1">
-            <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50">
-              <Heart className="w-4 h-4 text-gray-600" />
-            </button>
-            <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50">
-              <ShoppingCart className="w-4 h-4 text-gray-600" />
-            </button>
+            <ActionButton icon={Heart} />
+            <ActionButton icon={ShoppingCart} />
           </div>
         </div>
 
         {/* Badge de descuento */}
         {discount && (
-          <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
-            {discount}
-          </div>
+          <DiscountBadge discount={discount} />
         )}
 
         {/* Label del producto */}
         {label && (
-          <div className="absolute bottom-2 left-2 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-            {label}
-          </div>
+          <ProductLabel label={label} />
         )}
       </div>
 
@@ -105,12 +102,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Precios */}
         <div className="space-y-1">
-          <div className="flex items-center justify-between">
-            <span className="text-lg font-bold text-red-600">{price}</span>
-            {oldPrice && (
-              <span className="text-sm text-gray-400 line-through">{oldPrice}</span>
-            )}
-          </div>
+          <Price 
+            price={parseFloat(price.replace(/[^0-9.-]+/g, ""))} 
+            originalPrice={oldPrice ? parseFloat(oldPrice.replace(/[^0-9.-]+/g, "")) : undefined}
+            currency="€"
+            size="sm"
+          />
 
           {/* Ahorro */}
           {savings && (
@@ -121,16 +118,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Rating y ventas */}
         {rating && (
           <div className="flex items-center justify-between mt-2">
-            <div className="flex items-center gap-1">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className={`text-xs ${i < Math.floor(rating) ? 'text-yellow-400' : 'text-gray-300'}`}>
-                    ★
-                  </span>
-                ))}
-              </div>
-              <span className="text-xs text-gray-600">{rating}</span>
-            </div>
+            <Rating rating={rating} />
             {sold && (
               <span className="text-xs text-gray-500">{sold} vendidos</span>
             )}

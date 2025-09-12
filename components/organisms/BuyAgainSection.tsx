@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
-import ProductCard from "../atoms/ProductCard";
+import ProductCard from "../molecules/ProductCard";
 
 export default function BuyAgainSection() {
   const { t } = useLanguage();
