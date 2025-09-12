@@ -1,8 +1,8 @@
 import React from "react";
 
 interface PriceProps {
-  price: number;
-  originalPrice?: number;
+  price: number | string;
+  originalPrice?: number | string;
   currency?: string;
   discount?: number;
   size?: "sm" | "md" | "lg";
@@ -21,14 +21,20 @@ const Price: React.FC<PriceProps> = ({
     lg: "text-3xl"
   };
 
+  // Convertir a número y manejar casos edge
+  const numericPrice = typeof price === 'number' ? price : parseFloat(price?.toString() || '0');
+  const numericOriginalPrice = originalPrice ? 
+    (typeof originalPrice === 'number' ? originalPrice : parseFloat(originalPrice.toString())) : 
+    undefined;
+
   return (
     <div className="flex items-center gap-2">
       <span className={`font-bold text-red-600 ${sizeClasses[size]}`}>
-        {currency}{price.toFixed(2)}
+        {currency}{numericPrice.toFixed(2)}
       </span>
-      {originalPrice && (
+      {numericOriginalPrice && (
         <span className="text-gray-400 line-through text-lg">
-          {currency}{originalPrice.toFixed(2)}
+          {currency}{numericOriginalPrice.toFixed(2)}
         </span>
       )}
       {discount && (

@@ -33,18 +33,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
   return (
     <div className="space-y-4">
       {/* Título */}
-      <h1 className="text-2xl font-bold text-gray-900 leading-tight">
+      <h1 className="text-xl font-medium text-gray-900 leading-tight">
         {title}
       </h1>
-
-      {/* Badges */}
-      {badges.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {badges.map((badge, index) => (
-            <Badge key={index} text={badge} />
-          ))}
-        </div>
-      )}
 
       {/* Rating y ventas */}
       {(rating || soldCount) && (
@@ -54,34 +45,67 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
           )}
           {soldCount && (
             <span className="text-sm text-gray-600">
-              {soldCount} vendidos
+              {soldCount} vendido(s)
             </span>
           )}
         </div>
       )}
 
-      {/* Precio */}
-      <Price
-        price={price}
-        originalPrice={originalPrice}
-        currency={currency}
-        discount={discount}
-        size="lg"
-      />
-
       {/* Tienda */}
       {storeName && (
         <div className="text-sm text-gray-600">
-          Vendido por: <span className="font-medium text-orange-600">{storeName}</span>
+          De <span className="font-medium text-orange-600">{storeName}</span>
         </div>
       )}
 
-      {/* Descripción corta */}
-      {description && (
-        <div className="text-gray-700 leading-relaxed">
-          {description}
+      {/* Badge SuperOfertas */}
+      {badges.length > 0 && (
+        <div className="bg-red-500 text-white px-3 py-1 rounded text-sm font-medium inline-flex items-center gap-1">
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+          SuperOfertas
         </div>
       )}
+
+      {/* Precio */}
+      <div className="space-y-2">
+        <Price
+          price={price}
+          originalPrice={originalPrice}
+          currency={currency}
+          discount={discount}
+          size="lg"
+        />
+        
+        {/* Stock limitado */}
+        <div className="text-red-600 text-sm font-medium">
+          Solo quedan 18
+        </div>
+      </div>
+
+      {/* Selector de color/variante */}
+      <div className="space-y-2">
+        <div className="text-sm font-medium text-gray-700">
+          Color: Gold-BIRTHDAY
+        </div>
+        <div className="flex gap-2">
+          <button className="w-12 h-12 rounded border-2 border-orange-500 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1558060370-539c4d4b7b8e?w=100&h=100&fit=crop"
+              alt="Variante 1"
+              className="w-full h-full object-cover"
+            />
+          </button>
+          <button className="w-12 h-12 rounded border border-gray-300 overflow-hidden hover:border-gray-400">
+            <img
+              src="https://images.unsplash.com/photo-1558060370-539c4d4b7b8e?w=100&h=100&fit=crop"
+              alt="Variante 2"
+              className="w-full h-full object-cover"
+            />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -27,9 +27,32 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="flex gap-4">
+      {/* Miniaturas laterales */}
+      {images.length > 1 && (
+        <div className="flex flex-col gap-2 w-16">
+          {images.map((image, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                index === currentIndex
+                  ? "border-orange-500"
+                  : "border-gray-200 hover:border-gray-300"
+              }`}
+            >
+              <img
+                src={image}
+                alt={`${alt} ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Imagen principal */}
-      <div className="relative aspect-square overflow-hidden rounded-lg border border-gray-200">
+      <div className="flex-1 relative aspect-square overflow-hidden rounded-lg border border-gray-200">
         <img
           src={images[currentIndex]}
           alt={alt}
@@ -53,30 +76,16 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
             </button>
           </>
         )}
-      </div>
 
-      {/* Miniaturas */}
-      {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto">
-          {images.map((image, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                index === currentIndex
-                  ? "border-orange-500"
-                  : "border-gray-200 hover:border-gray-300"
-              }`}
-            >
-              <img
-                src={image}
-                alt={`${alt} ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </button>
-          ))}
+        {/* Botón de video (opcional) */}
+        <div className="absolute top-4 left-4">
+          <button className="bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-300">
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 };
