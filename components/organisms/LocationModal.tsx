@@ -7,9 +7,10 @@ import { X } from "lucide-react";
 interface LocationModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onMouseLeave?: () => void;
 }
 
-export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
+export default function LocationModal({ isOpen, onClose, onMouseLeave }: LocationModalProps) {
   const { 
     language, 
     currency, 
@@ -97,28 +98,37 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+    <div 
+      className="absolute top-full left-0 bg-transparent z-50"
+    >
+      <div 
+        className="bg-white rounded-lg p-3 sm:p-4 lg:p-6 w-80 sm:w-96 lg:w-full max-w-md shadow-lg border border-gray-200"
+        onMouseEnter={(e) => e.stopPropagation()}
+        {...(onMouseLeave && { onMouseLeave })}
+      >
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-800">Configuración</h2>
+        <div className="flex justify-between items-center mb-4 sm:mb-6">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-800">Configuración</h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
           >
-            <X size={24} />
+            <X size={20} className="sm:w-6 sm:h-6" />
           </button>
         </div>
 
         {/* Enviar a */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">{t('modal.send_to')}</h3>
+        <div className="mb-4 sm:mb-6">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">{t('modal.send_to')}</h3>
           
           {/* País */}
           <div className="relative mb-3">
             <button
-              onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-              className="w-full p-3 border border-gray-300 rounded-lg text-left flex items-center justify-between hover:border-gray-400"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowCountryDropdown(!showCountryDropdown);
+              }}
+              className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg text-left flex items-center justify-between hover:border-gray-400 text-sm sm:text-base"
             >
               <div className="flex items-center gap-2">
                 <span className="text-lg">
@@ -134,7 +144,10 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
                 {currentCountries.map((country) => (
                   <button
                     key={country.code}
-                    onClick={() => handleCountryChange(country.name)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCountryChange(country.name);
+                    }}
                     className="w-full text-left p-3 hover:bg-gray-100 flex items-center gap-2"
                   >
                     <span className="text-lg">{country.flag}</span>
@@ -148,7 +161,10 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
           {/* Estado/Provincia */}
           <div className="relative mb-3">
             <button
-              onClick={() => setShowStateDropdown(!showStateDropdown)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowStateDropdown(!showStateDropdown);
+              }}
               disabled={!selectedCountry}
               className="w-full p-3 border border-gray-300 rounded-lg text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
             >
@@ -161,7 +177,10 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
                 {currentStates.map((state) => (
                   <button
                     key={state}
-                    onClick={() => handleStateChange(state)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleStateChange(state);
+                    }}
                     className="w-full text-left p-3 hover:bg-gray-100"
                   >
                     {state}
@@ -174,7 +193,10 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
           {/* Ciudad */}
           <div className="relative">
             <button
-              onClick={() => setShowCityDropdown(!showCityDropdown)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowCityDropdown(!showCityDropdown);
+              }}
               disabled={!selectedState}
               className="w-full p-3 border border-gray-300 rounded-lg text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
             >
@@ -187,7 +209,10 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
                 {currentCities.map((city) => (
                   <button
                     key={city}
-                    onClick={() => handleCityChange(city)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCityChange(city);
+                    }}
                     className="w-full text-left p-3 hover:bg-gray-100"
                   >
                     {city}
@@ -199,11 +224,14 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
         </div>
 
         {/* Idioma */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">{t('modal.language')}</h3>
+        <div className="mb-4 sm:mb-6">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">{t('modal.language')}</h3>
           <div className="relative">
             <button
-              onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowLanguageDropdown(!showLanguageDropdown);
+              }}
               className="w-full p-3 border border-gray-300 rounded-lg text-left flex items-center justify-between hover:border-gray-400"
             >
               <div className="flex items-center gap-2">
@@ -220,7 +248,10 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
-                    onClick={() => handleLanguageChange(lang.code)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLanguageChange(lang.code);
+                    }}
                     className="w-full text-left p-3 hover:bg-gray-100 flex items-center gap-2"
                   >
                     <span className="text-lg">{lang.flag}</span>
@@ -233,11 +264,14 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
         </div>
 
         {/* Moneda */}
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">{t('modal.currency')}</h3>
+        <div className="mb-4 sm:mb-6">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">{t('modal.currency')}</h3>
           <div className="relative">
             <button
-              onClick={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowCurrencyDropdown(!showCurrencyDropdown);
+              }}
               className="w-full p-3 border border-gray-300 rounded-lg text-left flex items-center justify-between hover:border-gray-400"
             >
               <span>
@@ -252,7 +286,10 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
                 {currentCurrencies.map((curr) => (
                   <button
                     key={curr.code}
-                    onClick={() => handleCurrencyChange(curr.code)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCurrencyChange(curr.code);
+                    }}
                     className="w-full text-left p-3 hover:bg-gray-100"
                   >
                     {curr.code} ({curr.name})
@@ -265,8 +302,11 @@ export default function LocationModal({ isOpen, onClose }: LocationModalProps) {
 
         {/* Botón Guardar */}
         <button
-          onClick={handleSave}
-          className="w-full bg-gray-800 text-white py-3 px-4 rounded-lg hover:bg-gray-900 transition-colors font-medium"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleSave();
+          }}
+          className="w-full bg-gray-800 text-white py-2 sm:py-3 px-3 sm:px-4 rounded-lg hover:bg-gray-900 transition-colors font-medium text-sm sm:text-base"
         >
           {t('modal.save')}
         </button>

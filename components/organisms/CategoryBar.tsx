@@ -36,62 +36,64 @@ const CategoriesBar: React.FC = () => {
 
   return (
     <div className="w-full border-b bg-white">
-      <div className="max-w-full mx-auto px-4 flex items-center justify-center gap-6 h-10">
+      <div className="max-w-full mx-auto px-2 sm:px-4 flex items-center justify-center gap-2 sm:gap-4 lg:gap-6 h-8 sm:h-10">
         {/* Botón: Todas las categorías */}
         <div
-          className="relative"
+          className="relative flex-shrink-0"
           onMouseEnter={() => setShowCategoriesDropdown(true)}
           onMouseLeave={() => {
             setShowCategoriesDropdown(false);
             setActiveCategory(null);
           }}
         >
-          <button className="flex items-center gap-2 rounded-full border border-gray-300 px-5 py-2 text-sm hover:bg-gray-50 whitespace-nowrap transition-colors">
-            <span className="text-lg">☰</span>
-            <span className="text-gray-700">{t("header.all_categories")}</span>
-            <ChevronDown size={14} className="text-gray-500" />
+          <button className="flex items-center gap-1 sm:gap-2 rounded-full border border-gray-300 px-2 sm:px-4 lg:px-5 py-1 sm:py-2 text-xs sm:text-sm hover:bg-gray-50 whitespace-nowrap transition-colors">
+            <span className="text-sm sm:text-lg">☰</span>
+            <span className="text-gray-700 hidden sm:inline">{t("header.all_categories")}</span>
+            <ChevronDown size={12} className="text-gray-500 sm:w-4 sm:h-4" />
           </button>
 
           {/* Dropdown de categorías */}
           {showCategoriesDropdown && (
-            <div className="absolute top-full left-0 mt-0 flex bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+            <div className="absolute top-full left-0 mt-0 flex flex-col sm:flex-row bg-white border border-gray-200 rounded-lg shadow-lg z-50 w-80 sm:w-auto">
               {/* Lista de categorías */}
-              <div className="w-56 border-r">
+              <div className="w-full sm:w-56 border-b sm:border-b-0 sm:border-r">
                 {categories.map((category) => (
                   <div
                     key={category.name}
                     onMouseEnter={() => setActiveCategory(category.name)}
-                    className={`flex items-center justify-between p-2 text-sm cursor-pointer hover:bg-gray-100 ${
+                    className={`flex items-center justify-between p-2 sm:p-3 text-xs sm:text-sm cursor-pointer hover:bg-gray-100 ${
                       activeCategory === category.name ? "bg-gray-100 font-medium" : ""
                     }`}
                   >
                     {category.name}
-                    <ChevronRight size={14} className="text-gray-400" />
+                    <ChevronRight size={12} className="text-gray-400 sm:w-4 sm:h-4" />
                   </div>
                 ))}
               </div>
 
               {/* Subcategorías */}
               {activeCategory && (
-                <div className="w-64 p-4">
-                  {categories
-                    .find((cat) => cat.name === activeCategory)
-                    ?.subcategories.map((sub) => (
-                      <div
-                        key={sub}
-                        className="p-2 text-sm text-gray-600 hover:bg-gray-50 rounded cursor-pointer"
-                      >
-                        {sub}
-                      </div>
-                    ))}
+                <div className="w-full sm:w-64 p-3 sm:p-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-1 gap-1 sm:gap-0">
+                    {categories
+                      .find((cat) => cat.name === activeCategory)
+                      ?.subcategories.map((sub) => (
+                        <div
+                          key={sub}
+                          className="p-2 text-xs sm:text-sm text-gray-600 hover:bg-gray-50 rounded cursor-pointer"
+                        >
+                          {sub}
+                        </div>
+                      ))}
+                  </div>
                 </div>
               )}
             </div>
           )}
         </div>
 
-        {/* Links (una sola línea, sin cortes) */}
-        <nav className="flex items-center gap-6 text-sm font-medium text-gray-700 whitespace-nowrap overflow-x-auto no-scrollbar">
+        {/* Links responsive */}
+        <nav className="flex items-center gap-2 sm:gap-4 lg:gap-6 text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap overflow-x-auto no-scrollbar flex-1 justify-center">
           {items.map((it) => (
             <button
               key={it.label}
@@ -100,7 +102,18 @@ const CategoriesBar: React.FC = () => {
                 it.label === t("header.packs_offers") ? "text-red-500 font-semibold" : ""
               }`}
             >
-              {it.label}
+              {/* Texto abreviado en móvil para algunos elementos */}
+              <span className="hidden sm:inline">{it.label}</span>
+              <span className="sm:hidden">
+                {it.label === t("header.packs_offers") ? "Packs" :
+                 it.label === t("header.super_offers") ? "Super" :
+                 it.label === t("header.business") ? "Business" :
+                 it.label === t("header.computing") ? "Info" :
+                 it.label === t("header.telephony") ? "Tel" :
+                 it.label === t("header.accessories") ? "Acc" :
+                 it.label === t("header.choice") ? "Choice" :
+                 it.label}
+              </span>
             </button>
           ))}
         </nav>

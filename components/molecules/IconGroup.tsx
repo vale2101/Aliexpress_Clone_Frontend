@@ -27,48 +27,57 @@ const IconGroup: React.FC = () => {
 
   return (
     <>
-      <div className="flex items-center gap-6">
-        {/* 🔹 Descargar app */}
-        <div className="flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors">
-          <AppWindow size={18} className="text-gray-700" />
-          <span className="text-sm text-gray-700">Descarga la app de AliExpress</span>
+      <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
+        {/* 🔹 Descargar app - oculto en móvil */}
+        <div className="hidden md:flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors">
+          <AppWindow size={16} className="text-gray-700" />
+          <span className="text-xs lg:text-sm text-gray-700 hidden lg:inline">Descarga la app</span>
         </div>
 
-        {/* 🔹 Idioma y moneda */}
+        {/* 🔹 Idioma y moneda - responsive */}
         <div
-          onClick={() => setShowLocationModal(true)}
-          className="flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors"
+          onMouseEnter={() => setShowLocationModal(true)}
+          onMouseLeave={() => setShowLocationModal(false)}
+          className="flex items-center gap-1 cursor-pointer hover:text-orange-500 transition-colors relative"
         >
-          {/* Aquí puedes poner bandera */}
+          {/* Bandera */}
           <img
             src="/flags/co.png"
             alt="Colombia"
-            className="w-5 h-5 rounded-sm"
+            className="w-4 h-4 sm:w-5 sm:h-5 rounded-sm"
           />
-          <span className="text-sm text-gray-700">Manizales/ES/</span>
-          <span className="text-sm text-gray-700">{currency}</span>
+          {/* Texto responsive */}
+          <div className="hidden sm:flex items-center gap-1">
+            <span className="text-xs lg:text-sm text-gray-700">Manizales/ES/</span>
+            <span className="text-xs lg:text-sm text-gray-700">{currency}</span>
+          </div>
           <span className="text-gray-400 text-xs">▼</span>
+          
+          {/* Modal posicionado dentro del elemento relativo */}
+          <LocationModal 
+            isOpen={showLocationModal} 
+            onClose={() => setShowLocationModal(false)}
+            onMouseLeave={() => setShowLocationModal(false)}
+          />
         </div>
 
         {/* 🔹 Menú Usuario */}
         <UserMenu onLogin={handleLogin} onLogout={handleLogout} />
 
-        {/* 🔹 Carrito */}
+        {/* 🔹 Carrito - responsive */}
         <div
           onClick={() => console.log("Ir al carrito")}
-          className="flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors relative"
+          className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:text-orange-500 transition-colors relative"
         >
           <div className="relative">
-            <ShoppingCart size={18} className="text-gray-600" />
-            <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full h-4 w-4 flex items-center justify-center text-xs">
+            <ShoppingCart size={16} className="text-gray-600" />
+            <span className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-black text-white text-xs rounded-full h-3 w-3 sm:h-4 sm:w-4 flex items-center justify-center">
               {cartItems}
             </span>
           </div>
-          <span className="text-sm text-gray-700">Cesta</span>
+          <span className="text-xs lg:text-sm text-gray-700 hidden sm:inline">Cesta</span>
         </div>
       </div>
-
-      <LocationModal isOpen={showLocationModal} onClose={() => setShowLocationModal(false)} />
     </>
   );
 };

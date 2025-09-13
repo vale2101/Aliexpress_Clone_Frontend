@@ -30,25 +30,25 @@ export default function SearchBar({ className = "" }: { className?: string }) {
         placeholder="mecanismo de tijera teclado victus" 
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="border-none flex-1 h-11 px-4 focus:outline-none text-gray-700" 
+        className="border-none flex-1 h-8 sm:h-10 lg:h-11 px-2 sm:px-3 lg:px-4 focus:outline-none text-gray-700 text-sm sm:text-base" 
       />
       
-      {/* Botón de búsqueda por imagen */}
+      {/* Botón de búsqueda por imagen - oculto en móvil */}
       <button
         type="button"
         onClick={handleImageSearch}
-        className="px-3 py-2 hover:bg-gray-100 flex items-center h-11 border-l border-gray-300"
+        className="hidden sm:flex px-2 lg:px-3 py-2 hover:bg-gray-100 items-center h-8 sm:h-10 lg:h-11 border-l border-gray-300"
         title="Búsqueda por imagen"
       >
-        <Camera className="w-5 h-5 text-gray-600" />
+        <Camera className="w-4 h-4 lg:w-5 lg:h-5 text-gray-600" />
       </button>
       
       {/* Botón de búsqueda */}
       <button 
         type="submit"
-        className="bg-black text-white px-4 py-2 flex items-center h-11 hover:bg-gray-800 transition-colors rounded-r-full"
+        className="bg-black text-white px-2 sm:px-3 lg:px-4 py-2 flex items-center h-8 sm:h-10 lg:h-11 hover:bg-gray-800 transition-colors rounded-r-full"
       >
-        <Search className="w-5 h-5" />
+        <Search className="w-4 h-4 lg:w-5 lg:h-5" />
       </button>
     </form>
   );
