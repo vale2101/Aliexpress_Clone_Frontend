@@ -2,14 +2,6 @@
 import React from "react";
 import RecommendationsSection from "../../components/organisms/RecommendationsSection";
 import FeaturedProducts from "../../components/organisms/FeaturedProducts";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Bisutería y Relojes | Mi Tienda",
-  description:
-    "Descubre joyas, bisutería y relojes únicos para cada ocasión. Encuentra el accesorio perfecto con estilo y elegancia.",
-  keywords: ["bisutería", "joyas", "relojes", "accesorios", "moda"],
-};
 
 export default function BisuteriaPage() {
   return (
