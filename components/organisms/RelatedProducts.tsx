@@ -59,7 +59,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
           <ProductCard
             key={product.id_producto}
             id={product.id_producto}
-            image={`https://images.unsplash.com/photo-${1500000000000 + product.id_producto}?w=300&h=300&fit=crop&crop=center`}
+            image={`https://images.unsplash.com/photo-${1500000000000 + (product.id_producto ?? 0)}?w=300&h=300&fit=crop&crop=center`}
             title={product.nombre}
             price={`${product.precio} ${product.moneda}`}
             oldPrice={

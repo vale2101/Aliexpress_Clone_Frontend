@@ -14,7 +14,6 @@ import FormToggle from "../molecules/FormToggle";
 import ErrorMessage from "../atoms/ErrorMessage";
 import Logo from "../atoms/Logo";
 
-
 const AuthFormRefactored: React.FC = () => {
   const { login, register, isLoading, error, clearError } = useAuth();
   const router = useRouter();
@@ -54,15 +53,18 @@ const AuthFormRefactored: React.FC = () => {
         });
         router.push('/');
       }
-    } catch (error: any) {
-      console.error('Error en autenticación:', error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error en autenticación:", error.message);
+      } else {
+        console.error("Error en autenticación:", error);
+      }
     }
   };
 
   const toggleMode = () => {
     setIsLogin(!isLogin);
     clearError();
-    // Limpiar campos al cambiar modo
     setEmail("");
     setPassword("");
     setConfirmPassword("");
@@ -72,32 +74,28 @@ const AuthFormRefactored: React.FC = () => {
     setAddress("");
   };
 
-  // Cerrar dropdowns al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (!target.closest('.dropdown-container')) {
+      if (!target.closest(".dropdown-container")) {
         // Los dropdowns se manejan internamente en sus componentes
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   return (
     <div className="min-h-screen flex">
-      {}
+      {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
         <div className="flex items-center justify-between px-6 py-4">
-          {}
           <div className="flex items-center">
             <Logo />
           </div>
-          
-          {}
           <div className="flex items-center text-gray-600 hover:text-gray-800 cursor-pointer">
             <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
@@ -107,21 +105,17 @@ const AuthFormRefactored: React.FC = () => {
         </div>
       </div>
 
-      {}
+      {/* Carousel */}
       <div className="hidden lg:flex lg:w-2/3 relative mt-16">
         <ImageCarousel />
       </div>
 
-      {}
+      {/* Form */}
       <div className="w-full lg:w-1/3 bg-white flex items-center justify-center p-8 mt-16">
         <div className="w-full max-w-md">
-          {}
           <FormHeader isLogin={isLogin} />
-
-          {}
           <ErrorMessage message={error || ""} />
 
-          {}
           <form onSubmit={handleSubmit} className="space-y-4">
             {isLogin ? (
               <LoginFields
@@ -155,14 +149,12 @@ const AuthFormRefactored: React.FC = () => {
             />
           </form>
 
-          {}
           <div className="text-center mt-4">
             <a href="#" className="text-gray-500 text-sm hover:text-gray-700">
               ¿Tienes problemas al iniciar sesión?
             </a>
           </div>
 
-          {}
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
@@ -172,16 +164,13 @@ const AuthFormRefactored: React.FC = () => {
             </div>
           </div>
 
-          {}
           <SocialLoginButtons />
 
-          {}
           <LocationSelector
             selectedLocation={selectedLocation}
             onLocationChange={setSelectedLocation}
           />
 
-          {}
           <div className="mt-6 text-xs text-gray-500 leading-relaxed">
             Al continuar, confirmas ser mayor de edad y aceptas nuestro Acuerdo de Membresía Gratuita de AliExpress y Políticas de Privacidad. Tu información podrá utilizarse con fines promocionales, pero puedes rechazarlo en cualquier momento.
           </div>
@@ -192,7 +181,6 @@ const AuthFormRefactored: React.FC = () => {
             </a>
           </div>
 
-          {}
           <FormToggle isLogin={isLogin} onToggle={toggleMode} />
         </div>
       </div>
