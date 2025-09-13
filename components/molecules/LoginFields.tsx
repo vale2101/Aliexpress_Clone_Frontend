@@ -18,23 +18,25 @@ const LoginFields: React.FC<LoginFieldsProps> = ({
     <>
       <div>
         <FormField
+          label="Correo electrónico o número de teléfono"
           type="email"
-          placeholder="Email o número de teléfono"
+          placeholder="Introduce tu correo o teléfono"
           value={email}
           onChange={onEmailChange}
           required
-          className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full"
         />
       </div>
 
-      <div>
+      <div className="mt-4">
         <FormField
+          label="Contraseña"
           type="password"
-          placeholder="Contraseña"
+          placeholder="Introduce tu contraseña"
           value={password}
           onChange={onPasswordChange}
           required
-          className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full"
         />
       </div>
     </>
