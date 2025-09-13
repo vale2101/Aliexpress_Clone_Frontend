@@ -36,12 +36,13 @@ const RegisterFields: React.FC<RegisterFieldsProps> = ({
 }) => {
   return (
     <>
-      {}
+      {/* Nombre y Apellido */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <FormField
+            label="Nombre"
             type="text"
-            placeholder="Nombre"
+            placeholder="Introduce tu nombre"
             value={firstName}
             onChange={onFirstNameChange}
             required
@@ -49,8 +50,9 @@ const RegisterFields: React.FC<RegisterFieldsProps> = ({
         </div>
         <div>
           <FormField
+            label="Apellido"
             type="text"
-            placeholder="Apellido"
+            placeholder="Introduce tu apellido"
             value={lastName}
             onChange={onLastNameChange}
             required
@@ -58,50 +60,60 @@ const RegisterFields: React.FC<RegisterFieldsProps> = ({
         </div>
       </div>
 
+      {/* Email */}
       <div>
         <FormField
+          label="Correo electrónico"
           type="email"
-          placeholder="Email"
+          placeholder="Introduce tu correo"
           value={email}
           onChange={onEmailChange}
           required
         />
       </div>
 
+      {/* Teléfono */}
       <div>
         <FormField
+          label="Número de teléfono"
           type="tel"
-          placeholder="Número de teléfono"
+          placeholder="Introduce tu número de teléfono"
           value={phone}
           onChange={onPhoneChange}
           required
         />
       </div>
 
+      {/* Dirección */}
       <div>
         <FormField
+          label="Dirección"
           type="text"
-          placeholder="Dirección"
+          placeholder="Introduce tu dirección"
           value={address}
           onChange={onAddressChange}
           required
         />
       </div>
 
+      {/* Contraseña */}
       <div>
         <FormField
+          label="Contraseña"
           type="password"
-          placeholder="Contraseña"
+          placeholder="Introduce tu contraseña"
           value={password}
           onChange={onPasswordChange}
           required
         />
       </div>
 
+      {/* Confirmar contraseña */}
       <div>
         <FormField
+          label="Confirmar contraseña"
           type="password"
-          placeholder="Confirmar contraseña"
+          placeholder="Vuelve a escribir tu contraseña"
           value={confirmPassword}
           onChange={onConfirmPasswordChange}
           required
