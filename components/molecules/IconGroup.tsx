@@ -28,32 +28,32 @@ const IconGroup: React.FC = () => {
   return (
     <>
       <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
-        {/* 🔹 Descargar app - oculto en móvil */}
+        {}
         <div className="hidden md:flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors">
           <AppWindow size={16} className="text-gray-700" />
           <span className="text-xs lg:text-sm text-gray-700 hidden lg:inline">Descarga la app</span>
         </div>
 
-        {/* 🔹 Idioma y moneda - responsive */}
+        {}
         <div
           onMouseEnter={() => setShowLocationModal(true)}
           onMouseLeave={() => setShowLocationModal(false)}
           className="flex items-center gap-1 cursor-pointer hover:text-orange-500 transition-colors relative"
         >
-          {/* Bandera */}
+          {}
           <img
             src="/flags/co.png"
             alt="Colombia"
             className="w-4 h-4 sm:w-5 sm:h-5 rounded-sm"
           />
-          {/* Texto responsive */}
+          {}
           <div className="hidden sm:flex items-center gap-1">
             <span className="text-xs lg:text-sm text-gray-700">Manizales/ES/</span>
             <span className="text-xs lg:text-sm text-gray-700">{currency}</span>
           </div>
           <span className="text-gray-400 text-xs">▼</span>
           
-          {/* Modal posicionado dentro del elemento relativo */}
+          {}
           <LocationModal 
             isOpen={showLocationModal} 
             onClose={() => setShowLocationModal(false)}
@@ -61,10 +61,10 @@ const IconGroup: React.FC = () => {
           />
         </div>
 
-        {/* 🔹 Menú Usuario */}
+        {}
         <UserMenu onLogin={handleLogin} onLogout={handleLogout} />
 
-        {/* 🔹 Carrito - responsive */}
+        {}
         <div
           onClick={() => console.log("Ir al carrito")}
           className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:text-orange-500 transition-colors relative"

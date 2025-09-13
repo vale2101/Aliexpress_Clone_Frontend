@@ -13,8 +13,6 @@ const AliExpressHeader: React.FC = () => {
 
   return (
     <div className="bg-white border-b border-gray-200">
-      {/* Línea verde superior */}
-      <div className="h-1 bg-green-500"></div>
       
       <div className="max-w-full mx-auto px-4">
         <div className="flex items-center justify-between h-16">

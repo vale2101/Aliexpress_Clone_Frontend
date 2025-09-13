@@ -37,19 +37,19 @@ export default function RecommendationsSection() {
             <ProductCard
               key={p.id_producto}
               id={p.id_producto}
-              image="/placeholder.png" 
+              image={p.imagen_url || "/placeholder.png"} // 👈 ahora usa el campo de la API
               title={p.nombre}
               price={`$${p.precio} ${p.moneda}`}
               oldPrice={
                 p.precio_original ? `$${p.precio_original} ${p.moneda}` : undefined
               }
               discount={p.descuento ? `-${p.descuento}%` : undefined}
-              rating={4.5} 
+              rating={4.5}
               sold={String(p.stock)}
               label={p.estado === "activo" ? "Disponible" : "Agotado"}
               savings={
                 p.precio_original
-                  ? `Ahorra $${p.precio_original - p.precio} ${p.moneda}`
+                  ? `Ahorra $${Number(p.precio_original) - Number(p.precio)} ${p.moneda}`
                   : undefined
               }
               features={[p.descripcion || "Sin descripción"]}

@@ -5,10 +5,9 @@ import BenefitsStrip from "../organisms/BenefitsStrip";
 import AliExpressBusinessBanner from "../organisms/AliExpressBusinessBanner";
 import BatchSavingZone from "../organisms/BatchSavingZone";
 import BuyAgainSection from "../organisms/BuyAgainSection";
-import PromotionalBanner from "../organisms/PromotionalBanner";
 import FeaturedProducts from "../organisms/FeaturedProducts";
-import CategoriesGrid from "../organisms/CategoriesGrid";
 import RecommendationsSection from "../organisms/RecommendationsSection";
+import PromoWithCategories from "../organisms/PromoWithCategories";
 import HomeLayout from "../layouts/HomeLayout";
 import OffersSection from "../organisms/OffersSection";
 
@@ -40,13 +39,9 @@ export default function Home() {
       </div>
       
       {/* Banner promocional Viva */}
-      <PromotionalBanner />
+      <PromoWithCategories />
       
-      {/* Productos destacados */}
-      <FeaturedProducts />
       
-      {/* Grid de categorías */}
-      <CategoriesGrid />
       
       {/* Sección de recomendaciones */}
       <RecommendationsSection />

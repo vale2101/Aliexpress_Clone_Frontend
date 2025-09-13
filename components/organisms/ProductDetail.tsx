@@ -74,11 +74,12 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  const productImages = [
-    `https://libur.com.co/cdn/shop/files/IMG_0343.jpg?v=1702424787&width=600`,
-    `https://libur.com.co/cdn/shop/files/IMG_0343.jpg?v=1702424787&width=600`,
-    `https://libur.com.co/cdn/shop/files/IMG_0343.jpg?v=1702424787&width=600`,
-  ];
+  // 🔹 Usamos la imagen de la BD o fallback
+  const productImages = product.imagen_url
+    ? [product.imagen_url] // si en futuro soportas varias imágenes, aquí puedes hacer split(",") y map
+    : [
+        "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=600&fit=crop&crop=center",
+      ];
 
   const tabs = [
     {
@@ -143,7 +144,7 @@ const ProductDetail: React.FC = () => {
                 discount={product.descuento}
                 rating={4.5}
                 reviewCount={128}
-                soldCount={500}
+                soldCount={product.stock}
                 storeName="Tienda AliExpress"
                 badges={product.descuento ? [`-${product.descuento}%`] : []}
                 description={product.descripcion}

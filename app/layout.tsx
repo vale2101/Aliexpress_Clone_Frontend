@@ -8,8 +8,11 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AliExpress Clone",
-  description: "Frontend only",
+  title: {
+    default: "Aliexpress - Compra online de Electrónica, Moda, Hogar y más", 
+    template: "%s | Aliexpress ", 
+  },
+  description: "Descubre productos increíbles en Aliexpress.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

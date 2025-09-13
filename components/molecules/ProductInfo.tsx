@@ -89,24 +89,8 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
         <div className="text-sm font-medium text-gray-700">
           Color: Gold-BIRTHDAY
         </div>
-        <div className="flex gap-2">
-          <button className="w-12 h-12 rounded border-2 border-orange-500 overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1558060370-539c4d4b7b8e?w=100&h=100&fit=crop"
-              alt="Variante 1"
-              className="w-full h-full object-cover"
-            />
-          </button>
-          <button className="w-12 h-12 rounded border border-gray-300 overflow-hidden hover:border-gray-400">
-            <img
-              src="https://images.unsplash.com/photo-1558060370-539c4d4b7b8e?w=100&h=100&fit=crop"
-              alt="Variante 2"
-              className="w-full h-full object-cover"
-            />
-          </button>
         </div>
       </div>
-    </div>
   );
 };
 
