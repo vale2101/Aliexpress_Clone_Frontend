@@ -11,7 +11,10 @@ export default function RecommendationsSection() {
     async function loadProducts() {
       try {
         const data = await productService.getAll();
-        setProducts(data);
+        const filtered = data.filter(
+          (p) => p.id_producto && p.id_producto >= 10 && p.id_producto <= 16
+        );
+        setProducts(filtered);
       } catch (error) {
         console.error("Error cargando productos:", error);
       } finally {
@@ -37,7 +40,7 @@ export default function RecommendationsSection() {
             <ProductCard
               key={p.id_producto}
               id={p.id_producto}
-              image={p.imagen_url || "/placeholder.png"} // 👈 ahora usa el campo de la API
+              image={p.imagen_url || "/placeholder.png"} 
               title={p.nombre}
               price={`$${p.precio} ${p.moneda}`}
               oldPrice={

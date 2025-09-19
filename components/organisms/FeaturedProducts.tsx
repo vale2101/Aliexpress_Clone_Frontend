@@ -17,7 +17,10 @@ export default function FeaturedProducts() {
     async function loadProducts() {
       try {
         const data = await productService.getAll();
-        setProducts(data);
+        const filtered = data.filter(
+          (p) => p.id_producto && p.id_producto >= 4 && p.id_producto <= 9
+        );
+        setProducts(filtered);
       } catch (error) {
         console.error("Error cargando productos destacados:", error);
       } finally {
@@ -55,7 +58,7 @@ export default function FeaturedProducts() {
                 p.precio_original ? `$${p.precio_original} ${p.moneda ?? ""}` : undefined
               }
               discount={p.descuento ? `-${p.descuento}%` : undefined}
-              rating={4.5} // 🔹 esto lo puedes reemplazar con data real si lo tienes en la BD
+              rating={4.5}
               sold={`${p.stock} disponibles`}
               label={p.estado === "activo" ? "Disponible" : "Agotado"}
             />
