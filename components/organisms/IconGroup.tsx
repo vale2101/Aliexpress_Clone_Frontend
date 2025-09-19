@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, AppWindow } from "lucide-react"; // 👈 añadí AppWindow
+import { ShoppingCart, AppWindow } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useAuth } from "../../contexts/AuthContext";
-import LocationModal from "../organisms/LocationModal";
+import LocationModal from "./LocationModal";
 import UserMenu from "../molecules/UserMenu";
 
 const IconGroup: React.FC = () => {
@@ -28,32 +28,29 @@ const IconGroup: React.FC = () => {
   return (
     <>
       <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
-        {}
+        {/* Descarga la app */}
         <div className="hidden md:flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors">
           <AppWindow size={16} className="text-gray-700" />
           <span className="text-xs lg:text-sm text-gray-700 hidden lg:inline">Descarga la app</span>
         </div>
 
-        {}
+        {/* Ubicación y moneda */}
         <div
           onMouseEnter={() => setShowLocationModal(true)}
           onMouseLeave={() => setShowLocationModal(false)}
           className="flex items-center gap-1 cursor-pointer hover:text-orange-500 transition-colors relative"
         >
-          {}
           <img
             src="/flags/co.png"
             alt="Colombia"
             className="w-4 h-4 sm:w-5 sm:h-5 rounded-sm"
           />
-          {}
           <div className="hidden sm:flex items-center gap-1">
             <span className="text-xs lg:text-sm text-gray-700">Manizales/ES/</span>
             <span className="text-xs lg:text-sm text-gray-700">{currency}</span>
           </div>
           <span className="text-gray-400 text-xs">▼</span>
           
-          {}
           <LocationModal 
             isOpen={showLocationModal} 
             onClose={() => setShowLocationModal(false)}
@@ -61,10 +58,10 @@ const IconGroup: React.FC = () => {
           />
         </div>
 
-        {}
+        {/* Usuario */}
         <UserMenu onLogin={handleLogin} onLogout={handleLogout} />
 
-        {}
+        {/* Carrito */}
         <div
           onClick={() => console.log("Ir al carrito")}
           className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:text-orange-500 transition-colors relative"

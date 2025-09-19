@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "../molecules/ProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -69,7 +69,7 @@ export default function OfferSection({
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm relative">
-      {/* 🔹 Header */}
+      {/* Header */}
       <div className="text-center mb-4">
         <h2 className="text-lg font-bold">
           {title.replace("Save", "Sa")}
@@ -88,7 +88,7 @@ export default function OfferSection({
         </div>
       </div>
 
-      {/* 🔹 Carrusel */}
+      {/* Carrusel */}
       <div className="relative group">
         <Swiper
           modules={[Navigation]}
@@ -97,7 +97,7 @@ export default function OfferSection({
             nextEl: `.swiper-button-next-${type}`,
           }}
           spaceBetween={16}
-          slidesPerView={2} // ✅ Siempre solo 2 productos visibles
+          slidesPerView={2}
         >
           {products.map((p, i) => (
             <SwiperSlide key={i}>
@@ -106,7 +106,7 @@ export default function OfferSection({
           ))}
         </Swiper>
 
-        {/* 🔹 Botones de navegación: solo aparecen al pasar sobre el carrusel */}
+        {/* Botones de navegación */}
         <button
           className={`swiper-button-prev-${type} absolute top-1/2 -left-4 z-10 
           bg-gray-800 text-white p-2 rounded-full shadow 

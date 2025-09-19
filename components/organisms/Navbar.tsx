@@ -1,7 +1,7 @@
 import React from "react";
-import Logo from "../atoms/Logo";
+import Logo from "../molecules/Logo";
 import SearchBar from "../molecules/SearchBar";
-import IconGroup from "../molecules/IconGroup";
+import IconGroup from "./IconGroup";
 
 const Navbar: React.FC = () => {
   return (

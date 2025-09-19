@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Search, Camera, ChevronDown, User, ShoppingCart, QrCode, MapPin } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useAuth } from "../../contexts/AuthContext";
-import Logo from "../atoms/Logo";
+import Logo from "../molecules/Logo";
 
 const AliExpressHeader: React.FC = () => {
   const { t } = useLanguage();

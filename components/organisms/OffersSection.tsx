@@ -1,4 +1,4 @@
-import OfferSection from "../molecules/OfferSection";
+import OfferSection from "./OfferSection";
 
 export default function OffersSection() {
   return (

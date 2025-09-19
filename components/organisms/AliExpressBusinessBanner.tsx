@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
-import OfferSection from "../molecules/OfferSection";
+import OfferSection from "./OfferSection";
 
 // 📦 Importamos íconos desde lucide-react
 import { BadgeCheck, Zap, DollarSign } from "lucide-react";

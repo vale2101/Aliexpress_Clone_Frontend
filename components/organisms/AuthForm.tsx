@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import ImageCarousel from "../molecules/ImageCarousel";
+import ImageCarousel from "./ImageCarousel";
 import FormHeader from "../molecules/FormHeader";
 import LoginFields from "../molecules/LoginFields";
 import RegisterFields from "../molecules/RegisterFields";
@@ -12,7 +12,7 @@ import SocialLoginButtons from "../molecules/SocialLoginButtons";
 import LocationSelector from "../molecules/LocationSelector";
 import FormToggle from "../molecules/FormToggle";
 import ErrorMessage from "../atoms/ErrorMessage";
-import Logo from "../atoms/Logo";
+import Logo from "../molecules/Logo";
 
 const AuthFormRefactored: React.FC = () => {
   const { login, register, isLoading, error, clearError } = useAuth();
