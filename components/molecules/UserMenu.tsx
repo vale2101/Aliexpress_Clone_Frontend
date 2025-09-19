@@ -17,7 +17,7 @@ import {
   FileText,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
-import MenuItem from "./MenuItem";
+import MenuItem from "../atoms/MenuItem";
 import Divider from "../atoms/Divider";
 
 const UserMenu: React.FC<{ onLogin: () => void; onLogout: () => void }> = ({
