@@ -5,14 +5,15 @@ import { useRouter } from "next/navigation";
 import { ShoppingCart, AppWindow } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useAuth } from "../../contexts/AuthContext";
+import { useCartStore } from "../../stores/cartStore";
 import LocationModal from "./LocationModal";
 import UserMenu from "../molecules/UserMenu";
 
 const IconGroup: React.FC = () => {
   const [showLocationModal, setShowLocationModal] = useState(false);
-  const [cartItems, setCartItems] = useState(0);
   const { currency } = useLanguage();
   const { logout } = useAuth();
+  const { totalItems } = useCartStore();
   const router = useRouter();
 
   const handleLogin = () => router.push("/user");
@@ -23,6 +24,10 @@ const IconGroup: React.FC = () => {
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
+  };
+
+  const handleCartClick = () => {
+    router.push("/carrito");
   };
 
   return (
@@ -63,13 +68,13 @@ const IconGroup: React.FC = () => {
 
         {/* Carrito */}
         <div
-          onClick={() => console.log("Ir al carrito")}
+          onClick={handleCartClick}
           className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:text-orange-500 transition-colors relative"
         >
           <div className="relative">
             <ShoppingCart size={16} className="text-gray-600" />
-            <span className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-black text-white text-xs rounded-full h-3 w-3 sm:h-4 sm:w-4 flex items-center justify-center">
-              {cartItems}
+            <span className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center font-medium shadow-lg">
+              {totalItems > 99 ? '99+' : totalItems}
             </span>
           </div>
           <span className="text-xs lg:text-sm text-gray-700 hidden sm:inline">Cesta</span>

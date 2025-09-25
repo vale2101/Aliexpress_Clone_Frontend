@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { MapPin, ChevronRight, Heart, Share2, MessageCircle, Shield, Clock, Truck } from "lucide-react";
+import { useCartStore, Product } from "../../stores/cartStore";
 import Button from "../atoms/Button";
 import QuantitySelector from "../atoms/QuantitySelector";
 
@@ -9,37 +10,49 @@ interface PurchaseSidebarProps {
   productId: number;
   price: number | string;
   currency?: string;
-  onAddToCart: (productId: number, quantity: number) => void;
-  onAddToWishlist: (productId: number) => void;
-  onShare: (productId: number) => void;
-  onContact: (productId: number) => void;
+  productName?: string;
+  productImage?: string;
+  productDescription?: string;
+  onAddToWishlist?: (productId: number) => void;
+  onShare?: (productId: number) => void;
+  onContact?: (productId: number) => void;
 }
 
 const PurchaseSidebar: React.FC<PurchaseSidebarProps> = ({
   productId,
   price,
   currency = "€",
-  onAddToCart,
+  productName = "Producto",
+  productImage = "/placeholder-image.jpg",
+  productDescription = "",
   onAddToWishlist,
   onShare,
   onContact,
 }) => {
   const [quantity, setQuantity] = useState(1);
+  const { addItem } = useCartStore();
 
   const handleAddToCart = () => {
-    onAddToCart(productId, quantity);
+    const product: Product = {
+      id: productId.toString(),
+      name: productName,
+      price: typeof price === 'number' ? price : parseFloat(price.toString().replace(/[^0-9.-]+/g, "")),
+      image: productImage,
+      description: productDescription
+    };
+    addItem(product, quantity);
   };
 
   const handleAddToWishlist = () => {
-    onAddToWishlist(productId);
+    onAddToWishlist?.(productId);
   };
 
   const handleShare = () => {
-    onShare(productId);
+    onShare?.(productId);
   };
 
   const handleContact = () => {
-    onContact(productId);
+    onContact?.(productId);
   };
 
   return (

@@ -1,6 +1,7 @@
 import React from "react";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useCartStore, Product } from "../../stores/cartStore";
 import ActionButton from "../atoms/ActionButton";
 import DiscountBadge from "../atoms/DiscountBadge";
 import ProductLabel from "../atoms/ProductLabel";
@@ -39,10 +40,27 @@ const ProductCard: React.FC<ProductCardProps> = ({
   button,
 }) => {
   const router = useRouter();
+  const { addItem } = useCartStore();
 
   const handleCardClick = () => {
     if (id) {
       router.push(`/producto/${id}`);
+    }
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Evitar que se active el click del card
+    if (id) {
+      const product: Product = {
+        id: id.toString(),
+        name: title,
+        price: parseFloat(price.replace(/[^0-9.-]+/g, "")),
+        image: image,
+        description: features?.join(", "),
+        rating: rating,
+        reviews: sold ? parseInt(sold.replace(/[^0-9]/g, "")) : undefined
+      };
+      addItem(product, 1);
     }
   };
   return (
@@ -62,7 +80,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="flex flex-col gap-1">
             <ActionButton icon={Heart} />
-            <ActionButton icon={ShoppingCart} />
+            <ActionButton icon={ShoppingCart} onClick={handleAddToCart} />
           </div>
         </div>
 
