@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import PromoCard from "../molecules/PromoCard";
+import Image from "next/image";
 import CountdownTimer from "../molecules/CountdownTimer";
 import { useLanguage } from "../../contexts/LanguageContext";
 
@@ -49,9 +49,11 @@ const HeroBanner: React.FC = () => {
           {/* Imagen lateral */}
           <div className="hidden lg:block w-[300px]">
             <div className="relative">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400&h=300&fit=crop&crop=center"
                 alt="Promo"
+                width={400}
+                height={220}
                 className="h-[220px] w-full rounded-lg object-cover shadow-lg"
               />
               {/* Elementos decorativos */}

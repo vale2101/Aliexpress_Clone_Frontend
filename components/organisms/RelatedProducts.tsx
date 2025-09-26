@@ -10,8 +10,7 @@ interface RelatedProductsProps {
 }
 
 const RelatedProducts: React.FC<RelatedProductsProps> = ({ 
-  currentProductId, 
-  category 
+  currentProductId
 }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);

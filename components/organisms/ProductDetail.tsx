@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { productService, Product } from "../../services/productService";
@@ -28,12 +28,14 @@ const ProductDetail: React.FC = () => {
     if (productId) {
       fetchProduct();
     }
-  }, [productId]);
+  }, [productId, fetchProduct]);
 
-  const fetchProduct = async () => {
+  const fetchProduct = useCallback(async () => {
+    if (!productId) return;
+    
     try {
       setLoading(true);
-      const productData = await productService.getById(productId!);
+      const productData = await productService.getById(productId);
       setProduct(productData);
     } catch (err) {
       setError("Error al cargar el producto");
@@ -41,7 +43,7 @@ const ProductDetail: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [productId]);
 
   const handleAddToCart = (productId: number, quantity: number, size?: string) => {
     console.log("Añadir al carrito:", { productId, quantity, size });

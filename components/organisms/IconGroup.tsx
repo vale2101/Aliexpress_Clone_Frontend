@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, AppWindow } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -45,9 +46,11 @@ const IconGroup: React.FC = () => {
           onMouseLeave={() => setShowLocationModal(false)}
           className="flex items-center gap-1 cursor-pointer hover:text-orange-500 transition-colors relative"
         >
-          <img
+          <Image
             src="/flags/co.png"
             alt="Colombia"
+            width={20}
+            height={20}
             className="w-4 h-4 sm:w-5 sm:h-5 rounded-sm"
           />
           <div className="hidden sm:flex items-center gap-1">

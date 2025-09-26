@@ -1,10 +1,17 @@
 import React from "react";
+import Image from "next/image";
 
 type CardProps = { title: string; price: string; img: string; store?: string };
 const Item = ({ title, price, img, store }: CardProps) => (
   <div className="group bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
     <div className="aspect-square overflow-hidden bg-gray-100">
-      <img src={img} alt={title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" />
+      <Image 
+        src={img} 
+        alt={title} 
+        width={300}
+        height={300}
+        className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" 
+      />
     </div>
     <div className="p-3">
       <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">{title}</h3>

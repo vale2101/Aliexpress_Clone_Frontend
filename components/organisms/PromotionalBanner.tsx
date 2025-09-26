@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 export default function PromotionalBanner() {
@@ -52,9 +53,11 @@ export default function PromotionalBanner() {
       <div className="grid grid-cols-3 gap-4">
         {promoProducts.map((product) => (
           <div key={product.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <img
+            <Image
               src={product.image}
               alt={product.title}
+              width={200}
+              height={160}
               className="w-full h-40 object-cover"
             />
             <div className="p-2 text-sm">

@@ -5,7 +5,6 @@ import BenefitsStrip from "../organisms/BenefitsStrip";
 import AliExpressBusinessBanner from "../organisms/AliExpressBusinessBanner";
 import BatchSavingZone from "../organisms/BatchSavingZone";
 import BuyAgainSection from "../organisms/BuyAgainSection";
-import FeaturedProducts from "../organisms/FeaturedProducts";
 import RecommendationsSection from "../organisms/RecommendationsSection";
 import PromoWithCategories from "../organisms/PromoWithCategories";
 import HomeLayout from "../layouts/HomeLayout";
