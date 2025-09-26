@@ -103,7 +103,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({
 
       {/* Información adicional */}
       <div className="text-sm text-gray-600 space-y-1">
-        <p>✓ Envío gratis en pedidos superiores a 25€</p>
+        <p>✓ Envío gratis en pedidos superiores a $25</p>
         <p>✓ Devolución gratuita en 30 días</p>
         <p>✓ Garantía del vendedor</p>
       </div>

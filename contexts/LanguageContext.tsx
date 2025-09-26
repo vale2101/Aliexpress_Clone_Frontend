@@ -256,7 +256,6 @@ const currencies = {
     { code: 'COP', name: 'Peso colombiano', symbol: '$' },
     { code: 'MXN', name: 'Peso mexicano', symbol: '$' },
     { code: 'ARS', name: 'Peso argentino', symbol: '$' },
-    { code: 'EUR', name: 'Euro', symbol: '€' },
   ],
   en: [
     { code: 'USD', name: 'US Dollar', symbol: '$' },
@@ -266,7 +265,6 @@ const currencies = {
   ],
   pt: [
     { code: 'BRL', name: 'Real brasileiro', symbol: 'R$' },
-    { code: 'EUR', name: 'Euro', symbol: '€' },
   ]
 };
 

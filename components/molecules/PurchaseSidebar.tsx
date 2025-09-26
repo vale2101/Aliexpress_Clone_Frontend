@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { MapPin, ChevronRight, Heart, Share2, MessageCircle, Shield, Clock, Truck } from "lucide-react";
-import { useCartStore, Product } from "../../stores/cartStore";
+import { useCartStore } from "../organisms/CartStore";
+import { Product } from "../atoms/ProductTypes";
 import Button from "../atoms/Button";
 import QuantitySelector from "../atoms/QuantitySelector";
 
@@ -21,7 +22,7 @@ interface PurchaseSidebarProps {
 const PurchaseSidebar: React.FC<PurchaseSidebarProps> = ({
   productId,
   price,
-  currency = "€",
+  currency = "$",
   productName = "Producto",
   productImage = "/placeholder-image.jpg",
   productDescription = "",

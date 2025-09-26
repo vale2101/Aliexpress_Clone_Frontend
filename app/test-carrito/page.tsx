@@ -3,7 +3,7 @@
 import React from 'react';
 import HomeLayout from '../../components/layouts/HomeLayout';
 import ProductItem from '../../components/molecules/ProductItem';
-import { useProducts } from '../../hooks/useProducts';
+import { useProducts } from '../../components/molecules/useProducts';
 
 export default function TestCarritoPage() {
   const { products, loading, error } = useProducts();

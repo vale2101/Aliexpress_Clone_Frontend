@@ -1,62 +1,133 @@
-import { API_CONFIG } from "../config/api";
+import { API_CONFIG, buildApiUrl, DEFAULT_FETCH_OPTIONS } from "../config/api";
+import { Product, ApiResponse, ServiceResponse, SearchParams } from "../config/types";
 
-export interface Product {
-  id_producto?: number; 
-  nombre: string;
-  descripcion?: string;
-  precio: number;
-  precio_original?: number;
-  descuento?: number;
-  moneda?: string; 
-  stock: number;
-  estado?: "activo" | "inactivo"; 
-  fecha_publicacion?: string; 
-  material?: string;
-  color?: string;
-  peso?: number;
-  dimensiones?: string;
-  descripcionCom?: string;
-  imagen_url?: string; // 👈 agregado
-}
-
+/**
+ * Servicio de productos
+ * Maneja la obtención y gestión de productos desde la API
+ */
 export class ProductService {
-  private baseUrl = `${API_CONFIG.BASE_URL}/producto`;
+  private readonly baseUrl = API_CONFIG.BASE_URL;
 
-  async getAll(): Promise<Product[]> {
-    console.log("🔎 Fetching productos desde:", `${this.baseUrl}/obtenerProductos`);
+  /**
+   * Realiza una petición HTTP con manejo de errores centralizado
+   * @param url - URL completa del endpoint
+   * @param options - Opciones de fetch
+   * @returns Promise con la respuesta parseada
+   */
+  private async makeRequest<T>(
+    url: string,
+    options: RequestInit = {}
+  ): Promise<T> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT);
 
-    const res = await fetch(`${this.baseUrl}/obtenerProductos`, {
-      cache: "no-store",
-    });
+    try {
+      const response = await fetch(url, {
+        ...DEFAULT_FETCH_OPTIONS,
+        ...options,
+        signal: controller.signal,
+      });
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("❌ Error en fetch productos:", res.status, errorText);
-      throw new Error(`Error al obtener productos: ${res.status}`);
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        let errorMessage = `Error ${response.status}: ${response.statusText}`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (parseError) {
+          console.warn('No se pudo parsear el error:', parseError);
+        }
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Error('La petición tardó demasiado tiempo');
+        }
+        if (error.message.includes('fetch')) {
+          throw new Error(
+            'No se puede conectar con el servidor. Verifica que el backend esté corriendo.'
+          );
+        }
+      }
+      throw error;
     }
-
-    const data = await res.json();
-    console.log("✅ Respuesta productos:", data);
-
-    // tu API devuelve { data: [...] }
-    return data.data;
   }
 
-  async getById(id: number): Promise<Product> {
-    console.log("🔎 Fetching producto con ID:", id);
+  /**
+   * Obtiene todos los productos
+   * @param params - Parámetros de búsqueda opcionales
+   * @returns Lista de productos
+   */
+  async getAll(params?: SearchParams): Promise<Product[]> {
+    try {
+      const url = buildApiUrl(API_CONFIG.ENDPOINTS.PRODUCTS.GET_ALL);
+      console.log("🔎 Fetching productos desde:", url);
 
-    const res = await fetch(`${this.baseUrl}/obtenerProducto/${id}`);
+      const response = await this.makeRequest<ApiResponse<Product[]>>(url, {
+        cache: "no-store",
+      });
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("❌ Error en fetch producto:", res.status, errorText);
-      throw new Error(`Error al obtener producto: ${res.status}`);
+      console.log("✅ Respuesta productos:", response);
+      return response.data || [];
+    } catch (error) {
+      console.error("❌ Error al obtener productos:", error);
+      throw error;
     }
+  }
 
-    const data = await res.json();
-    console.log("✅ Respuesta producto:", data);
+  /**
+   * Obtiene un producto por su ID
+   * @param id - ID del producto
+   * @returns Datos del producto
+   */
+  async getById(id: number): Promise<Product> {
+    try {
+      const url = buildApiUrl(`${API_CONFIG.ENDPOINTS.PRODUCTS.GET_BY_ID}/${id}`);
+      console.log("🔎 Fetching producto con ID:", id);
 
-    return data.data;
+      const response = await this.makeRequest<ApiResponse<Product>>(url);
+      console.log("✅ Respuesta producto:", response);
+
+      return response.data;
+    } catch (error) {
+      console.error("❌ Error al obtener producto:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Busca productos por término de búsqueda
+   * @param query - Término de búsqueda
+   * @param params - Parámetros adicionales de búsqueda
+   * @returns Lista de productos que coinciden
+   */
+  async search(query: string, params?: Omit<SearchParams, 'query'>): Promise<Product[]> {
+    try {
+      const searchParams = new URLSearchParams({
+        q: query,
+        ...(params?.page && { page: params.page.toString() }),
+        ...(params?.limit && { limit: params.limit.toString() }),
+        ...(params?.category && { category: params.category }),
+        ...(params?.minPrice && { minPrice: params.minPrice.toString() }),
+        ...(params?.maxPrice && { maxPrice: params.maxPrice.toString() }),
+      });
+
+      const url = `${buildApiUrl(API_CONFIG.ENDPOINTS.PRODUCTS.GET_ALL)}?${searchParams}`;
+      console.log("🔍 Buscando productos:", url);
+
+      const response = await this.makeRequest<ApiResponse<Product[]>>(url);
+      return response.data || [];
+    } catch (error) {
+      console.error("❌ Error al buscar productos:", error);
+      throw error;
+    }
   }
 }
 

@@ -11,7 +11,7 @@ interface PriceProps {
 const Price: React.FC<PriceProps> = ({ 
   price, 
   originalPrice, 
-  currency = "€", 
+  currency = "$", 
   discount,
   size = "md" 
 }) => {

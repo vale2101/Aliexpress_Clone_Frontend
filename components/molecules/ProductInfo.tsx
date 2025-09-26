@@ -21,7 +21,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
   title,
   price,
   originalPrice,
-  currency = "€",
+  currency = "$",
   discount,
   rating,
   reviewCount,

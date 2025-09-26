@@ -1,22 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  description?: string;
-  category?: string;
-  rating?: number;
-  reviews?: number;
-}
-
-export interface CartItem {
-  product: Product;
-  quantity: number;
-  subtotal: number;
-}
+import { Product, CartItem } from "../atoms/ProductTypes";
+import { calculateTotals } from "../molecules/CartCalculations";
 
 interface CartState {
   items: CartItem[];
@@ -29,11 +14,6 @@ interface CartState {
   clearCart: () => void;
   getItemQuantity: (productId: string) => number;
 }
-
-const calculateTotals = (items: CartItem[]) => ({
-  totalItems: items.reduce((sum, item) => sum + item.quantity, 0),
-  totalPrice: items.reduce((sum, item) => sum + item.subtotal, 0),
-});
 
 export const useCartStore = create<CartState>()(
   persist(

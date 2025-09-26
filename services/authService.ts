@@ -1,116 +1,155 @@
-import { API_CONFIG } from '../config/api';
+import { API_CONFIG, buildApiUrl, DEFAULT_FETCH_OPTIONS } from '../config/api';
+import { 
+  LoginRequest, 
+  RegisterRequest, 
+  User, 
+  AuthResponse, 
+  ApiResponse,
+  ServiceResponse 
+} from '../config/types';
 
-export interface LoginRequest {
-  email: string;
-  contrasena: string;
-}
-
-export interface RegisterRequest {
-  nombre: string;
-  apellido: string;
-  email: string;
-  contrasena: string;
-  telefono?: string;
-  rol: number;
-  estado?: 'activo' | 'suspendido' | 'eliminado';
-}
-
-export interface User {
-  id_usuario: number;
-  nombre: string;
-  apellido: string;
-  email: string;
-  telefono?: string;
-  rol: number;
-  estado: string;
-}
-
-export interface AuthResponse {
-  message: string;
-  user?: User;
-}
-
+/**
+ * Servicio de autenticación
+ * Maneja login, registro, perfil de usuario y autenticación
+ */
 class AuthService {
-  private loginUrl = 'http://localhost:3000/api/user/login';
-  private registerUrl = 'http://localhost:3000/api/user/createUser';
-  private profileUrl = 'http://localhost:3000/api/user/findUserById';
-  private updateUrl = 'http://localhost:3000/api/user/updateUser';
+  private readonly baseUrl = API_CONFIG.BASE_URL;
 
+  /**
+   * Realiza una petición HTTP con manejo de errores centralizado
+   * @param url - URL completa del endpoint
+   * @param options - Opciones de fetch
+   * @returns Promise con la respuesta parseada
+   */
   private async makeRequest<T>(
     url: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const defaultOptions: RequestInit = {
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include', // Importante para cookies
-    };
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT);
 
     try {
-      const response = await fetch(url, { ...defaultOptions, ...options });
+      const response = await fetch(url, {
+        ...DEFAULT_FETCH_OPTIONS,
+        ...options,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         let errorMessage = `Error ${response.status}: ${response.statusText}`;
         try {
           const errorData = await response.json();
           errorMessage = errorData.message || errorMessage;
-        } catch (parseError) {}
+        } catch (parseError) {
+          console.warn('No se pudo parsear el error:', parseError);
+        }
         throw new Error(errorMessage);
       }
 
       const data = await response.json();
       return data;
     } catch (error) {
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        throw new Error(
-          'No se puede conectar con el servidor. Verifica que el backend esté corriendo en el puerto 3000.'
-        );
+      clearTimeout(timeoutId);
+      
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Error('La petición tardó demasiado tiempo');
+        }
+        if (error.message.includes('fetch')) {
+          throw new Error(
+            'No se puede conectar con el servidor. Verifica que el backend esté corriendo.'
+          );
+        }
       }
       throw error;
     }
   }
 
-  // LOGIN
+  /**
+   * Inicia sesión de usuario
+   * @param credentials - Credenciales de login
+   * @returns Respuesta de autenticación
+   */
   async login(credentials: LoginRequest): Promise<AuthResponse> {
-    return this.makeRequest<AuthResponse>(this.loginUrl, {
+    const url = buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.LOGIN);
+    return this.makeRequest<AuthResponse>(url, {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
   }
 
+  /**
+   * Registra un nuevo usuario
+   * @param userData - Datos del usuario a registrar
+   * @returns Respuesta de registro
+   */
   async register(userData: RegisterRequest): Promise<AuthResponse> {
-    return this.makeRequest<AuthResponse>(this.registerUrl, {
+    const url = buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.REGISTER);
+    return this.makeRequest<AuthResponse>(url, {
       method: 'POST',
       body: JSON.stringify(userData),
     });
   }
 
-  // OBTENER PERFIL
-  async getProfile(userId: number): Promise<{ data: User }> {
-    return this.makeRequest<{ data: User }>(`${this.profileUrl}/${userId}`);
+  /**
+   * Obtiene el perfil de un usuario por ID
+   * @param userId - ID del usuario
+   * @returns Datos del usuario
+   */
+  async getProfile(userId: number): Promise<ApiResponse<User>> {
+    const url = buildApiUrl(`${API_CONFIG.ENDPOINTS.USER.PROFILE}/${userId}`);
+    return this.makeRequest<ApiResponse<User>>(url);
   }
 
+  /**
+   * Actualiza los datos de un usuario
+   * @param userId - ID del usuario
+   * @param userData - Datos a actualizar
+   * @returns Respuesta de actualización
+   */
   async updateUser(userId: number, userData: Partial<User>): Promise<AuthResponse> {
-    return this.makeRequest<AuthResponse>(`${this.updateUrl}/${userId}`, {
+    const url = buildApiUrl(`${API_CONFIG.ENDPOINTS.USER.UPDATE}/${userId}`);
+    return this.makeRequest<AuthResponse>(url, {
       method: 'PUT',
       body: JSON.stringify(userData),
     });
   }
 
-  // CHECK AUTH
+  /**
+   * Verifica si el usuario está autenticado
+   * @returns true si está autenticado, false en caso contrario
+   */
   async checkAuth(): Promise<boolean> {
     try {
-      const response = await fetch('http://localhost:3000/api/user/getUsers', {
-        credentials: 'include',
-      });
+      const url = buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.CHECK_AUTH);
+      const response = await fetch(url, DEFAULT_FETCH_OPTIONS);
       return response.ok;
     } catch {
       return false;
     }
   }
 
-  // LOGOUT
+  /**
+   * Cierra la sesión del usuario
+   * Limpia el localStorage y cualquier dato de sesión
+   */
   async logout(): Promise<void> {
-    localStorage.removeItem('user');
+    try {
+      // Intentar hacer logout en el servidor si hay endpoint
+      const url = buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.LOGOUT);
+      await fetch(url, {
+        ...DEFAULT_FETCH_OPTIONS,
+        method: 'POST',
+      });
+    } catch (error) {
+      console.warn('Error al hacer logout en el servidor:', error);
+    } finally {
+      // Limpiar datos locales
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+    }
   }
 }
 

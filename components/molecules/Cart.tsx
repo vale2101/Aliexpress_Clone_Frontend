@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShoppingCart, Trash2, Plus, Minus } from 'lucide-react';
-import { useCartStore } from '../../stores/cartStore';
+import { useCartStore } from '../organisms/CartStore';
 import Button from '../atoms/Button';
 import Price from '../atoms/Price';
 
@@ -106,7 +106,7 @@ const Cart: React.FC<CartProps> = ({
                 <div className="mb-3">
                   <Price 
                     price={item.product.price} 
-                    currency="€" 
+                    currency="$" 
                     size="sm"
                   />
                 </div>
@@ -140,7 +140,7 @@ const Cart: React.FC<CartProps> = ({
                     <div className="text-sm text-gray-500 mb-1">Subtotal</div>
                     <Price 
                       price={item.subtotal} 
-                      currency="€" 
+                      currency="$" 
                       size="md"
                     />
                   </div>
@@ -174,7 +174,7 @@ const Cart: React.FC<CartProps> = ({
             <span className="text-gray-900">Total:</span>
             <Price 
               price={totalPrice} 
-              currency="€" 
+              currency="$" 
               size="lg"
             />
           </div>

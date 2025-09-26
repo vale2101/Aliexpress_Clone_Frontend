@@ -1,7 +1,8 @@
 import React from "react";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useCartStore, Product } from "../../stores/cartStore";
+import { useCartStore } from "../organisms/CartStore";
+import { Product } from "../atoms/ProductTypes";
 import ActionButton from "../atoms/ActionButton";
 import DiscountBadge from "../atoms/DiscountBadge";
 import ProductLabel from "../atoms/ProductLabel";
@@ -123,7 +124,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <Price 
             price={parseFloat(price.replace(/[^0-9.-]+/g, ""))} 
             originalPrice={oldPrice ? parseFloat(oldPrice.replace(/[^0-9.-]+/g, "")) : undefined}
-            currency="€"
+            currency="$"
             size="sm"
           />
 

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import HomeLayout from '../../components/layouts/HomeLayout';
-import { useCartStore } from '../../stores/cartStore';
+import { useCartStore } from '../../components/organisms/CartStore';
 
 export default function CarritoPage() {
   const { items, totalItems, totalPrice, updateQuantity, removeItem, clearCart } = useCartStore();
@@ -90,7 +90,7 @@ export default function CarritoPage() {
                           <h3 className="font-medium text-gray-900 mb-1">{item.product.name}</h3>
                           <p className="text-sm text-gray-600 mb-2">{item.product.description}</p>
                           <div className="flex items-center justify-between">
-                            <span className="text-lg font-bold text-red-600">€{item.product.price}</span>
+                            <span className="text-lg font-bold text-red-600">${item.product.price}</span>
                             <div className="flex items-center gap-3">
                               <div className="flex items-center gap-2">
                                 <button 
@@ -138,7 +138,7 @@ export default function CarritoPage() {
                 {/* Estimación total */}
                 <div className="flex justify-between items-center">
                   <span className="text-gray-700">Estimación total</span>
-                  <span className="text-xl font-bold text-gray-900">€{totalPrice.toFixed(2)}</span>
+                  <span className="text-xl font-bold text-gray-900">${totalPrice.toFixed(2)}</span>
                 </div>
 
                 {/* Botón continuar */}
@@ -176,7 +176,7 @@ export default function CarritoPage() {
                       <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
-                      Cupón de €1.00 por entrega tardía
+                      Cupón de $1.00 por entrega tardía
                     </li>
                     <li className="flex items-center gap-2">
                       <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">

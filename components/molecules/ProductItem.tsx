@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
-import { useCartStore, Product } from '../../stores/cartStore';
+import { useCartStore } from '../organisms/CartStore';
+import { Product } from '../atoms/ProductTypes';
 import Button from '../atoms/Button';
 import Price from '../atoms/Price';
 import Rating from '../atoms/Rating';
@@ -79,7 +80,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           <div className="mb-3">
             <Price 
               price={product.price} 
-              currency="€" 
+              currency="$" 
               size="lg"
             />
           </div>

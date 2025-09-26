@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShoppingCart } from 'lucide-react';
-import { useCartStore } from '../../stores/cartStore';
+import { useCartStore } from '../organisms/CartStore';
 
 interface CartIconProps {
   className?: string;
