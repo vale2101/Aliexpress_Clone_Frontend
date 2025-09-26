@@ -24,12 +24,6 @@ const ProductDetail: React.FC = () => {
 
   const productId = params?.id ? parseInt(params.id as string) : null;
 
-  useEffect(() => {
-    if (productId) {
-      fetchProduct();
-    }
-  }, [productId, fetchProduct]);
-
   const fetchProduct = useCallback(async () => {
     if (!productId) return;
     
@@ -44,6 +38,12 @@ const ProductDetail: React.FC = () => {
       setLoading(false);
     }
   }, [productId]);
+
+  useEffect(() => {
+    if (productId) {
+      fetchProduct();
+    }
+  }, [productId, fetchProduct]);
 
   const handleAddToCart = (productId: number, quantity: number, size?: string) => {
     console.log("Añadir al carrito:", { productId, quantity, size });
