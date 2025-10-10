@@ -44,9 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const { addItem } = useCartStore();
 
   const handleCardClick = () => {
-    if (id) {
-      router.push(`/producto/${id}`);
-    }
+    if (id) router.push(`/producto/${id}`);
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {

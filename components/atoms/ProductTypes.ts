@@ -1,4 +1,3 @@
-// ÁTOMOS - Tipos e interfaces básicas
 export interface Product {
   id: string;
   name: string;

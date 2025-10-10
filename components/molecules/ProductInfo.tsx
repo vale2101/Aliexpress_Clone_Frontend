@@ -87,7 +87,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
       {/* Selector de color/variante */}
       <div className="space-y-2">
         <div className="text-sm font-medium text-gray-700">
-          Color: Gold-BIRTHDAY
+          Color: Igual a la imagen
         </div>
         </div>
       </div>

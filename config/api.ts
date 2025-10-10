@@ -1,7 +1,3 @@
-/**
- * Configuración centralizada de la API
- * Contiene todas las URLs y endpoints del backend
- */
 
 import { ENV } from './env';
 

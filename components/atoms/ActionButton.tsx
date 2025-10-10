@@ -3,7 +3,7 @@ import { LucideIcon } from "lucide-react";
 
 interface ActionButtonProps {
   icon: LucideIcon;
-  onClick?: () => void;
+onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
 }
 

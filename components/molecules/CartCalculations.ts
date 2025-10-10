@@ -1,4 +1,3 @@
-// MOLÉCULAS - Funciones de cálculo del carrito
 import { CartItem } from "../atoms/ProductTypes";
 
 export const calculateTotals = (items: CartItem[]) => ({

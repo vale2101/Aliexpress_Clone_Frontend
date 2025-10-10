@@ -8,10 +8,6 @@ import {
   ServiceResponse 
 } from '../config/types';
 
-/**
- * Servicio de autenticación
- * Maneja login, registro, perfil de usuario y autenticación
- */
 class AuthService {
   private readonly baseUrl = API_CONFIG.BASE_URL;
 
@@ -131,13 +127,9 @@ class AuthService {
     }
   }
 
-  /**
-   * Cierra la sesión del usuario
-   * Limpia el localStorage y cualquier dato de sesión
-   */
+
   async logout(): Promise<void> {
     try {
-      // Intentar hacer logout en el servidor si hay endpoint
       const url = buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.LOGOUT);
       await fetch(url, {
         ...DEFAULT_FETCH_OPTIONS,
@@ -146,7 +138,6 @@ class AuthService {
     } catch (error) {
       console.warn('Error al hacer logout en el servidor:', error);
     } finally {
-      // Limpiar datos locales
       localStorage.removeItem('user');
       localStorage.removeItem('token');
     }

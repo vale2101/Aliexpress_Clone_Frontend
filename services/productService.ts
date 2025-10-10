@@ -1,10 +1,6 @@
 import { API_CONFIG, buildApiUrl, DEFAULT_FETCH_OPTIONS } from "../config/api";
 import { Product, ApiResponse, ServiceResponse, SearchParams } from "../config/types";
 
-/**
- * Servicio de productos
- * Maneja la obtención y gestión de productos desde la API
- */
 export class ProductService {
   private readonly baseUrl = API_CONFIG.BASE_URL;
 
@@ -132,3 +128,5 @@ export class ProductService {
 }
 
 export const productService = new ProductService();
+
+export type { Product };
