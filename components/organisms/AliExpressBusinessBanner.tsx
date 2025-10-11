@@ -4,7 +4,6 @@ import React from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import OfferSection from "./OfferSection";
 
-// 📦 Importamos íconos desde lucide-react
 import { BadgeCheck, Zap, DollarSign } from "lucide-react";
 
 export default function AliExpressBusinessBanner() {
@@ -19,13 +18,7 @@ export default function AliExpressBusinessBanner() {
       label: "CE",
       minQuantity: "≥3 pzas.",
     },
-    {
-      id: 2,
-      image: "https://ae01.alicdn.com/kf/S46a8c1b292eb4058a8bdbdbf3f1b6c67a.jpg",
-      title: "Figuras pixeladas Mario Bros",
-      price: "$14.266,13",
-      minQuantity: "≥3 pzas.",
-    },
+
     {
       id: 3,
       image: "https://ae01.alicdn.com/kf/S91f3f45f9ff24f63b3b8f43d55a6f0cfW.jpg",

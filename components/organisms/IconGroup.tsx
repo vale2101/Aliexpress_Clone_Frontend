@@ -47,7 +47,7 @@ const IconGroup: React.FC = () => {
           className="flex items-center gap-1 cursor-pointer hover:text-orange-500 transition-colors relative"
         >
           <Image
-            src="/flags/co.png"
+            src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg"
             alt="Colombia"
             width={20}
             height={20}

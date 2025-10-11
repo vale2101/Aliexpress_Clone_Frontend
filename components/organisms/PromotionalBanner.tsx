@@ -10,24 +10,6 @@ export default function PromotionalBanner() {
   // Productos de ejemplo
   const promoProducts = [
     {
-      id: 1,
-      image: "https://ae01.alicdn.com/kf/S7d3c178b9fa14c98aeb2d5d6c8c03f6cM.jpg",
-      title: "Chaqueta estampada",
-      price: "$156.892,51",
-      oldPrice: "$215.985,51",
-      rating: "⭐ 4.0",
-      sold: "31 vendidos",
-    },
-    {
-      id: 2,
-      image: "https://ae01.alicdn.com/kf/S46a8c1b292eb4058a8bdbdbf3f1b6c67a.jpg",
-      title: "Sudadera rosa",
-      price: "$131.141,15",
-      oldPrice: "$201.758,68",
-      rating: "⭐ 4.9",
-      sold: "3.000+ vendidos",
-    },
-    {
       id: 3,
       image: "https://ae01.alicdn.com/kf/S91f3f45f9ff24f63b3b8f43d55a6f0cfW.jpg",
       title: "Conjunto amarillo",
