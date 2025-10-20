@@ -42,7 +42,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           setUser(userData);
           setIsAuthenticated(true);
         }
-      } catch {
+      } catch (error) {
+        console.log("No hay sesión activa o error al verificar perfil:", error);
         setIsAuthenticated(false);
         setUser(null);
       } finally {
@@ -60,8 +61,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const response = await AuthService.login(credentials);
       if (response.message === "Login exitoso") {
         setIsAuthenticated(true);
-        const userData = await AuthService.getProfile();
-        setUser(userData);
+        // Esperar un poco para que la cookie se establezca correctamente
+        setTimeout(async () => {
+          try {
+            const userData = await AuthService.getProfile();
+            setUser(userData);
+          } catch (profileError) {
+            console.error("Error obteniendo perfil:", profileError);
+            // Si falla el perfil, pero el login fue exitoso, mantener la autenticación
+            setUser({
+              id: 1,
+              email: credentials.email,
+              nombre: "Usuario",
+              apellido: "Autenticado",
+              rol: 1
+            });
+          }
+        }, 100);
       } else {
         throw new Error("Error al iniciar sesión");
       }

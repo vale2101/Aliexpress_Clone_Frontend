@@ -53,20 +53,54 @@ export const AuthService = {
   },
 
   async getProfile(): Promise<any> {
-    const res = await fetch(`${API_URL}/profile`, {
-      method: "GET",
-      credentials: "include",
-    });
-    if (!res.ok) throw new Error("No se pudo obtener el perfil");
-    return res.json();
+    try {
+      const res = await fetch(`${API_URL}/profile`, {
+        method: "GET",
+        credentials: "include",
+      });
+      
+      if (!res.ok) {
+        throw new Error(`Error ${res.status}: No se pudo obtener el perfil`);
+      }
+      
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error("El servidor no devolvió una respuesta JSON válida: " + text);
+      }
+      
+      return data;
+    } catch (error: any) {
+      console.error("Error obteniendo perfil:", error);
+      throw new Error(error.message || "Error al obtener el perfil");
+    }
   },
 
   async logout(): Promise<{ message: string }> {
-    const res = await fetch(`${API_URL}/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
-    if (!res.ok) throw new Error("Error al cerrar sesión");
-    return res.json();
+    try {
+      const res = await fetch(`${API_URL}/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      
+      if (!res.ok) {
+        throw new Error(`Error ${res.status}: Error al cerrar sesión`);
+      }
+      
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error("El servidor no devolvió una respuesta JSON válida: " + text);
+      }
+      
+      return data;
+    } catch (error: any) {
+      console.error("Error en logout:", error);
+      throw new Error(error.message || "Error al cerrar sesión");
+    }
   },
 };
