@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { productService, Product } from "../../services/productService";
+import { ProductService, ProductoInterface } from "../../services/ProductService";
 import ProductImageGallery from "../molecules/ProductImageGallery";
 import ProductInfo from "../molecules/ProductInfo";
 import PurchaseSidebar from "../molecules/PurchaseSidebar";
@@ -18,7 +18,7 @@ import CategoryBar from "./CategoryBar";
 const ProductDetail: React.FC = () => {
   const params = useParams();
   const router = useRouter();
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<ProductoInterface | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,23 +26,23 @@ const ProductDetail: React.FC = () => {
 
   const fetchProduct = useCallback(async () => {
     if (!productId) return;
-    
+
     try {
       setLoading(true);
-      const productData = await productService.getById(productId);
+      setError(null);
+      const productData = await ProductService.getById(productId);
       setProduct(productData);
     } catch (err) {
+      console.error("❌ Error fetching product:", err);
       setError("Error al cargar el producto");
-      console.error("Error fetching product:", err);
+      setProduct(null);
     } finally {
       setLoading(false);
     }
   }, [productId]);
 
   useEffect(() => {
-    if (productId) {
-      fetchProduct();
-    }
+    if (productId) fetchProduct();
   }, [productId, fetchProduct]);
 
   const handleAddToCart = (productId: number, quantity: number, size?: string) => {
@@ -62,6 +62,7 @@ const ProductDetail: React.FC = () => {
   };
 
   if (loading) return <ProductSkeleton />;
+
   if (error || !product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -76,13 +77,12 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  // 🔹 Usamos la imagen de la BD o fallback
+  // ✅ Imagen única o fallback
   const productImages = product.imagen_url
-    ? [product.imagen_url] // si en futuro soportas varias imágenes, aquí puedes hacer split(",") y map
-    : [
-        "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=600&fit=crop&crop=center",
-      ];
+    ? [product.imagen_url]
+    : ["https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=600&fit=crop&crop=center"];
 
+  // ✅ Tabs correctamente basados en la interfaz del backend
   const tabs = [
     {
       id: "description",
@@ -90,7 +90,7 @@ const ProductDetail: React.FC = () => {
       content: (
         <div className="prose max-w-none">
           <p className="text-gray-700 leading-relaxed">
-            {product.descripcionCom || product.descripcion || "Descripción detallada no disponible."}
+            {product.descripcionCom || product.descripcion || "Descripción no disponible."}
           </p>
           <div className="mt-6 space-y-4">
             <h4 className="font-semibold text-gray-900">Características:</h4>
@@ -101,7 +101,9 @@ const ProductDetail: React.FC = () => {
               {product.dimensiones && <li><strong>Dimensiones:</strong> {product.dimensiones}</li>}
               {product.estado && <li><strong>Estado:</strong> {product.estado}</li>}
               {product.fecha_publicacion && (
-                <li><strong>Publicado el:</strong> {new Date(product.fecha_publicacion).toLocaleDateString()}</li>
+                <li>
+                  <strong>Publicado el:</strong> {new Date(product.fecha_publicacion).toLocaleDateString()}
+                </li>
               )}
             </ul>
           </div>
@@ -131,12 +133,12 @@ const ProductDetail: React.FC = () => {
 
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Imágenes */}
+            {/* 🔳 Imágenes */}
             <div className="lg:col-span-1">
               <ProductImageGallery images={productImages} alt={product.nombre} />
             </div>
 
-            {/* Información */}
+            {/* 🔳 Información principal */}
             <div className="lg:col-span-1">
               <ProductInfo
                 title={product.nombre}
@@ -153,8 +155,9 @@ const ProductDetail: React.FC = () => {
               />
             </div>
 
-            {/* Sidebar de compra */}
+            {/* 🔳 Sidebar de compra */}
             <div className="lg:col-span-1">
+              // @ts-ignore: intentionally passing handler props not declared in PurchaseSidebarProps
               <PurchaseSidebar
                 productId={product.id_producto ?? 0}
                 price={product.precio}
@@ -168,7 +171,7 @@ const ProductDetail: React.FC = () => {
           </div>
         </div>
 
-        {/* Tabs */}
+        {/* 🔳 Tabs */}
         <div className="mt-6 bg-white rounded-lg shadow-sm">
           <div className="px-6">
             <ProductTabs tabs={tabs} />

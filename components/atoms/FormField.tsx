@@ -21,7 +21,10 @@ const FormField: React.FC<FormFieldProps> = ({
 }) => {
   return (
     <div className="flex flex-col w-full">
-      <label className="mb-1 text-sm font-medium text-gray-700">{label}</label>
+      <label className="mb-1 text-sm font-medium text-gray-700">
+        {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
+      </label>
       <input
         type={type}
         value={value}

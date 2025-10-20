@@ -17,7 +17,7 @@ import Logo from "../molecules/Logo";
 const AuthFormRefactored: React.FC = () => {
   const { login, register, isLoading, error, clearError } = useAuth();
   const router = useRouter();
-  
+
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,22 +26,27 @@ const AuthFormRefactored: React.FC = () => {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("United States");
+  const [selectedLocation, setSelectedLocation] = useState("Colombia");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     clearError();
-    
+
     try {
       if (isLogin) {
         await login({ email, contrasena: password });
-        router.push('/');
+        router.push("/"); 
       } else {
         if (password !== confirmPassword) {
-          alert('Las contraseñas no coinciden');
+          alert("Las contraseñas no coinciden");
           return;
         }
-        
+
+        if (!firstName || !lastName || !email || !password) {
+          alert("Por favor completa todos los campos obligatorios");
+          return;
+        }
+
         await register({
           nombre: firstName,
           apellido: lastName,
@@ -49,21 +54,17 @@ const AuthFormRefactored: React.FC = () => {
           contrasena: password,
           telefono: phone,
           rol: 1,
-          estado: 'activo'
         });
-        router.push('/');
+
+        router.push("/");
       }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error("Error en autenticación:", error.message);
-      } else {
-        console.error("Error en autenticación:", error);
-      }
+    } catch (error: any) {
+      console.error("❌ Error en autenticación:", error.message || error);
     }
   };
 
   const toggleMode = () => {
-    setIsLogin(!isLogin);
+    setIsLogin((prev) => !prev);
     clearError();
     setEmail("");
     setPassword("");
@@ -78,7 +79,7 @@ const AuthFormRefactored: React.FC = () => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (!target.closest(".dropdown-container")) {
-        // Los dropdowns se manejan internamente en sus componentes
+        // Sin acción, pero evita cierres inesperados
       }
     };
 
@@ -90,27 +91,33 @@ const AuthFormRefactored: React.FC = () => {
 
   return (
     <div className="min-h-screen flex">
-      {/* Header */}
+      {/* 🔝 Header */}
       <div className="absolute top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
         <div className="flex items-center justify-between px-6 py-4">
           <div className="flex items-center">
             <Logo />
           </div>
           <div className="flex items-center text-gray-600 hover:text-gray-800 cursor-pointer">
-            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            <svg
+              className="w-5 h-5 mr-2"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
             </svg>
-            <span className="text-sm font-medium">Download the AliExpress app</span>
+            <span className="text-sm font-medium">
+              Descargar la app de AliExpress
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Carousel */}
+      {/* 🖼️ Carousel */}
       <div className="hidden lg:flex lg:w-2/3 relative mt-16">
         <ImageCarousel />
       </div>
 
-      {/* Form */}
+      {/* 🧾 Formulario */}
       <div className="w-full lg:w-1/3 bg-white flex items-center justify-center p-8 mt-16">
         <div className="w-full max-w-md">
           <FormHeader isLogin={isLogin} />
@@ -139,18 +146,20 @@ const AuthFormRefactored: React.FC = () => {
                 onPhoneChange={(e) => setPhone(e.target.value)}
                 onAddressChange={(e) => setAddress(e.target.value)}
                 onPasswordChange={(e) => setPassword(e.target.value)}
-                onConfirmPasswordChange={(e) => setConfirmPassword(e.target.value)}
+                onConfirmPasswordChange={(e) =>
+                  setConfirmPassword(e.target.value)
+                }
               />
             )}
 
-            <SubmitButton
-              isLogin={isLogin}
-              isLoading={isLoading}
-            />
+            <SubmitButton isLogin={isLogin} isLoading={isLoading} />
           </form>
 
           <div className="text-center mt-4">
-            <a href="#" className="text-gray-500 text-sm hover:text-gray-700">
+            <a
+              href="#"
+              className="text-gray-500 text-sm hover:text-gray-700"
+            >
               ¿Tienes problemas al iniciar sesión?
             </a>
           </div>
@@ -160,7 +169,9 @@ const AuthFormRefactored: React.FC = () => {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Acceso rápido con</span>
+              <span className="px-2 bg-white text-gray-500">
+                Acceso rápido con
+              </span>
             </div>
           </div>
 
@@ -172,11 +183,17 @@ const AuthFormRefactored: React.FC = () => {
           />
 
           <div className="mt-6 text-xs text-gray-500 leading-relaxed">
-            Al continuar, confirmas ser mayor de edad y aceptas nuestro Acuerdo de Membresía Gratuita de AliExpress y Políticas de Privacidad. Tu información podrá utilizarse con fines promocionales, pero puedes rechazarlo en cualquier momento.
+            Al continuar, confirmas ser mayor de edad y aceptas nuestro
+            Acuerdo de Membresía Gratuita y Políticas de Privacidad. Tu
+            información podrá utilizarse con fines promocionales, pero puedes
+            rechazarlo en cualquier momento.
           </div>
 
           <div className="text-center mt-4">
-            <a href="#" className="text-xs text-gray-500 hover:text-gray-700">
+            <a
+              href="#"
+              className="text-xs text-gray-500 hover:text-gray-700"
+            >
               ¿Por qué escoger una ubicación?
             </a>
           </div>

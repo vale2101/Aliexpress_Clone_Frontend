@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../molecules/ProductCard";
-import { productService, Product } from "../../services/productService";
+import { ProductService, ProductoInterface } from "../../services/ProductService";
 
 export default function FeaturedProducts() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductoInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fallbackImages = [
@@ -16,13 +16,17 @@ export default function FeaturedProducts() {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const data = await productService.getAll();
+        setLoading(true);
+        const data = await ProductService.getAll();
+        // 🔹 Filtrar productos destacados (ID entre 4 y 9 como tú deseas)
         const filtered = data.filter(
           (p) => p.id_producto && p.id_producto >= 4 && p.id_producto <= 9
         );
         setProducts(filtered);
       } catch (error) {
-        console.error("Error cargando productos destacados:", error);
+        console.error("❌ Error cargando productos destacados:", error);
+        // En caso de error, usar productos de fallback
+        setProducts([]);
       } finally {
         setLoading(false);
       }
@@ -55,12 +59,14 @@ export default function FeaturedProducts() {
               title={p.nombre}
               price={`$${p.precio} ${p.moneda ?? ""}`}
               oldPrice={
-                p.precio_original ? `$${p.precio_original} ${p.moneda ?? ""}` : undefined
+                p.precio_original
+                  ? `$${p.precio_original} ${p.moneda ?? ""}`
+                  : undefined
               }
               discount={p.descuento ? `-${p.descuento}%` : undefined}
               rating={4.5}
               sold={`${p.stock} disponibles`}
-              label={p.estado === "activo" ? "Disponible" : "Agotado"}
+              label={p.estado === "activo" ? "Disponible" : "Inactivo"}
             />
           ))}
         </div>

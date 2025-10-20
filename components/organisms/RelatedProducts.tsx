@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import ProductCard from "../molecules/ProductCard";
-import { productService, Product } from "../../services/productService";
+import { ProductService, ProductoInterface } from "../../services/ProductService";
 
 interface RelatedProductsProps {
   currentProductId: number;
@@ -12,13 +12,14 @@ interface RelatedProductsProps {
 const RelatedProducts: React.FC<RelatedProductsProps> = ({ 
   currentProductId
 }) => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductoInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadRelatedProducts() {
       try {
-        const allProducts = await productService.getAll();
+        setLoading(true);
+        const allProducts = await ProductService.getAll();
         // Filtrar el producto actual y tomar los primeros 4
         const relatedProducts = allProducts
           .filter(p => p.id_producto !== currentProductId)
@@ -26,6 +27,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
         setProducts(relatedProducts);
       } catch (error) {
         console.error("Error cargando productos relacionados:", error);
+        setProducts([]);
       } finally {
         setLoading(false);
       }

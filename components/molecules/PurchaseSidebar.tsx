@@ -14,6 +14,7 @@ interface PurchaseSidebarProps {
   productName?: string;
   productImage?: string;
   productDescription?: string;
+  onAddToCart?: (productId: number, quantity: number) => void; // ✅ AGREGA ESTO
   onAddToWishlist?: (productId: number) => void;
   onShare?: (productId: number) => void;
   onContact?: (productId: number) => void;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Product as CartProduct } from "../atoms/ProductTypes";
-import { productService, Product as ApiProduct } from "../../services/productService";
+import { ProductService, ProductoInterface as ApiProduct } from "../../services/ProductService";
 
 export const useProducts = () => {
   const [products, setProducts] = useState<CartProduct[]>([]);
@@ -13,7 +13,7 @@ export const useProducts = () => {
         setLoading(true);
         setError(null);
 
-        const apiProducts: ApiProduct[] = await productService.getAll();
+        const apiProducts: ApiProduct[] = await ProductService.getAll();
 
         const convertedProducts: CartProduct[] = apiProducts.map((apiProduct) => ({
           id: apiProduct.id_producto?.toString() || "0",
