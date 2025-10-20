@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import ProductCard from "../molecules/ProductCard";
-import { ProductService, ProductoInterface } from "../../services/ProductService";
+import { ProductService, ProductoInterface } from "../../services/productService";
 
 interface RelatedProductsProps {
   currentProductId: number;

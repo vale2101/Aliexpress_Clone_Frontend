@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { ProductService, ProductoInterface } from "../../services/ProductService";
+import { ProductService, ProductoInterface } from "../../services/productService";
 import ProductImageGallery from "../molecules/ProductImageGallery";
 import ProductInfo from "../molecules/ProductInfo";
 import PurchaseSidebar from "../molecules/PurchaseSidebar";

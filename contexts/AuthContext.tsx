@@ -65,7 +65,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setTimeout(async () => {
           try {
             const userData = await AuthService.getProfile();
-            setUser(userData);
+            // Actualizar el email con el del login real
+            const updatedUserData = {
+              ...userData,
+              email: credentials.email
+            };
+            setUser(updatedUserData);
           } catch (profileError) {
             console.error("Error obteniendo perfil:", profileError);
             // Si falla el perfil, pero el login fue exitoso, mantener la autenticación

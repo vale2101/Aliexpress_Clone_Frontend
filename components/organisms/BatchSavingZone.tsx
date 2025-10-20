@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import ProductCard from "../molecules/ProductCard";
-import { ProductService, ProductoInterface } from "../../services/ProductService";
+import { ProductService, ProductoInterface } from "../../services/productService";
 
 export default function BatchSavingZone() {
   const { t } = useLanguage();
