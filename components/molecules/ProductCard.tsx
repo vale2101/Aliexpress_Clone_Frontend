@@ -48,7 +48,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Evitar que se active el click del card
+    e.stopPropagation(); 
     if (id) {
       const product: Product = {
         id: id.toString(),
@@ -67,7 +67,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
       className="group relative bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
       onClick={handleCardClick}
     >
-      {/* Imagen del producto */}
       <div className="relative aspect-square overflow-hidden">
         <img
           src={image}
@@ -75,7 +74,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
         
-        {/* Botones de acción */}
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="flex flex-col gap-1">
             <ActionButton icon={Heart} />
@@ -83,30 +81,24 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
 
-        {/* Badge de descuento */}
         {discount && (
           <DiscountBadge discount={discount} />
         )}
 
-        {/* Label del producto */}
         {label && (
           <ProductLabel label={label} />
         )}
       </div>
 
-      {/* Contenido del producto */}
       <div className="p-3">
-        {/* Título del producto */}
         <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-2 min-h-[2.5rem]">
           {title}
         </h3>
 
-        {/* Tienda */}
         {store && (
           <p className="text-xs text-gray-500 mb-1">{store}</p>
         )}
 
-        {/* Características */}
         {features && features.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-2">
             {features.map((feature, index) => (
@@ -117,7 +109,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
 
-        {/* Precios */}
         <div className="space-y-1">
           <Price 
             price={parseFloat(price.replace(/[^0-9.-]+/g, ""))} 
@@ -126,13 +117,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
             size="sm"
           />
 
-          {/* Ahorro */}
           {savings && (
             <p className="text-xs text-green-600 font-medium">{savings}</p>
           )}
         </div>
 
-        {/* Rating y ventas */}
         {rating && (
           <div className="flex items-center justify-between mt-2">
             <Rating rating={rating} />
@@ -142,7 +131,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
 
-        {/* Botón especial */}
         {button && (
           <button className="w-full text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-3 rounded mt-2 transition-colors">
             {button}

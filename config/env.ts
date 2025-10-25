@@ -1,5 +1,5 @@
 export const ENV = {
-  API_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000",
+  API_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api",
   BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000",
   APP_NAME: process.env.NEXT_PUBLIC_APP_NAME || "AliExpress Clone",
   APP_VERSION: process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0",

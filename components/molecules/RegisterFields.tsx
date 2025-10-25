@@ -1,125 +1,77 @@
-import React from 'react';
-import FormField from '../atoms/FormField';
+"use client";
+
+import React from "react";
 
 interface RegisterFieldsProps {
-  firstName: string;
-  lastName: string;
+  nombre: string;
+  apellido: string;
   email: string;
-  phone: string;
-  address: string;
-  password: string;
-  confirmPassword: string;
-  onFirstNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onLastNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onPhoneChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onAddressChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onConfirmPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  telefono: string;
+  contrasena: string;
+  confirmarContrasena: string;
+  onChange: (field: string, value: string) => void;
 }
 
 const RegisterFields: React.FC<RegisterFieldsProps> = ({
-  firstName,
-  lastName,
+  nombre,
+  apellido,
   email,
-  phone,
-  address,
-  password,
-  confirmPassword,
-  onFirstNameChange,
-  onLastNameChange,
-  onEmailChange,
-  onPhoneChange,
-  onAddressChange,
-  onPasswordChange,
-  onConfirmPasswordChange
+  telefono,
+  contrasena,
+  confirmarContrasena,
+  onChange,
 }) => {
   return (
-    <>
-      {/* Nombre y Apellido */}
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <FormField
-            label="Nombre"
-            type="text"
-            placeholder="Introduce tu nombre"
-            value={firstName}
-            onChange={onFirstNameChange}
-            required
-          />
-        </div>
-        <div>
-          <FormField
-            label="Apellido"
-            type="text"
-            placeholder="Introduce tu apellido"
-            value={lastName}
-            onChange={onLastNameChange}
-            required
-          />
-        </div>
-      </div>
-
-      {/* Email */}
-      <div>
-        <FormField
-          label="Correo electrónico"
-          type="email"
-          placeholder="Introduce tu correo"
-          value={email}
-          onChange={onEmailChange}
-          required
-        />
-      </div>
-
-      {/* Teléfono */}
-      <div>
-        <FormField
-          label="Número de teléfono"
-          type="tel"
-          placeholder="Introduce tu número de teléfono"
-          value={phone}
-          onChange={onPhoneChange}
-          required
-        />
-      </div>
-
-      {/* Dirección */}
-      <div>
-        <FormField
-          label="Dirección"
+    <div className="space-y-3">
+      <div className="grid grid-cols-2 gap-3">
+        <input
           type="text"
-          placeholder="Introduce tu dirección"
-          value={address}
-          onChange={onAddressChange}
-          required
+          placeholder="Nombre"
+          value={nombre}
+          onChange={(e) => onChange("nombre", e.target.value)}
+          className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+        />
+        <input
+          type="text"
+          placeholder="Apellido"
+          value={apellido}
+          onChange={(e) => onChange("apellido", e.target.value)}
+          className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
         />
       </div>
 
-      {/* Contraseña */}
-      <div>
-        <FormField
-          label="Contraseña"
-          type="password"
-          placeholder="Introduce tu contraseña"
-          value={password}
-          onChange={onPasswordChange}
-          required
-        />
-      </div>
+      <input
+        type="email"
+        placeholder="Correo electrónico"
+        value={email}
+        onChange={(e) => onChange("email", e.target.value)}
+        className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+      />
 
-      {/* Confirmar contraseña */}
-      <div>
-        <FormField
-          label="Confirmar contraseña"
-          type="password"
-          placeholder="Vuelve a escribir tu contraseña"
-          value={confirmPassword}
-          onChange={onConfirmPasswordChange}
-          required
-        />
-      </div>
-    </>
+      <input
+        type="tel"
+        placeholder="Número de teléfono"
+        value={telefono}
+        onChange={(e) => onChange("telefono", e.target.value)}
+        className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+      />
+
+      <input
+        type="password"
+        placeholder="Contraseña"
+        value={contrasena}
+        onChange={(e) => onChange("contrasena", e.target.value)}
+        className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+      />
+
+      <input
+        type="password"
+        placeholder="Confirmar contraseña"
+        value={confirmarContrasena}
+        onChange={(e) => onChange("confirmarContrasena", e.target.value)}
+        className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+      />
+    </div>
   );
 };
 

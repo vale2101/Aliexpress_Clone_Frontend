@@ -2,37 +2,34 @@
 
 import React, { useEffect, useState } from "react";
 import ProductCard from "../molecules/ProductCard";
-import { ProductService, ProductoInterface } from "../../services/productService";
+import { productService, ProductoInterface } from "../../services/productService";
 
 interface RelatedProductsProps {
-  currentProductId: number;
-  category?: string;
+  currentProductId: number; 
 }
 
-const RelatedProducts: React.FC<RelatedProductsProps> = ({ 
-  currentProductId
-}) => {
+const RelatedProducts: React.FC<RelatedProductsProps> = ({ currentProductId }) => {
   const [products, setProducts] = useState<ProductoInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadRelatedProducts() {
+    async function loadProducts() {
       try {
         setLoading(true);
-        const allProducts = await ProductService.getAll();
-        // Filtrar el producto actual y tomar los primeros 4
-        const relatedProducts = allProducts
-          .filter(p => p.id_producto !== currentProductId)
-          .slice(0, 4);
-        setProducts(relatedProducts);
+        const allProducts = await productService.getAll();
+        const filtered = allProducts.filter(
+          (product) => product.id_producto !== currentProductId
+        );
+        setProducts(filtered);
       } catch (error) {
-        console.error("Error cargando productos relacionados:", error);
+        console.error("Error cargando productos:", error);
         setProducts([]);
       } finally {
         setLoading(false);
       }
     }
-    loadRelatedProducts();
+
+    loadProducts();
   }, [currentProductId]);
 
   if (loading) {
@@ -49,7 +46,11 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
   }
 
   if (products.length === 0) {
-    return null;
+    return (
+      <div className="text-center text-gray-500">
+        No hay productos relacionados.
+      </div>
+    );
   }
 
   return (
@@ -60,11 +61,13 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
           <ProductCard
             key={product.id_producto}
             id={product.id_producto}
-            image={`https://images.unsplash.com/photo-${1500000000000 + (product.id_producto ?? 0)}?w=300&h=300&fit=crop&crop=center`}
+            image={product.imagen_url || "/placeholder.jpg"}
             title={product.nombre}
             price={`${product.precio} ${product.moneda}`}
             oldPrice={
-              product.precio_original ? `${product.precio_original} ${product.moneda}` : undefined
+              product.precio_original
+                ? `${product.precio_original} ${product.moneda}`
+                : undefined
             }
             discount={product.descuento ? `-${product.descuento}%` : undefined}
             rating={4.5}

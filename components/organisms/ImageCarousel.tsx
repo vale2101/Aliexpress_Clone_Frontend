@@ -13,35 +13,35 @@ interface CarouselImage {
 const carouselImages: CarouselImage[] = [
   {
     id: 1,
-    src: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+    src: "/placeholder-banner-1.jpg",
     alt: "Shopping online",
     title: "Los nuevos usuarios obtienen -70% dto.",
     subtitle: "Ofertas increíbles te esperan"
   },
   {
     id: 2,
-    src: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&h=600&fit=crop",
+    src: "/placeholder-banner-2.jpg",
     alt: "Fashion shopping",
     title: "Envío gratis en pedidos +$50",
     subtitle: "Tecnología al mejor precio"
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1556742111-a301076d9d18?w=800&h=600&fit=crop",
+    src: "/placeholder-banner-3.jpg",
     alt: "Home decor",
     title: "Moda de temporada -50%",
     subtitle: "Estilo único para ti"
   },
   {
     id: 4,
-    src: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop",
+    src: "/placeholder-banner-4.jpg",
     alt: "Electronics shopping",
     title: "Hogar y decoración -40%",
     subtitle: "Haz tu casa perfecta"
   },
   {
     id: 5,
-    src: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&h=600&fit=crop",
+    src: "/placeholder-banner-5.jpg",
     alt: "Beauty products",
     title: "Belleza y cuidado -60%",
     subtitle: "Cuida tu piel todos los días"

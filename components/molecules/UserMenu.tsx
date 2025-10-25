@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import {
   User,
   ClipboardList,
@@ -15,96 +16,104 @@ import {
   LogOut,
   HelpCircle,
   FileText,
+  Store,
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import MenuItem from "../atoms/MenuItem";
 import Divider from "../atoms/Divider";
 
-const UserMenu: React.FC<{ onLogin: () => void; onLogout: () => void }> = ({
-  onLogin,
-  onLogout,
-}) => {
-  const { isAuthenticated, user } = useAuth();
+const UserMenu: React.FC = () => {
+  const { isAuthenticated, user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLoginRedirect = () => router.push("/user");
+  const handleRegisterRedirect = () => router.push("/registro");
+  const handleVendedorLoginRedirect = () => router.push("/vendedor");
+  const handleLogout = async () => {
+    await logout();
+    router.push("/");
+  };
 
   return (
-    <div
-      className="relative"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-    >
-      {/* Botón principal */}
+    <div className="relative" ref={menuRef}>
       <div
-        onClick={!isAuthenticated ? onLogin : undefined}
+        onClick={toggleMenu}
         className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:text-orange-500 transition-colors"
       >
         <User size={16} className="text-gray-600" />
-        {isAuthenticated ? (
-          <span className="text-xs sm:text-sm text-gray-700 hidden sm:inline">
-            ¡Hola, {user?.nombre || "Usuario"}!
-          </span>
-        ) : (
-          <span className="text-xs sm:text-sm text-gray-700 hidden sm:inline">
-            ¡Bienvenido Identifícate / Regístrate
-          </span>
-        )}
+        <span className="text-xs sm:text-sm text-gray-700 hidden sm:inline">
+          {isAuthenticated ? `¡Hola, ${user?.nombre || "Usuario"}!` : "Identifícate / Regístrate"}
+        </span>
       </div>
 
-      {/* Dropdown */}
       {isOpen && (
         <div className="absolute right-0 mt-2 w-64 sm:w-72 bg-white shadow-lg rounded-2xl border border-gray-200 z-50">
           {isAuthenticated ? (
             <div className="p-2 sm:p-3">
               <h3 className="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Mi cuenta</h3>
               <ul className="space-y-1">
-                <MenuItem icon={<ClipboardList size={14} className="sm:w-4 sm:h-4" />} label="Mis pedidos" />
-                <MenuItem icon={<Wallet size={14} className="sm:w-4 sm:h-4" />} label="Mis monedas" />
-                <MenuItem
-                  icon={<MessageSquare size={14} className="sm:w-4 sm:h-4" />}
-                  label="Centro de mensajes"
-                />
-                <MenuItem icon={<CreditCard size={14} className="sm:w-4 sm:h-4" />} label="Pago" />
-                <MenuItem icon={<Heart size={14} className="sm:w-4 sm:h-4" />} label="Lista de deseos" />
-                <MenuItem icon={<Ticket size={14} className="sm:w-4 sm:h-4" />} label="Mis cupones" />
+                <MenuItem icon={<ClipboardList size={14} />} label="Mis pedidos" />
+                <MenuItem icon={<Wallet size={14} />} label="Mis monedas" />
+                <MenuItem icon={<MessageSquare size={14} />} label="Centro de mensajes" />
+                <MenuItem icon={<CreditCard size={14} />} label="Pago" />
+                <MenuItem icon={<Heart size={14} />} label="Lista de deseos" />
+                <MenuItem icon={<Ticket size={14} />} label="Mis cupones" />
               </ul>
               <Divider />
-              <MenuItem icon={<Settings size={14} className="sm:w-4 sm:h-4" />} label="Configuración" />
               <MenuItem
-                icon={<Briefcase size={14} className="sm:w-4 sm:h-4" />}
-                label="AliExpress Business"
+                icon={<Settings size={14} />}
+                label="Configuración"
+                onClick={() => router.push("/cuenta")}
               />
+              <MenuItem icon={<Briefcase size={14} />} label="AliExpress Business" />
+              <MenuItem icon={<PackageSearch size={14} />} label="Centro de dropshipping" />
               <MenuItem
-                icon={<PackageSearch size={14} className="sm:w-4 sm:h-4" />}
-                label="Centro de dropshipping"
-              />
-              <MenuItem
-                icon={<LogOut size={14} className="sm:w-4 sm:h-4" />}
+                icon={<LogOut size={14} />}
                 label="Cerrar sesión"
                 danger
-                onClick={onLogout}
+                onClick={handleLogout}
               />
             </div>
           ) : (
             <div className="p-2 sm:p-3">
-              {/* Encabezado */}
-              <div className="bg-black text-white rounded-full px-3 sm:px-4 py-2 text-center font-semibold mb-2 text-sm sm:text-base">
-                Identifícate
-              </div>
-              <p className="text-xs text-gray-500 mb-2 text-center">
-                Registrarse
-              </p>
+              <button
+                onClick={handleLoginRedirect}
+                className="bg-black text-white rounded-full px-4 py-2 text-center font-semibold mb-2 w-full text-sm sm:text-base hover:bg-gray-800 transition"
+              >
+                Iniciar sesión
+              </button>
 
-              {/* Opciones */}
+              <button
+                onClick={handleRegisterRedirect}
+                className="bg-orange-500 text-white rounded-full px-4 py-2 text-center font-semibold mb-3 w-full text-sm sm:text-base hover:bg-orange-600 transition"
+              >
+                Registrarse
+              </button>
+
               <ul className="space-y-1">
-                <MenuItem icon={<Settings size={14} className="sm:w-4 sm:h-4" />} label="Configuración" />
                 <MenuItem
-                  icon={<HelpCircle size={14} className="sm:w-4 sm:h-4" />}
-                  label="Atención al cliente"
+                  icon={<Store size={14} />}
+                  label="Iniciar sesión como vendedor"
+                  onClick={handleVendedorLoginRedirect}
                 />
-                <MenuItem
-                  icon={<FileText size={14} className="sm:w-4 sm:h-4" />}
-                  label="Política de devoluciones"
-                />
+                <Divider />
+                <MenuItem icon={<HelpCircle size={14} />} label="Atención al cliente" />
+                <MenuItem icon={<FileText size={14} />} label="Política de devoluciones" />
               </ul>
             </div>
           )}

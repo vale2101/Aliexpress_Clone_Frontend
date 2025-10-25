@@ -3,28 +3,20 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import ProductCard from "../molecules/ProductCard";
-import { ProductService, ProductoInterface } from "../../services/productService";
+import { productService, ProductoInterface } from "../../services/productService";
 
 export default function BatchSavingZone() {
   const { t } = useLanguage();
   const [products, setProducts] = useState<ProductoInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fallbackImages = [
-    "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=300&h=300&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300&h=300&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=300&h=300&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=300&h=300&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop&crop=center",
-    "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=300&h=300&fit=crop&crop=center",
-  ];
 
   useEffect(() => {
     async function loadProducts() {
       try {
         setLoading(true);
         console.log("🔄 Iniciando carga de productos en BatchSavingZone...");
-        const data = await ProductService.getAll();
+        const data = await productService.getAll();
         console.log("✅ Productos cargados en BatchSavingZone:", data.length);
         setProducts(data);
       } catch (error) {

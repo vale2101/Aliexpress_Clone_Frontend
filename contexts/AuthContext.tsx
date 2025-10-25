@@ -1,136 +1,103 @@
 "use client";
-
-import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import { AuthService } from "../services/authService";
-import { User, LoginRequest, RegisterRequest } from "../interfaces/user.interface";
+import React, { createContext, useState, ReactNode, useEffect, useContext } from "react";
+import { UserService } from "../services/userService";
+import { User, CreateUserRequest } from "../interfaces/user.interface";
 
 interface AuthContextType {
   user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  login: (credentials: LoginRequest) => Promise<void>;
-  register: (userData: RegisterRequest) => Promise<void>;
+  loading: boolean;
+  login: (email: string, contrasena: string) => Promise<void>;
   logout: () => Promise<void>;
-  error: string | null;
-  clearError: () => void;
+  isAuthenticated: boolean;
+  register: (newUser: CreateUserRequest) => Promise<void>; // 🔹 corrección aquí
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth debe ser usado dentro de un AuthProvider");
-  return context;
-};
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const checkSession = async () => {
       try {
-        setIsLoading(true);
-        const userData = await AuthService.getProfile();
-        if (userData) {
-          setUser(userData);
-          setIsAuthenticated(true);
+        const users = await UserService.getUsers();
+        if (users.length > 0) {
+          setUser(users[0]);
         }
-      } catch (error) {
-        console.log("No hay sesión activa o error al verificar perfil:", error);
-        setIsAuthenticated(false);
+      } catch {
         setUser(null);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
-    checkAuth();
+    checkSession();
   }, []);
 
-  const login = async (credentials: LoginRequest) => {
+  const login = async (email: string, contrasena: string) => {
+    setLoading(true);
     try {
-      setIsLoading(true);
-      clearError();
-
-      const response = await AuthService.login(credentials);
-      if (response.message === "Login exitoso") {
-        setIsAuthenticated(true);
-        // Esperar un poco para que la cookie se establezca correctamente
-        setTimeout(async () => {
-          try {
-            const userData = await AuthService.getProfile();
-            // Actualizar el email con el del login real
-            const updatedUserData = {
-              ...userData,
-              email: credentials.email
-            };
-            setUser(updatedUserData);
-          } catch (profileError) {
-            console.error("Error obteniendo perfil:", profileError);
-            // Si falla el perfil, pero el login fue exitoso, mantener la autenticación
-            setUser({
-              id: 1,
-              email: credentials.email,
-              nombre: "Usuario",
-              apellido: "Autenticado",
-              rol: 1
-            });
-          }
-        }, 100);
-      } else {
-        throw new Error("Error al iniciar sesión");
+      const response = await UserService.login({ email, contrasena });
+      // Si el backend devuelve los datos del usuario logueado:
+      if (response.data?.user) {
+        setUser(response.data.user);
       }
-    } catch (err: any) {
-      console.error("❌ Error login:", err);
-      setError(err.message || "Error al iniciar sesión");
-      setIsAuthenticated(false);
-      throw err;
+    } catch {
+      setUser(null);
     } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const register = async (userData: RegisterRequest) => {
-    try {
-      setIsLoading(true);
-      clearError();
-      await AuthService.register(userData);
-      await login({ email: userData.email, contrasena: userData.contrasena });
-    } catch (err: any) {
-      console.error("❌ Error register:", err);
-      setError(err.message || "Error al registrarse");
-      setIsAuthenticated(false);
-    } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   const logout = async () => {
+    setLoading(true);
     try {
-      setIsLoading(true);
-      await AuthService.logout();
+      await UserService.logout();
       setUser(null);
-      setIsAuthenticated(false);
-    } catch (err: any) {
-      setError(err.message || "Error al cerrar sesión");
+    } catch (error) {
+      console.error(error);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
-  const clearError = () => setError(null);
+  // ✅ Register usando CreateUserRequest
+  const register = async (newUser: CreateUserRequest) => {
+    setLoading(true);
+    try {
+      await UserService.createUser({
+        ...newUser,
+        rol: 2, // Asignado automáticamente
+        estado: "activo", // por defecto
+      });
+    } catch (error: any) {
+      console.error("Error al registrar usuario:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, isLoading, login, register, logout, error, clearError }}
+      value={{
+        user,
+        loading,
+        login,
+        logout,
+        isAuthenticated: !!user,
+        register, // 🔹 disponible para usar
+      }}
     >
-      {children}
+      {loading ? <p>Cargando...</p> : children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth debe estar dentro de un AuthProvider");
+  }
+  return context;
 };

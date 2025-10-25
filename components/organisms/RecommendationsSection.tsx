@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../molecules/ProductCard";
-import { ProductService, ProductoInterface } from "../../services/productService";
+import { productService, ProductoInterface } from "../../services/productService";
 
 export default function RecommendationsSection() {
   const [products, setProducts] = useState<ProductoInterface[]>([]);
@@ -11,17 +11,14 @@ export default function RecommendationsSection() {
     async function loadProducts() {
       try {
         setLoading(true);
-        const data = await ProductService.getAll();
+        const data = await productService.getAll();
 
         if (!Array.isArray(data)) {
           throw new Error("El servidor no devolvió una lista de productos válida");
         }
 
-        // ✅ Filtrar por ID
-        const filtered = data.filter(
-          (p) => p.id_producto && p.id_producto >= 10 && p.id_producto <= 16
-        );
-        setProducts(filtered);
+        // ✅ Ya no hay filtro, se muestran todos los productos
+        setProducts(data);
       } catch (error) {
         console.error("Error cargando productos:", error);
         setProducts([]);
@@ -36,6 +33,10 @@ export default function RecommendationsSection() {
     return <p className="text-center">Cargando productos...</p>;
   }
 
+  if (products.length === 0) {
+    return <p className="text-center text-gray-500">No hay productos disponibles</p>;
+  }
+
   return (
     <div className="bg-white py-12">
       <div className="max-w-full mx-auto px-4">
@@ -48,7 +49,7 @@ export default function RecommendationsSection() {
             <ProductCard
               key={p.id_producto}
               id={p.id_producto}
-              image={p.imagen_url || "/placeholder.png"} 
+              image={p.imagen_url || "/placeholder.jpg"}
               title={p.nombre}
               price={`$${p.precio} ${p.moneda}`}
               oldPrice={

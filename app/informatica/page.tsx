@@ -15,14 +15,11 @@ export default function InformaticaPage() {
             Todo lo que necesitas para la oficina y el estudio.
           </p>
         </div>
-        
-        {/* Productos destacados */}
-        <FeaturedProducts />
-        
-        {/* Productos recomendados */}
+
+        <FeaturedProducts categories={["Informática", "Escuela"]} />
+
         <RecommendationsSection />
       </div>
     </div>
   );
 }
-
