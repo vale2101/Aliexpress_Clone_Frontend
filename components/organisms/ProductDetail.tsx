@@ -22,7 +22,6 @@ const ProductDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // ✅ Obtener el ID del producto desde la URL
   const productId = params?.id ? Number(params.id) : null;
 
   const fetchProduct = useCallback(async () => {
@@ -83,12 +82,10 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  // ✅ Imágenes con fallback
   const productImages = product.imagen_url
     ? [product.imagen_url]
     : ["https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=600&fit=crop&crop=center"];
 
-  // ✅ Contenido de pestañas
   const tabs = [
     {
       id: "description",
@@ -134,12 +131,10 @@ const ProductDetail: React.FC = () => {
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Imágenes */}
             <div className="lg:col-span-1">
               <ProductImageGallery images={productImages} alt={product.nombre} />
             </div>
 
-            {/* Información del producto */}
             <div className="lg:col-span-1">
               <ProductInfo
                 title={product.nombre}
@@ -156,7 +151,6 @@ const ProductDetail: React.FC = () => {
               />
             </div>
 
-            {/* Sidebar de compra */}
             <div className="lg:col-span-1">
               <PurchaseSidebar
                 productId={product.id_producto ?? 0}
@@ -171,7 +165,6 @@ const ProductDetail: React.FC = () => {
           </div>
         </div>
 
-        {/* Tabs */}
         <div className="mt-6 bg-white rounded-lg shadow">
           <div className="px-6">
             <ProductTabs tabs={tabs} />

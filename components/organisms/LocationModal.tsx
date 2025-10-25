@@ -37,13 +37,11 @@ export default function LocationModal({ isOpen, onClose, onMouseLeave }: Locatio
 
   const currentCountries = countries[selectedLanguage as keyof typeof countries] || countries.es;
   
-  // Obtener el código del país seleccionado
   const selectedCountryCode = currentCountries.find(c => c.name === selectedCountry)?.code || 'CO';
   const currentStates = states[selectedCountryCode as keyof typeof states] || [];
   const currentCities = cities[selectedState as keyof typeof cities] || [];
   const currentCurrencies = currencies[selectedLanguage as keyof typeof currencies] || currencies.es;
 
-  // Efecto para limpiar estado y ciudad cuando cambie el país
   useEffect(() => {
     if (selectedCountry && currentStates.length === 0) {
       setSelectedState('');
@@ -106,7 +104,6 @@ export default function LocationModal({ isOpen, onClose, onMouseLeave }: Locatio
         onMouseEnter={(e) => e.stopPropagation()}
         {...(onMouseLeave && { onMouseLeave })}
       >
-        {/* Header */}
         <div className="flex justify-between items-center mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-bold text-gray-800">Configuración</h2>
           <button
@@ -117,11 +114,9 @@ export default function LocationModal({ isOpen, onClose, onMouseLeave }: Locatio
           </button>
         </div>
 
-        {/* Enviar a */}
         <div className="mb-4 sm:mb-6">
           <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">{t('modal.send_to')}</h3>
           
-          {/* País */}
           <div className="relative mb-3">
             <button
               onClick={(e) => {
@@ -158,7 +153,6 @@ export default function LocationModal({ isOpen, onClose, onMouseLeave }: Locatio
             )}
           </div>
 
-          {/* Estado/Provincia */}
           <div className="relative mb-3">
             <button
               onClick={(e) => {
@@ -190,7 +184,6 @@ export default function LocationModal({ isOpen, onClose, onMouseLeave }: Locatio
             )}
           </div>
 
-          {/* Ciudad */}
           <div className="relative">
             <button
               onClick={(e) => {
@@ -223,7 +216,6 @@ export default function LocationModal({ isOpen, onClose, onMouseLeave }: Locatio
           </div>
         </div>
 
-        {/* Idioma */}
         <div className="mb-4 sm:mb-6">
           <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">{t('modal.language')}</h3>
           <div className="relative">
@@ -263,7 +255,6 @@ export default function LocationModal({ isOpen, onClose, onMouseLeave }: Locatio
           </div>
         </div>
 
-        {/* Moneda */}
         <div className="mb-4 sm:mb-6">
           <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">{t('modal.currency')}</h3>
           <div className="relative">
@@ -300,7 +291,6 @@ export default function LocationModal({ isOpen, onClose, onMouseLeave }: Locatio
           </div>
         </div>
 
-        {/* Botón Guardar */}
         <button
           onClick={(e) => {
             e.stopPropagation();

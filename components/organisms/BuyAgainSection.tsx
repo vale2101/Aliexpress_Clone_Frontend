@@ -14,9 +14,13 @@ export default function BuyAgainSection() {
     async function loadProducts() {
       try {
         setLoading(true);
-        const data = await productService.getAll();
-        // Tomar solo los primeros 6 productos para la sección "Compra de nuevo"
-        setProducts(data.slice(0, 6));
+        const allProducts = await productService.getAll();
+
+        const filtered = allProducts.filter(
+          (p) => p.categoria?.trim().toLowerCase() === "volverc"
+        );
+
+        setProducts(filtered.slice(0, 6));
       } catch (error) {
         console.error("Error cargando productos:", error);
         setProducts([]);
@@ -24,13 +28,14 @@ export default function BuyAgainSection() {
         setLoading(false);
       }
     }
+
     loadProducts();
   }, []);
 
   if (loading) {
     return (
       <div className="p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('buy_again.title')}</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">{t("buy_again.title")}</h2>
         <p className="text-center text-gray-500">Cargando productos...</p>
       </div>
     );
@@ -39,7 +44,7 @@ export default function BuyAgainSection() {
   if (products.length === 0) {
     return (
       <div className="p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('buy_again.title')}</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">{t("buy_again.title")}</h2>
         <p className="text-center text-gray-500">No hay productos disponibles</p>
       </div>
     );
@@ -47,8 +52,8 @@ export default function BuyAgainSection() {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('buy_again.title')}</h2>
-      
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">{t("buy_again.title")}</h2>
+
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {products.map((product) => (
           <ProductCard
@@ -57,7 +62,11 @@ export default function BuyAgainSection() {
             image={product.imagen_url || "/placeholder.jpg"}
             title={product.nombre}
             price={`$${product.precio} ${product.moneda || ""}`}
-            oldPrice={product.precio_original ? `$${product.precio_original} ${product.moneda || ""}` : undefined}
+            oldPrice={
+              product.precio_original
+                ? `$${product.precio_original} ${product.moneda || ""}`
+                : undefined
+            }
             discount={product.descuento ? `-${product.descuento}%` : undefined}
             rating={4.5}
             sold={`${product.stock} disponibles`}

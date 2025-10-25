@@ -55,7 +55,7 @@ const RegisterFormRefactored: React.FC = () => {
         estado: "activo",
       });
 
-      router.push("/login");
+      router.push("/user");
     } catch (err: any) {
       setErrorMessage(err.message || "Error al registrarse");
     }

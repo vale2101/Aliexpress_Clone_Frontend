@@ -39,7 +39,6 @@ export default function VendedorLogin() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Izquierda: formulario */}
       <div className="w-full lg:w-1/2 flex items-center justify-center bg-white">
         <div className="w-full max-w-lg px-8 py-24">
           <Logo />
@@ -95,7 +94,6 @@ export default function VendedorLogin() {
         </div>
       </div>
 
-      {/* Derecha: carrusel */}
       <div className="hidden lg:block lg:w-1/2 relative">
         <VendedorCarousel />
       </div>

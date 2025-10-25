@@ -16,7 +16,6 @@ const AliExpressHeader: React.FC = () => {
       
       <div className="max-w-full mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo y menú hamburguesa */}
           <div className="flex items-center gap-4">
             <Logo />
             <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200">
@@ -28,7 +27,6 @@ const AliExpressHeader: React.FC = () => {
             </button>
           </div>
 
-          {/* Barra de búsqueda centrada */}
           <div className="flex-1 max-w-2xl mx-8">
             <div className="relative">
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -49,9 +47,7 @@ const AliExpressHeader: React.FC = () => {
             </div>
           </div>
 
-          {/* Sección derecha */}
           <div className="flex items-center gap-6">
-            {/* Descarga la app */}
             <div className="flex items-center gap-2 text-xs text-gray-700">
               <QrCode className="w-4 h-4" />
               <div className="text-center">
@@ -60,7 +56,6 @@ const AliExpressHeader: React.FC = () => {
               </div>
             </div>
 
-            {/* Ubicación y moneda */}
             <div className="flex items-center gap-2 text-xs">
               <div className="flex items-center gap-1">
                 <div className="w-4 h-3 bg-gradient-to-r from-yellow-400 via-blue-500 to-red-500 rounded-sm"></div>
@@ -74,7 +69,6 @@ const AliExpressHeader: React.FC = () => {
               </div>
             </div>
 
-            {/* Usuario */}
             <div className="flex items-center gap-2 text-xs text-gray-700">
               <User className="w-4 h-4" />
               <div>
@@ -83,7 +77,6 @@ const AliExpressHeader: React.FC = () => {
               </div>
             </div>
 
-            {/* Carrito */}
             <div className="flex items-center gap-2 text-xs text-gray-700">
               <div className="relative">
                 <ShoppingCart className="w-5 h-5" />

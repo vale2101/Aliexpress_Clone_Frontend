@@ -37,7 +37,6 @@ const CategoriesBar: React.FC = () => {
   return (
     <div className="w-full border-b bg-white">
       <div className="max-w-full mx-auto px-2 sm:px-4 flex items-center justify-center gap-2 sm:gap-4 lg:gap-6 h-8 sm:h-10">
-        {/* Botón: Todas las categorías */}
         <div
           className="relative flex-shrink-0"
           onMouseEnter={() => setShowCategoriesDropdown(true)}
@@ -52,10 +51,8 @@ const CategoriesBar: React.FC = () => {
             <ChevronDown size={12} className="text-gray-500 sm:w-4 sm:h-4" />
           </button>
 
-          {/* Dropdown de categorías */}
           {showCategoriesDropdown && (
             <div className="absolute top-full left-0 mt-0 flex flex-col sm:flex-row bg-white border border-gray-200 rounded-lg shadow-lg z-50 w-80 sm:w-auto">
-              {/* Lista de categorías */}
               <div className="w-full sm:w-56 border-b sm:border-b-0 sm:border-r">
                 {categories.map((category) => (
                   <div
@@ -71,7 +68,6 @@ const CategoriesBar: React.FC = () => {
                 ))}
               </div>
 
-              {/* Subcategorías */}
               {activeCategory && (
                 <div className="w-full sm:w-64 p-3 sm:p-4">
                   <div className="grid grid-cols-2 sm:grid-cols-1 gap-1 sm:gap-0">

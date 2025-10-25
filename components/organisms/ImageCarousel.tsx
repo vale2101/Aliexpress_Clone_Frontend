@@ -51,7 +51,6 @@ const carouselImages: CarouselImage[] = [
 export default function ImageCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-advance carousel every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => 
@@ -76,7 +75,6 @@ export default function ImageCarousel() {
 
   return (
     <div className="relative w-full h-full overflow-hidden">
-      {/* Carousel Images */}
       <div className="relative w-full h-full">
         {carouselImages.map((image, index) => (
           <div
@@ -89,10 +87,8 @@ export default function ImageCarousel() {
               className="w-full h-full bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: `url(${image.src})` }}
             >
-              {/* Overlay más sutil para mostrar mejor las imágenes */}
               <div className="absolute inset-0 bg-black bg-opacity-20"></div>
               
-              {/* Content */}
               <div className="absolute inset-0 flex items-center justify-center p-12">
                 <div className="text-white text-center">
                   <div className="bg-black bg-opacity-50 rounded-lg p-8 backdrop-blur-sm">
@@ -110,7 +106,6 @@ export default function ImageCarousel() {
         ))}
       </div>
 
-      {/* Dots indicator */}
       <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
         <div className="flex justify-center space-x-2">
           {carouselImages.map((_, dotIndex) => (
@@ -127,7 +122,6 @@ export default function ImageCarousel() {
         </div>
       </div>
 
-      {/* Navigation Arrows */}
       <button
         onClick={goToPrevious}
         className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-300"
@@ -148,7 +142,6 @@ export default function ImageCarousel() {
         </svg>
       </button>
 
-      {/* Progress Bar */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
         <div className="w-32 h-1 bg-white bg-opacity-30 rounded-full overflow-hidden">
           <div 

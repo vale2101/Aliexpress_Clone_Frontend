@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import ProductCard from "../molecules/ProductCard";
 import { productService, ProductoInterface } from "../../services/productService";
@@ -15,15 +16,16 @@ export default function FeaturedProducts({ categories }: FeaturedProductsProps) 
     async function loadProducts() {
       try {
         setLoading(true);
-        const data = await productService.getAll();
+        const allProducts = await productService.getAll();
 
-        // 🔹 Filtrar por categoría si se pasa la prop
+        const normalize = (str?: string) => str?.trim().toLowerCase();
+
         const filtered =
           categories && categories.length > 0
-            ? data.filter((p: ProductoInterface) =>
-                p.categoria ? categories.includes(p.categoria) : false
+            ? allProducts.filter((p) =>
+                p.categoria ? categories.map(normalize).includes(normalize(p.categoria)) : false
               )
-            : data;
+            : allProducts;
 
         setProducts(filtered);
       } catch (error) {
@@ -33,6 +35,7 @@ export default function FeaturedProducts({ categories }: FeaturedProductsProps) 
         setLoading(false);
       }
     }
+
     loadProducts();
   }, [categories]);
 

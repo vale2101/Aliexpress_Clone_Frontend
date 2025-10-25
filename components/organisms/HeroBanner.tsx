@@ -11,7 +11,6 @@ const HeroBanner: React.FC = () => {
     <section className="w-full" style={{ backgroundColor: '#ff7e38' }}>
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex items-center justify-center gap-12">
-          {/* Texto principal */}
           <div className="flex-1 text-white">
             <p className="mb-2 text-sm font-medium text-orange-100">
               {t('hero.promo_ends')}
@@ -20,13 +19,11 @@ const HeroBanner: React.FC = () => {
               Hasta <span className="text-yellow-300">-60%</span> dto.
             </h1>
 
-            {/* Timer */}
             <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-medium">
               <span className="text-orange-100">{t('hero.ends_in')}</span>
               <CountdownTimer />
             </div>
 
-            {/* Cupones debajo del timer */}
             <div className="flex gap-4">
               <div className="bg-white rounded-lg p-4 text-center min-w-[120px] shadow-lg">
                 <p className="text-red-500 font-bold text-xl mb-1">-$8.300</p>
@@ -46,7 +43,6 @@ const HeroBanner: React.FC = () => {
             </div>
           </div>
 
-          {/* Imagen lateral */}
           <div className="hidden lg:block w-[300px]">
             <div className="relative">
               <Image
@@ -56,7 +52,6 @@ const HeroBanner: React.FC = () => {
                 height={220}
                 className="h-[220px] w-full rounded-lg object-cover shadow-lg"
               />
-              {/* Elementos decorativos */}
               <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
                 <span className="text-yellow-800 text-sm">★</span>
               </div>

@@ -11,7 +11,18 @@ export default function OffersSection() {
     async function loadProducts() {
       try {
         setLoading(true);
-        const data = await productService.getAll();
+        const response = await productService.getAll();
+
+        const data = Array.isArray(response)
+          ? response
+          : (response as any)?.data || (response as any)?.productos || [];
+
+        if (!Array.isArray(data)) {
+          console.error("El backend no devolvió una lista válida. Respuesta:", response);
+          setProducts([]);
+          return;
+        }
+
         setProducts(data);
       } catch (error) {
         console.error("Error cargando productos:", error);
@@ -20,8 +31,21 @@ export default function OffersSection() {
         setLoading(false);
       }
     }
+
     loadProducts();
   }, []);
+
+  const normalize = (str?: string) => str?.trim().toLowerCase();
+
+  const packsProducts = products.filter(
+    (p) => normalize(p.categoria) === "oferta"
+  );
+  const superProducts = products.filter(
+    (p) => normalize(p.categoria) === "super ofertas"
+  );
+  const bigSaveProducts = products.filter(
+    (p) => normalize(p.categoria) === "big save"
+  );
 
   if (loading) {
     return (
@@ -33,7 +57,11 @@ export default function OffersSection() {
     );
   }
 
-  if (products.length === 0) {
+  if (
+    packsProducts.length === 0 &&
+    superProducts.length === 0 &&
+    bigSaveProducts.length === 0
+  ) {
     return (
       <div className="bg-white py-8">
         <div className="max-w-full mx-auto px-4">
@@ -43,63 +71,70 @@ export default function OffersSection() {
     );
   }
 
-  // Dividir productos en grupos para diferentes secciones
-  const packsProducts = products.slice(0, 6);
-  const superProducts = products.slice(6, 12);
-  const bigSaveProducts = products.slice(12, 18);
-
   return (
-    <>
-      {/* Secciones superiores */}
-      <div className="bg-white py-8">
-        <div className="max-w-full mx-auto px-4">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="bg-white py-8">
+      <div className="max-w-full mx-auto px-4">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {packsProducts.length > 0 && (
             <OfferSection
               title="Packs de ofertas"
               subtitle="3 desde 2,99$ US | -20% dto. Extra"
               type="packs"
-              products={packsProducts.map(p => ({
+              products={packsProducts.map((p, i) => ({
+                id: p.id_producto || i + 1,
                 image: p.imagen_url || "/placeholder.jpg",
                 title: p.nombre,
                 price: `$${p.precio} ${p.moneda || ""}`,
-                oldPrice: p.precio_original ? `$${p.precio_original} ${p.moneda || ""}` : undefined,
+                oldPrice: p.precio_original
+                  ? `$${p.precio_original} ${p.moneda || ""}`
+                  : undefined,
                 rating: 4.5,
-                sold: `${p.stock} disponibles`
+                sold: `${p.stock} disponibles`,
               }))}
             />
+          )}
 
+          {superProducts.length > 0 && (
             <OfferSection
               title="SuperOfertas"
-              subtitle="Acaba en: 07:00:00"
+              subtitle="Aprovecha antes que termine"
               type="super"
-              products={superProducts.map(p => ({
+              products={superProducts.map((p, i) => ({
+                id: p.id_producto || i + 1,
                 image: p.imagen_url || "/placeholder.jpg",
                 title: p.nombre,
                 price: `$${p.precio} ${p.moneda || ""}`,
-                oldPrice: p.precio_original ? `$${p.precio_original} ${p.moneda || ""}` : undefined,
+                oldPrice: p.precio_original
+                  ? `$${p.precio_original} ${p.moneda || ""}`
+                  : undefined,
                 discount: p.descuento ? `-${p.descuento}%` : undefined,
                 rating: 4.5,
-                sold: `${p.stock} disponibles`
+                sold: `${p.stock} disponibles`,
               }))}
             />
+          )}
 
+          {bigSaveProducts.length > 0 && (
             <OfferSection
               title="Big Save"
               subtitle="+500 Marcas"
               type="big"
-              products={bigSaveProducts.map(p => ({
+              products={bigSaveProducts.map((p, i) => ({
+                id: p.id_producto || i + 1,
                 image: p.imagen_url || "/placeholder.jpg",
                 title: p.nombre,
                 price: `$${p.precio} ${p.moneda || ""}`,
-                oldPrice: p.precio_original ? `$${p.precio_original} ${p.moneda || ""}` : undefined,
+                oldPrice: p.precio_original
+                  ? `$${p.precio_original} ${p.moneda || ""}`
+                  : undefined,
                 discount: p.descuento ? `-${p.descuento}%` : undefined,
                 rating: 4.5,
-                sold: `${p.stock} disponibles`
+                sold: `${p.stock} disponibles`,
               }))}
             />
-          </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

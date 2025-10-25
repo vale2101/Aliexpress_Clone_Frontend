@@ -3,7 +3,7 @@ import { ENV } from "../config/env";
 const API_URL = ENV.API_URL;
 
 export interface ProductoInterface {
-  id_producto?: number; 
+  id_producto?: number;
   nombre: string;
   descripcion?: string;
   precio: number;
@@ -19,122 +19,125 @@ export interface ProductoInterface {
   dimensiones?: string;
   descripcionCom?: string;
   imagen_url?: string;
+  categoria?: string;
 }
 
+interface ApiResponse<T> {
+  message?: string;
+  error?: string;
+  data?: T;
+}
 
-export const ProductService = {
+async function parseApiResponse<T>(response: Response): Promise<T> {
+  const json: ApiResponse<T> = await response.json();
+  if (!response.ok) {
+    throw new Error(json.message || json.error || "Error en la respuesta del servidor");
+  }
+  return json.data as T;
+}
+
+export const productService = {
   async getAll(): Promise<ProductoInterface[]> {
     try {
-      console.log("🔍 Intentando obtener productos desde:", `${API_URL}/obtenerProductos`);
-      
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 segundos timeout
-      
-      const res = await fetch(`${API_URL}/obtenerProductos`, {
-        headers: {
-          "Accept": "application/json",
-        },
-        signal: controller.signal
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+      const response = await fetch(`${API_URL}/producto/obtenerProductos`, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+        signal: controller.signal,
       });
-      
+
       clearTimeout(timeoutId);
-      
-      console.log("📡 Respuesta del servidor:", {
-        status: res.status,
-        statusText: res.statusText,
-        ok: res.ok,
-        url: res.url
-      });
-      
-      if (!res.ok) {
-        let errorMessage = `Error ${res.status}: ${res.statusText}`;
-        try {
-          const errorData = await res.json();
-          errorMessage = errorData.message || errorData.error || errorMessage;
-          console.error("❌ Error del servidor:", errorData);
-        } catch (parseError) {
-          console.error("❌ Error parseando respuesta de error:", parseError);
-        }
-        throw new Error(errorMessage);
-      }
-      
-      const data = await res.json();
-      console.log("✅ Productos obtenidos:", data.length, "productos");
-      return data;
+
+      const productos = await parseApiResponse<ProductoInterface[]>(response);
+      return Array.isArray(productos) ? productos : [];
     } catch (error) {
-      console.error("❌ Error en ProductService.getAll:", error);
-      
-      
-      throw error;
+      console.error("❌ Error en productService.getAll:", error);
+      return [];
     }
   },
 
-  async getById(id: number): Promise<ProductoInterface> {
-    const res = await fetch(`${API_URL}/obtenerProducto/${id}`, {
-      headers: {
-        "Accept": "application/json",
-      },
-    });
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Error al obtener producto");
-    }
-    return res.json();
-  },
+  async getById(id: number): Promise<ProductoInterface | null> {
+    try {
+      const response = await fetch(`${API_URL}/producto/obtenerProducto/${id}`, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+      });
 
-  async create(producto: ProductoInterface): Promise<void> {
-    const res = await fetch(`${API_URL}/crearProducto`, {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(producto),
-    });
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Error al crear producto");
+      const producto = await parseApiResponse<ProductoInterface>(response);
+      return producto;
+    } catch (error) {
+      console.error("❌ Error en productService.getById:", error);
+      return null;
     }
   },
 
-  async update(id: number, producto: ProductoInterface): Promise<void> {
-    const res = await fetch(`${API_URL}/actualizarProducto/${id}`, {
-      method: "PUT",
-      headers: { 
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify(producto),
-    });
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Error al actualizar producto");
+  async create(producto: ProductoInterface): Promise<boolean> {
+    try {
+      const response = await fetch(`${API_URL}/producto/crearProducto`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(producto),
+      });
+
+      await parseApiResponse<null>(response);
+      return true;
+    } catch (error) {
+      console.error("❌ Error en productService.create:", error);
+      return false;
     }
   },
 
-  async changeState(id: number): Promise<void> {
-    const res = await fetch(`${API_URL}/cambiarEstadoProducto/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Accept": "application/json"
-      }
-    });
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Error al cambiar estado del producto");
+  async update(id: number, producto: ProductoInterface): Promise<boolean> {
+    try {
+      const response = await fetch(`${API_URL}/producto/actualizarProducto/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(producto),
+      });
+
+      await parseApiResponse<null>(response);
+      return true;
+    } catch (error) {
+      console.error("❌ Error en productService.update:", error);
+      return false;
     }
   },
 
-  async delete(id: number): Promise<void> {
-    const res = await fetch(`${API_URL}/eliminarProducto/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Accept": "application/json"
-      }
-    });
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Error al eliminar producto");
+  async changeState(id: number): Promise<boolean> {
+    try {
+      const response = await fetch(`${API_URL}/producto/cambiarEstadoProducto/${id}`, {
+        method: "PATCH",
+        headers: { Accept: "application/json" },
+      });
+
+      await parseApiResponse<null>(response);
+      return true;
+    } catch (error) {
+      console.error("❌ Error en productService.changeState:", error);
+      return false;
+    }
+  },
+
+  async delete(id: number): Promise<boolean> {
+    try {
+      const response = await fetch(`${API_URL}/producto/eliminarProducto/${id}`, {
+        method: "DELETE",
+        headers: { Accept: "application/json" },
+      });
+
+      await parseApiResponse<null>(response);
+      return true;
+    } catch (error) {
+      console.error("❌ Error en productService.delete:", error);
+      return false;
     }
   },
 };

@@ -12,21 +12,16 @@ interface AccountLayoutProps {
 const AccountLayout: React.FC<AccountLayoutProps> = ({ breadcrumbItems }) => {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Breadcrumb */}
       <Breadcrumb items={breadcrumbItems} />
       
-      {/* Main Content */}
       <div className="flex">
-        {/* Sidebar */}
         <SidebarCuenta />
         
-        {/* Main Content Area */}
         <div className="flex-1 p-6">
           <UserResumenSection />
         </div>
       </div>
       
-      {/* Help Widget */}
       <HelpWidget />
     </div>
   );

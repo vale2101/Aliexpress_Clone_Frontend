@@ -11,16 +11,17 @@ export default function RecommendationsSection() {
     async function loadProducts() {
       try {
         setLoading(true);
+
+        // ✅ productService.getAll ya devuelve directamente el arreglo de productos
         const data = await productService.getAll();
 
         if (!Array.isArray(data)) {
           throw new Error("El servidor no devolvió una lista de productos válida");
         }
 
-        // ✅ Ya no hay filtro, se muestran todos los productos
         setProducts(data);
       } catch (error) {
-        console.error("Error cargando productos:", error);
+        console.error("❌ Error cargando productos:", error);
         setProducts([]);
       } finally {
         setLoading(false);

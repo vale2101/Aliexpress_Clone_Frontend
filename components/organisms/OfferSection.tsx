@@ -69,7 +69,6 @@ export default function OfferSection({
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm relative">
-      {/* Header */}
       <div className="text-center mb-4">
         <h2 className="text-lg font-bold">
           {title.replace("Save", "Sa")}
@@ -88,7 +87,6 @@ export default function OfferSection({
         </div>
       </div>
 
-      {/* Carrusel */}
       <div className="relative group">
         <Swiper
           modules={[Navigation]}
@@ -106,7 +104,6 @@ export default function OfferSection({
           ))}
         </Swiper>
 
-        {/* Botones de navegación */}
         <button
           className={`swiper-button-prev-${type} absolute top-1/2 -left-4 z-10 
           bg-gray-800 text-white p-2 rounded-full shadow 

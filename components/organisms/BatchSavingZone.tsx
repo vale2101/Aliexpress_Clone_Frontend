@@ -68,7 +68,7 @@ export default function BatchSavingZone() {
           <ProductCard
             key={product.id_producto || index}
             id={product.id_producto}
-            image={product.imagen_url || fallbackImages[index % fallbackImages.length]}
+            image={product.imagen_url || "/placeholder.jpg"}
             title={product.nombre}
             price={`$${product.precio} ${product.moneda ?? ""}`}
             oldPrice={
