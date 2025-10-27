@@ -24,7 +24,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({
   return (
     <div className="mt-6 p-4 bg-gray-50 rounded-lg relative dropdown-container">
       <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-600">Localización:</span>
+        <span className="text-sm text-gray-600">Pais :</span>
         <button 
           type="button"
           onClick={() => setShowLocationDropdown(!showLocationDropdown)}

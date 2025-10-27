@@ -1,33 +1,44 @@
-import React from 'react';
-import Button from '../atoms/Button';
-import LoadingSpinner from '../atoms/LoadingSpinner';
+import React from "react";
+import Button from "../atoms/Button";
+import LoadingSpinner from "../atoms/LoadingSpinner";
 
 interface SubmitButtonProps {
-  isLogin: boolean;
-  isLoading: boolean;
+  isLogin?: boolean; // si es login o registro
+  isLoading?: boolean;
   disabled?: boolean;
+  label?: string; // texto personalizado si no es login/registro
   className?: string;
 }
 
 const SubmitButton: React.FC<SubmitButtonProps> = ({
   isLogin,
-  isLoading,
+  isLoading = false,
   disabled = false,
-  className = "w-full bg-pink-400 hover:bg-pink-500 disabled:bg-pink-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-lg transition-colors"
+  label,
+  className,
 }) => {
+  const defaultClass =
+    "w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-lg transition-colors";
+
+  const finalClass = className || defaultClass;
+
+  const getLabel = () => {
+    if (isLogin !== undefined) {
+      if (isLoading) return isLogin ? "Iniciando sesión..." : "Registrando...";
+      return isLogin ? "Iniciar sesión" : "Registrarse";
+    }
+    return isLoading ? "Enviando..." : label || "Confirmar";
+  };
+
   return (
-    <Button
-      type="submit"
-      disabled={disabled || isLoading}
-      className={className}
-    >
+    <Button type="submit" disabled={disabled || isLoading} className={finalClass}>
       {isLoading ? (
         <div className="flex items-center justify-center">
           <LoadingSpinner size="md" className="mr-3" />
-          {isLogin ? "Iniciando sesión..." : "Registrando..."}
+          {getLabel()}
         </div>
       ) : (
-        isLogin ? "Iniciar sesión" : "Registrarse"
+        getLabel()
       )}
     </Button>
   );

@@ -22,7 +22,12 @@ import { useAuth } from "../../contexts/AuthContext";
 import MenuItem from "../atoms/MenuItem";
 import Divider from "../atoms/Divider";
 
-const UserMenu: React.FC = () => {
+interface UserMenuProps {
+  onLogin?: () => void;
+  onLogout?: () => Promise<void>;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ onLogin, onLogout }) => {
   const { isAuthenticated, user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -41,11 +46,22 @@ const UserMenu: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleLoginRedirect = () => router.push("/user");
-  const handleRegisterRedirect = () => router.push("/registro");
-  const handleVendedorLoginRedirect = () => router.push("/vendedor");
+  const handleLoginRedirect = () => {
+    if (onLogin) onLogin();
+    router.push("/user");
+  };
+
+  const handleRegisterRedirect = () => {
+    router.push("/registro");
+  };
+
+  const handleVendedorLoginRedirect = () => {
+    router.push("/vendedor");
+  };
+
   const handleLogout = async () => {
     await logout();
+    if (onLogout) await onLogout();
     router.push("/");
   };
 

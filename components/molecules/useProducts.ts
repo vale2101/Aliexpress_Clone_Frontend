@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Product as CartProduct } from "../atoms/ProductTypes";
-import { productService, ProductoInterface as ApiProduct } from "../../services/productService";
+import { productService   } from "../../services/productService";
+import { ProductoInterface as ApiProduct } from "@/interfaces/product.interface";
 
 export const useProducts = () => {
   const [products, setProducts] = useState<CartProduct[]>([]);

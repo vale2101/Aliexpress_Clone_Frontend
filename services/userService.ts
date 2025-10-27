@@ -46,13 +46,13 @@ export const UserService = {
     return response.data.data as User;
   },
 
-  async getCurrentUser(): Promise<User | null> {
-    const response = await axios.get<ApiResponse<User>>(
-      `${ENV.BACKEND_URL}/api/user/me`,
-      { withCredentials: true }
-    );
-    return response.data.data || null;
-  },
+async getCurrentUser(): Promise<User | null> {
+  const response = await axios.get<ApiResponse<User>>(
+    `${ENV.BACKEND_URL}/api/user/me`,
+    { withCredentials: true }
+  );
+  return response.data.data || null;
+},
 
   async createUser(data: CreateUserRequest): Promise<ApiResponse<null>> {
     const response = await axios.post<ApiResponse<null>>(
@@ -71,6 +71,7 @@ export const UserService = {
     );
     return response.data;
   },
+  
 
   async changeUserState(id: string, estado: User["estado"]): Promise<ApiResponse<null>> {
     const response = await axios.patch<ApiResponse<null>>(
@@ -89,3 +90,4 @@ export const UserService = {
     return response.data;
   },
 };
+

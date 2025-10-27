@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "../molecules/ProductCard";
-import { productService, ProductoInterface } from "../../services/productService";
+import { productService } from "../../services/productService";
+import { ProductoInterface } from "../../interfaces/product.interface";
 
 export default function RecommendationsSection() {
   const [products, setProducts] = useState<ProductoInterface[]>([]);

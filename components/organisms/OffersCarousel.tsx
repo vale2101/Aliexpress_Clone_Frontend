@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { productService, ProductoInterface } from "../../services/productService";
+import { productService } from "../../services/productService";
+import { ProductoInterface } from "../../interfaces/product.interface";
 
 type CardProps = { title: string; price: string; img: string; store?: string };
 

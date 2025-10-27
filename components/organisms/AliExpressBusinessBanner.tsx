@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import OfferSection from "./OfferSection";
-import { productService, ProductoInterface } from "../../services/productService";
+import { productService } from "../../services/productService";
+import { ProductoInterface } from "../../interfaces/product.interface";
 import { BadgeCheck, Zap, DollarSign } from "lucide-react";
 
 export default function AliExpressBusinessBanner() {

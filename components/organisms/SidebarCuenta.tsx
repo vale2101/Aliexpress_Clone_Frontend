@@ -4,7 +4,7 @@ import SidebarItem from "../molecules/SidebarItem";
 import Text from "../atoms/Typography";
 
 const menuItems = [
-  { label: "General", href: null, active: true },
+  { label: "General", href:"/cuenta" },
   { label: "Pedidos", href: "/pedidos" },
   { label: "Pago", href: "/pago" },
   { label: "Ajustes", href: null },
@@ -23,7 +23,6 @@ const SidebarCuenta: React.FC = () => {
           key={index} 
           label={item.label} 
           href={item.href}
-          active={item.active}
         />
       ))}
     </nav>

@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { productService, ProductoInterface } from "../../services/productService";
+import { productService } from "../../services/productService";
+import { ProductoInterface } from "../../interfaces/product.interface";
 
 export default function PromotionalBanner() {
   const { t } = useLanguage();

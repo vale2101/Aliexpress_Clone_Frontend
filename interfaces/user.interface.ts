@@ -16,19 +16,10 @@ export interface CreateUserRequest {
   email: string;
   contrasena: string;
   telefono?: string;
-  rol?: 2;
+  rol?: number;
   estado?: UserEstado; 
 }
 
-export interface CreateVendedorRequest {
-  nombre: string;
-  apellido: string;
-  email: string;
-  contrasena: string;
-  telefono?: string;
-  rol: "3";
-  estado?: UserEstado; 
-}
 
 export interface UpdateUserRequest {
   nombre?: string;

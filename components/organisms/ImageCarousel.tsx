@@ -13,39 +13,39 @@ interface CarouselImage {
 const carouselImages: CarouselImage[] = [
   {
     id: 1,
-    src: "/placeholder-banner-1.jpg",
+    src: "https://media.istockphoto.com/id/1249219777/es/foto/concepto-de-compra-en-l%C3%ADnea-cajas-de-paquetes-o-papel-con-un-logotipo-de-carrito-de-compras-en.jpg?s=612x612&w=0&k=20&c=c9lWANC_5G8ghLMV_EYiGlJpO55q--wIk8MRgI_08CQ=",
     alt: "Shopping online",
     title: "Los nuevos usuarios obtienen -70% dto.",
-    subtitle: "Ofertas increíbles te esperan"
+    subtitle: "Ofertas increíbles te esperan",
   },
   {
     id: 2,
-    src: "/placeholder-banner-2.jpg",
+    src: "https://images.unsplash.com/photo-1618354691215-0c6b9f6f5f7e?auto=format&fit=crop&w=1600&q=80",
     alt: "Fashion shopping",
     title: "Envío gratis en pedidos +$50",
-    subtitle: "Tecnología al mejor precio"
+    subtitle: "Tecnología al mejor precio",
   },
   {
     id: 3,
-    src: "/placeholder-banner-3.jpg",
+    src: "https://images.unsplash.com/photo-1606813909026-0f3b7b7d9e5e?auto=format&fit=crop&w=1600&q=80",
     alt: "Home decor",
     title: "Moda de temporada -50%",
-    subtitle: "Estilo único para ti"
+    subtitle: "Estilo único para ti",
   },
   {
     id: 4,
-    src: "/placeholder-banner-4.jpg",
+    src: "https://images.unsplash.com/photo-1580910051070-7f6b6e8b8b3b?auto=format&fit=crop&w=1600&q=80",
     alt: "Electronics shopping",
     title: "Hogar y decoración -40%",
-    subtitle: "Haz tu casa perfecta"
+    subtitle: "Haz tu casa perfecta",
   },
   {
     id: 5,
-    src: "/placeholder-banner-5.jpg",
+    src: "https://images.unsplash.com/photo-1611078489935-0c7f6f6f6f6f?auto=format&fit=crop&w=1600&q=80",
     alt: "Beauty products",
     title: "Belleza y cuidado -60%",
-    subtitle: "Cuida tu piel todos los días"
-  }
+    subtitle: "Cuida tu piel todos los días",
+  },
 ];
 
 export default function ImageCarousel() {
@@ -53,7 +53,7 @@ export default function ImageCarousel() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
+      setCurrentIndex((prevIndex) =>
         prevIndex === carouselImages.length - 1 ? 0 : prevIndex + 1
       );
     }, 4000);
@@ -66,11 +66,15 @@ export default function ImageCarousel() {
   };
 
   const goToPrevious = () => {
-    setCurrentIndex(currentIndex === 0 ? carouselImages.length - 1 : currentIndex - 1);
+    setCurrentIndex(
+      currentIndex === 0 ? carouselImages.length - 1 : currentIndex - 1
+    );
   };
 
   const goToNext = () => {
-    setCurrentIndex(currentIndex === carouselImages.length - 1 ? 0 : currentIndex + 1);
+    setCurrentIndex(
+      currentIndex === carouselImages.length - 1 ? 0 : currentIndex + 1
+    );
   };
 
   return (
@@ -80,7 +84,7 @@ export default function ImageCarousel() {
           <div
             key={image.id}
             className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0'
+              index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
           >
             <div
@@ -88,7 +92,7 @@ export default function ImageCarousel() {
               style={{ backgroundImage: `url(${image.src})` }}
             >
               <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-              
+
               <div className="absolute inset-0 flex items-center justify-center p-12">
                 <div className="text-white text-center">
                   <div className="bg-black bg-opacity-50 rounded-lg p-8 backdrop-blur-sm">
@@ -113,9 +117,9 @@ export default function ImageCarousel() {
               key={dotIndex}
               onClick={() => goToSlide(dotIndex)}
               className={`w-8 h-1 rounded transition-all duration-300 ${
-                dotIndex === currentIndex 
-                  ? 'bg-white' 
-                  : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                dotIndex === currentIndex
+                  ? "bg-white"
+                  : "bg-white bg-opacity-50 hover:bg-opacity-75"
               }`}
             />
           ))}
@@ -127,8 +131,18 @@ export default function ImageCarousel() {
         className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-300"
         aria-label="Previous image"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
       </button>
 
@@ -137,17 +151,27 @@ export default function ImageCarousel() {
         className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-300"
         aria-label="Next image"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </button>
 
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
         <div className="w-32 h-1 bg-white bg-opacity-30 rounded-full overflow-hidden">
-          <div 
+          <div
             className="h-full bg-white rounded-full transition-all duration-100 ease-linear"
-            style={{ 
-              width: `${((currentIndex + 1) / carouselImages.length) * 100}%` 
+            style={{
+              width: `${((currentIndex + 1) / carouselImages.length) * 100}%`,
             }}
           />
         </div>

@@ -84,7 +84,7 @@ export default function VendedorLogin() {
 
               <button
                 type="button"
-                onClick={() => router.push("/vendedor/registro")}
+                onClick={() => router.push("/registroV")}
                 className="px-6 py-3 rounded-full border border-gray-300 bg-white hover:shadow"
               >
                 Registro

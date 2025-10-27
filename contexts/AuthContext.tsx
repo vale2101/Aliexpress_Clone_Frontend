@@ -18,36 +18,34 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const users = await UserService.getUsers();
-        if (users.length > 0) {
-          setUser(users[0]); 
-        }
-      } catch {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    checkSession();
-  }, []);
-
-  const login = async (email: string, contrasena: string) => {
-    setLoading(true);
+useEffect(() => {
+  const checkSession = async () => {
     try {
-      const response = await UserService.login({ email, contrasena });
-      // ❌ alert removido
-      setUser({ email } as User);
-    } catch (error: any) {
-      // ❌ alert removido
+      const currentUser = await UserService.getCurrentUser();
+      setUser(currentUser);
+    } catch {
       setUser(null);
     } finally {
       setLoading(false);
     }
   };
+  checkSession();
+}, []);
 
+
+const login = async (email: string, contrasena: string) => {
+  setLoading(true);
+  try {
+    await UserService.login({ email, contrasena });
+
+    const currentUser = await UserService.getCurrentUser();
+    setUser(currentUser);
+  } catch (error) {
+    setUser(null);
+  } finally {
+    setLoading(false);
+  }
+};
   const logout = async () => {
     setLoading(true);
     try {

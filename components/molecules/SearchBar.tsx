@@ -14,13 +14,11 @@ export default function SearchBar({ className = "" }: { className?: string }) {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Navegar a página de búsqueda con el query
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
   const handleImageSearch = () => {
-    // Funcionalidad para búsqueda por imagen
     console.log("Búsqueda por imagen");
   };
 
@@ -33,7 +31,6 @@ export default function SearchBar({ className = "" }: { className?: string }) {
         className="border-none flex-1 h-8 sm:h-10 lg:h-11 px-2 sm:px-3 lg:px-4 focus:outline-none text-gray-700 text-sm sm:text-base" 
       />
       
-      {/* Botón de búsqueda por imagen - oculto en móvil */}
       <button
         type="button"
         onClick={handleImageSearch}
@@ -43,7 +40,6 @@ export default function SearchBar({ className = "" }: { className?: string }) {
         <Camera className="w-4 h-4 lg:w-5 lg:h-5 text-gray-600" />
       </button>
       
-      {/* Botón de búsqueda */}
       <button 
         type="submit"
         className="bg-black text-white px-2 sm:px-3 lg:px-4 py-2 flex items-center h-8 sm:h-10 lg:h-11 hover:bg-gray-800 transition-colors rounded-r-full"
