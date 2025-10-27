@@ -45,7 +45,7 @@ const CategoriesBar: React.FC = () => {
             setActiveCategory(null);
           }}
         >
-          <button className="flex items-center gap-1 sm:gap-2 rounded-full border border-gray-300 px-2 sm:px-4 lg:px-5 py-1 sm:py-2 text-xs sm:text-sm hover:bg-gray-50 whitespace-nowrap transition-colors">
+          <button className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 lg:px-5 py-1 sm:py-2 text-xs sm:text-sm hover:bg-gray-50 whitespace-nowrap transition-colors">
             <span className="text-sm sm:text-lg">☰</span>
             <span className="text-gray-700 hidden sm:inline">{t("header.all_categories")}</span>
             <ChevronDown size={12} className="text-gray-500 sm:w-4 sm:h-4" />
