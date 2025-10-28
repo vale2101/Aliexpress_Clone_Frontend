@@ -34,7 +34,6 @@ const Cart: React.FC<CartProps> = ({
   };
 
   const handleCheckout = () => {
-    // Aquí puedes implementar la lógica de checkout
     console.log('Proceder al checkout', { items, totalPrice });
   };
 
@@ -54,7 +53,6 @@ const Cart: React.FC<CartProps> = ({
 
   return (
     <div className={`bg-white rounded-lg border border-gray-200 ${className}`}>
-      {/* Header del carrito */}
       {showHeader && (
         <div className="px-6 py-4 border-b border-gray-200">
           <div className="flex items-center justify-between">
@@ -76,12 +74,10 @@ const Cart: React.FC<CartProps> = ({
         </div>
       )}
 
-      {/* Lista de productos */}
       <div className="divide-y divide-gray-200">
         {items.map((item) => (
           <div key={item.product.id} className="p-6">
             <div className="flex gap-4">
-              {/* Imagen del producto */}
               <div className="flex-shrink-0">
                 <img
                   src={item.product.image}
@@ -90,7 +86,6 @@ const Cart: React.FC<CartProps> = ({
                 />
               </div>
 
-              {/* Información del producto */}
               <div className="flex-1 min-w-0">
                 <h3 className="text-lg font-medium text-gray-900 line-clamp-2 mb-1">
                   {item.product.name}
@@ -102,7 +97,6 @@ const Cart: React.FC<CartProps> = ({
                   </p>
                 )}
 
-                {/* Precio unitario */}
                 <div className="mb-3">
                   <Price 
                     price={item.product.price} 
@@ -111,7 +105,6 @@ const Cart: React.FC<CartProps> = ({
                   />
                 </div>
 
-                {/* Controles de cantidad y subtotal */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <button
@@ -135,7 +128,6 @@ const Cart: React.FC<CartProps> = ({
                     </button>
                   </div>
 
-                  {/* Subtotal */}
                   <div className="text-right">
                     <div className="text-sm text-gray-500 mb-1">Subtotal</div>
                     <Price 
@@ -145,7 +137,6 @@ const Cart: React.FC<CartProps> = ({
                     />
                   </div>
 
-                  {/* Botón eliminar */}
                   <button
                     onClick={() => handleRemove(item.product.id)}
                     className="text-red-500 hover:text-red-700 p-2 transition-colors"
@@ -160,16 +151,13 @@ const Cart: React.FC<CartProps> = ({
         ))}
       </div>
 
-      {/* Resumen del carrito */}
       <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
         <div className="space-y-3">
-          {/* Total de artículos */}
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Total de artículos:</span>
             <span className="font-medium">{totalItems}</span>
           </div>
 
-          {/* Total general */}
           <div className="flex justify-between text-lg font-semibold">
             <span className="text-gray-900">Total:</span>
             <Price 
@@ -179,7 +167,6 @@ const Cart: React.FC<CartProps> = ({
             />
           </div>
 
-          {/* Botón de checkout */}
           {showCheckout && (
             <Button
               onClick={handleCheckout}

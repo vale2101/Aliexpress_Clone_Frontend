@@ -1,16 +1,17 @@
 "use client";
 
 import React from "react";
-import DeliveryAddressSection from "../molecules/DeliveryAddressSection";
+import DeliveryAddressSelector from "../molecules/DeliveryAddressSection"; 
 import PaymentMethodsSection from "../molecules/PaymentMethodsSection";
 import ShippingMethodSection from "../molecules/ShippingMethodSection";
-import CheckoutItemDetails from "../molecules/CheckoutItemDetails";
+import CheckoutItemList from "../molecules/CheckoutItemList";
 import OrderSummary from "../molecules/OrderSummary";
 import SecurityTrust from "../molecules/SecurityTrust";
 import FastDelivery from "../molecules/FastDelivery";
 import SecurityPrivacy from "../molecules/SecurityPrivacy";
 import SecurePayments from "../molecules/SecurePayments";
 import { useCheckoutCalculations } from "../../hooks/useCheckoutCalculations";
+import { AddressInterface } from "../../interfaces/address.interface"; 
 
 interface CheckoutItem {
   image: string;
@@ -24,6 +25,7 @@ interface CheckoutLayoutProps {
   onPlaceOrder: () => void;
   onQuantityChange?: (index: number, quantity: number) => void;
   onAddMoreItems?: () => void;
+  onAddressSelect?: (address: AddressInterface) => void; // ✅ prop para subir dirección
 }
 
 const CheckoutLayout: React.FC<CheckoutLayoutProps> = ({
@@ -31,15 +33,11 @@ const CheckoutLayout: React.FC<CheckoutLayoutProps> = ({
   onPlaceOrder,
   onQuantityChange,
   onAddMoreItems,
+  onAddressSelect,
 }) => {
-  // Calcular totales usando el hook
   const { subtotal, total, hasDiscount, discountAmount } = useCheckoutCalculations({
     items,
   });
-
-  const handleQuantityChange = (index: number, quantity: number) => {
-    onQuantityChange?.(index, quantity);
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -53,34 +51,21 @@ const CheckoutLayout: React.FC<CheckoutLayoutProps> = ({
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main content */}
       <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {/* Left Column */}
+          {/* Columna izquierda */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Delivery Address */}
-            <DeliveryAddressSection />
+            {/* ✅ Conexión: el selector de direcciones notifica hacia arriba */}
+            <DeliveryAddressSelector onSelect={onAddressSelect} />  
 
-            {/* Payment Methods */}
             <PaymentMethodsSection />
-
-            {/* Shipping Method */}
             <ShippingMethodSection />
-
-            {/* Item Details */}
-            <CheckoutItemDetails
-              image={items[0]?.image || ""}
-              title={items[0]?.title || ""}
-              price={items[0]?.price || 0}
-              quantity={items[0]?.quantity || 1}
-              onQuantityChange={(qty) => handleQuantityChange(0, qty)}
-              onAddMoreItems={onAddMoreItems}
-            />
+            <CheckoutItemList />
           </div>
 
-          {/* Right Column */}
+          {/* Columna derecha */}
           <div className="space-y-6">
-            {/* Order Summary */}
             <OrderSummary
               subtotal={subtotal}
               shippingCost={0}
@@ -89,16 +74,9 @@ const CheckoutLayout: React.FC<CheckoutLayoutProps> = ({
               onPlaceOrder={onPlaceOrder}
             />
 
-            {/* Security/Trust Section */}
             <SecurityTrust />
-
-            {/* Fast Delivery */}
             <FastDelivery />
-
-            {/* Security & Privacy */}
             <SecurityPrivacy />
-
-            {/* Secure Payments */}
             <SecurePayments />
           </div>
         </div>
@@ -108,4 +86,3 @@ const CheckoutLayout: React.FC<CheckoutLayoutProps> = ({
 };
 
 export default CheckoutLayout;
-

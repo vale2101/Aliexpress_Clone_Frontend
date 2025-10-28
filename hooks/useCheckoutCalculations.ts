@@ -13,25 +13,21 @@ export const useCheckoutCalculations = ({
 }: UseCheckoutCalculationsProps) => {
   const { promoResult, applyPromoCode } = usePromoCode();
 
-  // Calcular subtotal
   const subtotal = useMemo(
     () => items.reduce((sum, item) => sum + item.price * item.quantity, 0),
     [items]
   );
 
-  // Aplicar descuento promocional si existe
   const subtotalWithDiscount = useMemo(
     () => applyPromoCode(subtotal),
     [subtotal, applyPromoCode]
   );
 
-  // Calcular descuento aplicado
   const discountAmount = useMemo(
     () => subtotal - subtotalWithDiscount,
     [subtotal, subtotalWithDiscount]
   );
 
-  // Calcular total final
   const total = useMemo(
     () => subtotalWithDiscount + shippingCost,
     [subtotalWithDiscount, shippingCost]

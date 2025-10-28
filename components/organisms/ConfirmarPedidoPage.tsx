@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { useCartStore } from "../components/organisms/CartStore";
-import { useAuth } from "../contexts/AuthContext";
-import { pedidoService } from "../services/pedidoService";
-import { CrearPedidoDTO } from "../interfaces/pedido.interface";
+import { useCartStore } from "../organisms/CartStore";
+import { useAuth } from "../../contexts/AuthContext";
+import { pedidoService } from "../../services/pedidoService";
+import { CrearPedidoDTO } from "../../interfaces/pedido.interface";
 
 export interface CheckoutItem {
   image: string;
