@@ -7,7 +7,21 @@ export function middleware(req: NextRequest) {
   const isAuth = !!token;
   const { pathname } = req.nextUrl;
 
-  if (pathname.startsWith("/carrito") && !isAuth) {
+  // Define protected routes
+  const protectedRoutes = [
+    "/carrito",
+    "/cuenta",
+    "/confirmar-pedido",
+    "/direccion",
+    "/mis-pedidos"
+  ];
+
+  // Check if the current path matches any protected route
+  const isProtectedRoute = protectedRoutes.some(route => 
+    pathname.startsWith(route)
+  );
+
+  if (isProtectedRoute && !isAuth) {
     return NextResponse.redirect(new URL("/user", req.url));
   }
 
@@ -17,7 +31,12 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/carrito/:path*", 
-    
+    "/carrito/:path*",
+    "/cuenta/:path*",
+    "/confirmar-pedido/:path*",
+    "/direccion/:path*",
+    "/mis-pedidos/:path*",
+    "/cuenta/productos/:path*",
+    "/cuenta/pedidos/:path*",
   ],
 };
