@@ -2,19 +2,16 @@ import React from "react";
 import Text from "../atoms/Typography";
 import ResultCount from "../atoms/ResultCount";
 import ClearButton from "../atoms/ClearButton";
-import SearchBar from "./SearchBar";
 
 interface SearchResultHeaderProps {
   searchQuery: string;
   resultCount: number;
-  onSearchChange: (value: string) => void;
   onClearSearch: () => void;
 }
 
 const SearchResultHeader: React.FC<SearchResultHeaderProps> = ({
   searchQuery,
   resultCount,
-  onSearchChange,
   onClearSearch
 }) => {
   return (
@@ -31,9 +28,6 @@ const SearchResultHeader: React.FC<SearchResultHeaderProps> = ({
             </div>
           )}
         </div>
-      </div>
-      <div className="max-w-2xl">
-        <SearchBar className="w-full" onSearchChange={onSearchChange} />
       </div>
     </div>
   );

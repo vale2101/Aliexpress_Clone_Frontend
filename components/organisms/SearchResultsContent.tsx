@@ -15,7 +15,6 @@ interface SearchResultsContentProps {
     total: number;
     searchTerm: string;
   };
-  onSearchChange: (value: string) => void;
   onClearSearch: () => void;
 }
 
@@ -24,7 +23,6 @@ const SearchResultsContent: React.FC<SearchResultsContentProps> = ({
   filteredProducts,
   loading,
   stats,
-  onSearchChange,
   onClearSearch
 }) => {
   // Loading state
@@ -38,7 +36,6 @@ const SearchResultsContent: React.FC<SearchResultsContentProps> = ({
       <SearchResultHeader
         searchQuery={searchQuery}
         resultCount={stats.filtered}
-        onSearchChange={onSearchChange}
         onClearSearch={onClearSearch}
       />
 
