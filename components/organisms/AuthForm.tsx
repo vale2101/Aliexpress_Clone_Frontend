@@ -11,7 +11,7 @@ import LocationSelector from "../molecules/LocationSelector";
 import Logo from "../molecules/Logo";
 
 const AuthFormRefactored: React.FC = () => {
-  const { login, loading } = useAuth(); 
+  const { login, loading } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -23,10 +23,21 @@ const AuthFormRefactored: React.FC = () => {
     e.preventDefault();
     setErrorMessage("");
 
-    try {
-      const response = await login(email, password);
+      try {
+      const loggedUser = await login(email, password);
 
-      router.replace("/");
+      if (!loggedUser) {
+        setErrorMessage("Credenciales inválidas o error de conexión.");
+        return;
+      }
+
+      const roleNumber = Number(loggedUser.rol);
+      if (Number.isNaN(roleNumber) || roleNumber !== 2) {
+        setErrorMessage("Solo los vendedores pueden iniciar sesión en esta sección.");
+        return;
+      }
+
+      router.replace("/cuenta");
     } catch (err: any) {
       console.error("Error en login:", err);
       setErrorMessage(err.message || "Error al iniciar sesión");

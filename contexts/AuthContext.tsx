@@ -6,9 +6,9 @@ import { User, CreateUserRequest } from "../interfaces/user.interface";
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, contrasena: string) => Promise<void>;
+  login: (email: string, contrasena: string) => Promise<User | null>;
   logout: () => Promise<void>;
-    register: (data: CreateUserRequest) => Promise<void>;
+  register: (data: CreateUserRequest) => Promise<void>;
   isAuthenticated: boolean;
 }
 
@@ -18,39 +18,39 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const checkSession = async () => {
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const currentUser = await UserService.getCurrentUser();
+        setUser(currentUser);
+      } catch {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkSession();
+  }, []);
+
+  const login = async (email: string, contrasena: string): Promise<User | null> => {
+    setLoading(true);
     try {
+      await UserService.login({ email, contrasena });
       const currentUser = await UserService.getCurrentUser();
       setUser(currentUser);
-    } catch {
+      return currentUser;
+    } catch (error) {
       setUser(null);
+      return null;
     } finally {
       setLoading(false);
     }
   };
-  checkSession();
-}, []);
 
-
-const login = async (email: string, contrasena: string) => {
-  setLoading(true);
-  try {
-    await UserService.login({ email, contrasena });
-
-    const currentUser = await UserService.getCurrentUser();
-    setUser(currentUser);
-  } catch (error) {
-    setUser(null);
-  } finally {
-    setLoading(false);
-  }
-};
   const logout = async () => {
     setLoading(true);
     try {
-      const response = await UserService.logout();
-      // ❌ alert removido
+      await UserService.logout();
       setUser(null);
     } catch (error) {
       console.error(error);
@@ -58,7 +58,8 @@ const login = async (email: string, contrasena: string) => {
       setLoading(false);
     }
   };
-    const register = async (data: CreateUserRequest) => {
+
+  const register = async (data: CreateUserRequest) => {
     setLoading(true);
     try {
       await UserService.createUser(data);
