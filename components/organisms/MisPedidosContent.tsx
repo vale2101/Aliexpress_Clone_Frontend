@@ -8,11 +8,7 @@ import PedidosEmptyState from "../molecules/PedidosEmptyState";
 import PedidosLoadingState from "../molecules/PedidosLoadingState";
 import PedidosListHeader from "../molecules/PedidosListHeader";
 
-interface MisPedidosContentProps {
-  children?: React.ReactNode;
-}
-
-const MisPedidosContent: React.FC<MisPedidosContentProps> = () => {
+const MisPedidosContent: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,9 +33,7 @@ const MisPedidosContent: React.FC<MisPedidosContentProps> = () => {
     fetchPedidos();
   }, [user, isAuthenticated]);
 
-  if (loading) {
-    return <PedidosLoadingState />;
-  }
+  if (loading) return <PedidosLoadingState />;
 
   if (!isAuthenticated || !user) {
     return (
@@ -65,7 +59,7 @@ const MisPedidosContent: React.FC<MisPedidosContentProps> = () => {
 
   return (
     <>
-      <PedidosListHeader 
+      <PedidosListHeader
         title="Mis Pedidos"
         subtitle="Revisa el estado de todos tus pedidos"
       />
@@ -79,4 +73,3 @@ const MisPedidosContent: React.FC<MisPedidosContentProps> = () => {
 };
 
 export default MisPedidosContent;
-

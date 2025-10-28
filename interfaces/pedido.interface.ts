@@ -1,12 +1,9 @@
 export interface ProductoPedido {
   id_producto: number;
+  nombre: string;
+  imagen: string;
+  precio: number;
   cantidad: number;
-}
-
-export interface CrearPedidoDTO {
-  id_usuario: number;
-  id_direccion: number;
-  productos: ProductoPedido[];
 }
 
 export interface Pedido {
@@ -16,11 +13,14 @@ export interface Pedido {
   fecha_pedido: string;
   estado: string;
   total: number;
-  productos?: Array<{
+  productos: ProductoPedido[];
+}
+
+export interface CrearPedidoDTO {
+  id_usuario: number;
+  id_direccion: number;
+  productos: {
     id_producto: number;
-    nombre: string;
-    imagen: string;
-    precio: number;
     cantidad: number;
-  }>;
+  }[];
 }

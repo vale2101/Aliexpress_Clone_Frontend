@@ -1,5 +1,5 @@
 import { ENV } from "../config/env";
-import { CrearPedidoDTO } from "../interfaces/pedido.interface";
+import { CrearPedidoDTO, Pedido } from "../interfaces/pedido.interface";
 
 const API_URL = ENV.API_URL;
 
@@ -31,22 +31,16 @@ export const pedidoService = {
     }
   },
 
-  async getByUser(id_usuario: number): Promise<any[]> {
+  async getByUser(id_usuario: number): Promise<Pedido[]> {
     try {
-      const response = await fetch(`${API_URL}/pedido/user/${id_usuario}`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-      });
-
+      const response = await fetch(`${API_URL}/pedido/user/${id_usuario}`);
       const result = await response.json();
 
       if (!response.ok || !result.success) {
         throw new Error(result.message || result.error || "Error al obtener pedidos");
       }
 
-      return result.data || result.pedidos || [];
+      return result.pedidos || [];
     } catch (error) {
       console.error("❌ Error en pedidoService.getByUser:", error);
       return [];
