@@ -77,7 +77,7 @@ export const useCheckout = (selectedAddressId: number | null) => {
         confirmButtonColor: "#dc2626",
       });
       clearCart();
-      router.push("/pedido-confirmado");
+      router.push("/cuenta");
     } else {
       await Swal.fire({
         title: "Error",
@@ -89,7 +89,7 @@ export const useCheckout = (selectedAddressId: number | null) => {
   };
 
   const handleAddMoreItems = () => {
-    router.push("/productos");
+    router.push("/user");
   };
 
   return {

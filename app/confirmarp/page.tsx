@@ -29,7 +29,7 @@ const ConfirmarPedidoPage: React.FC = () => {
         confirmButtonColor: "#dc2626",
       }).then((result) => {
         if (result.isConfirmed) {
-          router.push("/user");
+          router.push("/cuenta");
         }
       });
     }
