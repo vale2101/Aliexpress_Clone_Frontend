@@ -1,15 +1,49 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { useSearch } from "../../hooks/useSearch";
+import SearchResultsContent from "../../components/organisms/SearchResultsContent";
 
 export default function SearchPage() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q") || "";
+  
+  const { 
+    searchQuery, 
+    setSearchQuery, 
+    filteredProducts, 
+    loading, 
+    stats,
+    loadProducts,
+    clearSearch 
+  } = useSearch({ initialQuery: query });
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  useEffect(() => {
+    if (query && query !== searchQuery) {
+      setSearchQuery(query);
+    }
+  }, [query]);
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          Página de Búsqueda
-        </h1>
-        <p className="text-gray-600">
-          Aquí se mostrarán los resultados de búsqueda.
-        </p>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <SearchResultsContent
+          searchQuery={searchQuery}
+          filteredProducts={filteredProducts}
+          loading={loading}
+          stats={stats}
+          onSearchChange={handleSearchChange}
+          onClearSearch={clearSearch}
+        />
       </div>
     </div>
   );

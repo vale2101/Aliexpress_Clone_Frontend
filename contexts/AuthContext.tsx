@@ -86,7 +86,7 @@ const login = async (email: string, contrasena: string) => {
   );
 };
 
-export const useAuth = (): AuthContextType => {
+export const useAuthContext = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth debe estar dentro de un AuthProvider");

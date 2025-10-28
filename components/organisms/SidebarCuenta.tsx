@@ -22,8 +22,8 @@ const adminMenuItems = [
 const SidebarCuenta: React.FC = () => {
   const { user } = useAuth();
   
-  // Check if user has admin role (role id 3)
-  const isAdmin = user && user.rol === "3";
+  // Check if user has admin role (role id 1)
+  const isAdmin = user && user.rol === "1";
   
   // Use appropriate menu based on role
   const menuItems = isAdmin ? adminMenuItems : regularMenuItems;

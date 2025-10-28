@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Pedido } from "../../interfaces/pedido.interface";
 import Text from "../atoms/Typography";
 import Button from "../atoms/Button";
@@ -105,13 +106,12 @@ const PedidoCard: React.FC<PedidoCardProps> = ({ pedido }) => {
             </div>
           </div>
           <div className="flex gap-3">
-            <Button
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-md flex items-center gap-2 font-medium"
-              onClick={() => window.location.href = `/pedidos/${pedido.id_pedido}`}
-            >
-              <Eye className="w-4 h-4" />
-              Ver detalles
-            </Button>
+            <Link href={`/pedidos/${pedido.id_pedido}`}>
+              <Button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-md flex items-center gap-2 font-medium">
+                <Eye className="w-4 h-4" />
+                Ver detalles
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
