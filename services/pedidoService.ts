@@ -46,7 +46,7 @@ export const pedidoService = {
         throw new Error(result.message || result.error || "Error al obtener pedidos");
       }
 
-      return result.pedidos || [];
+      return result.data || result.pedidos || [];
     } catch (error) {
       console.error("❌ Error en pedidoService.getByUser:", error);
       return [];

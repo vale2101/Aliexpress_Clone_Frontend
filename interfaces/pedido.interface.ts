@@ -8,3 +8,19 @@ export interface CrearPedidoDTO {
   id_direccion: number;
   productos: ProductoPedido[];
 }
+
+export interface Pedido {
+  id_pedido: number;
+  id_usuario: number;
+  id_direccion: number;
+  fecha_pedido: string;
+  estado: string;
+  total: number;
+  productos?: Array<{
+    id_producto: number;
+    nombre: string;
+    imagen: string;
+    precio: number;
+    cantidad: number;
+  }>;
+}

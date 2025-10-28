@@ -5,7 +5,7 @@ import Text from "../atoms/Typography";
 
 const menuItems = [
   { label: "General", href:"/cuenta" },
-  { label: "Pedidos", href: "/pedidos" },
+  { label: "Pedidos", href: "/mis-pedidos" },
   { label: "Pago", href: "/pago" },
   { label: "Ajustes", href: null },
   { label: "Dirección de envío", href: "/direccion" },
