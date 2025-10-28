@@ -2,7 +2,7 @@
 import React from "react";
 import SidebarItem from "../molecules/SidebarItem";
 import Text from "../atoms/Typography";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const regularMenuItems = [
   { label: "General", href: "/cuenta" },

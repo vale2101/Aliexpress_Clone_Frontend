@@ -11,7 +11,7 @@ import ErrorText from "../atoms/ErrorText";
 
 import { AddressInterface } from "../../interfaces/address.interface";
 import { addressService } from "../../services/addressService";
-import { useAuth } from "../../contexts/AuthContext"; // ✅ nuevo
+import { useAuth } from "../../hooks/useAuth";
 
 interface Props {
   initialData?: AddressInterface;

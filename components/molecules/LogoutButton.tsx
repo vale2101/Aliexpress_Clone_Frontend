@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../atoms/Button";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { LogOut } from "lucide-react";
 
 const LogoutButton: React.FC = () => {

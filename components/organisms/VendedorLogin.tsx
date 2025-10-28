@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import Logo from "../molecules/Logo";
 import LoginFields from "../molecules/LoginFields";
 import LocationSelector from "..//molecules/LocationSelector";

@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import Text from "../atoms/Typography";
 import LinkButton from "../atoms/LinkButton";
 import { addressService } from "../../services/addressService";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { AddressInterface } from "../../interfaces/address.interface";
 
 interface DeliveryAddressSelectorProps {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { useRouter } from "next/navigation";
 import Logo from "../molecules/Logo";
 import FormHeader from "../molecules/FormHeader";

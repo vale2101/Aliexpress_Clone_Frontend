@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, AppWindow } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { useCartStore } from "./CartStore";
 import LocationModal from "./LocationModal";
 import UserMenu from "../molecules/UserMenu";

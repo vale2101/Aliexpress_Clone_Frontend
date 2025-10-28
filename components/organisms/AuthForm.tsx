@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { useRouter } from "next/navigation";
 import ImageCarousel from "./ImageCarousel";
 import FormHeader from "../molecules/FormHeader";

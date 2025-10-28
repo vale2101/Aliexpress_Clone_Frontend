@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { useCartStore } from "../organisms/CartStore";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { pedidoService } from "../../services/pedidoService";
 import { CrearPedidoDTO } from "../../interfaces/pedido.interface";
 

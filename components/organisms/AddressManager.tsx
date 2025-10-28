@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { AddressInterface } from "../../interfaces/address.interface";
 import { addressService } from "../../services/addressService";
-import { useAuth } from "../../contexts/AuthContext"; 
+import { useAuth } from "../../hooks/useAuth"; 
 
 const AddressManager = () => {
   const { user } = useAuth();

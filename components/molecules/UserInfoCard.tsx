@@ -3,7 +3,7 @@ import Avatar from "../atoms/Avatar";
 import Text from "../atoms/Typography";
 import ActionIconItem from "./ActionIconItem";
 import { Heart, Clock, Ticket, CreditCard } from "lucide-react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const UserInfoCard: React.FC = () => {
   const { user } = useAuth();

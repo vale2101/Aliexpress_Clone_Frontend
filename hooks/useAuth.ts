@@ -4,7 +4,7 @@ import { User } from "../interfaces/user.interface";
 interface UseAuthReturn {
   user: User | null;
   loading: boolean;
-  login: (email: string, contrasena: string) => Promise<void>;
+  login: (email: string, contrasena: string) => Promise<User | null>;
   logout: () => Promise<void>;
   register: (data: any) => Promise<void>;
   isAuthenticated: boolean;

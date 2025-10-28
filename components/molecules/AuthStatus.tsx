@@ -1,6 +1,6 @@
 import React from "react";
 import Text from "../atoms/Typography";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { CheckCircle, XCircle, Loader } from "lucide-react";
 
 const AuthStatus: React.FC = () => {

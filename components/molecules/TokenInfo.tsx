@@ -1,7 +1,7 @@
 import React from "react";
 import Text from "../atoms/Typography";
 import LogoutButton from "./LogoutButton";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const TokenInfo: React.FC = () => {
   const { user, isAuthenticated, loading } = useAuth();

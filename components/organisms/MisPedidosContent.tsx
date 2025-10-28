@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { pedidoService } from "../../services/pedidoService";
 import { Pedido } from "../../interfaces/pedido.interface";
 import PedidoCard from "../molecules/PedidoCard";
