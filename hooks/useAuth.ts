@@ -20,9 +20,9 @@ export const useAuth = (): UseAuthReturn => {
   const { user, loading, login, logout, register, isAuthenticated } = auth;
 
   // Verificar rol del usuario
-  const isAdmin = user?.rol === "1";     // Admin
-  const isCustomer = user?.rol === "2";  // Usuario
-  const isVendor = user?.rol === "3";    // Vendedor
+  const isAdmin = user?.rol === 1;     // Admin
+  const isCustomer = user?.rol === 2;  // Usuario
+  const isVendor = user?.rol === 3;    // Vendedor
 
   // Obtener nombre completo del usuario
   const userFullName = user 

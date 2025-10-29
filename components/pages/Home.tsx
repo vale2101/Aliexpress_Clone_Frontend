@@ -17,13 +17,10 @@ export default function Home() {
       <HeroBanner />
       <BenefitsStrip />
       
-      {/* Secciones de ofertas */}
       <OffersSection />
       
-      {/* Banner de AliExpress Business */}
       <AliExpressBusinessBanner />
       
-      {/* Secciones de productos */}
       <div className="bg-gray-50 py-12">
         <div className="max-w-full mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-6">
@@ -37,12 +34,10 @@ export default function Home() {
         </div>
       </div>
       
-      {/* Banner promocional Viva */}
       <PromoWithCategories />
       
       
       
-      {/* Sección de recomendaciones */}
       <RecommendationsSection />
     </HomeLayout>
   );

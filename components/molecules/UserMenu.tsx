@@ -84,11 +84,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ onLogin, onLogout }) => {
               <h3 className="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Mi cuenta</h3>
               <ul className="space-y-1">
                 <MenuItem icon={<ClipboardList size={14} />} label="Mis pedidos" />
-                <MenuItem icon={<Wallet size={14} />} label="Mis monedas" />
-                <MenuItem icon={<MessageSquare size={14} />} label="Centro de mensajes" />
-                <MenuItem icon={<CreditCard size={14} />} label="Pago" />
-                <MenuItem icon={<Heart size={14} />} label="Lista de deseos" />
-                <MenuItem icon={<Ticket size={14} />} label="Mis cupones" />
               </ul>
               <Divider />
               <MenuItem
@@ -97,7 +92,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ onLogin, onLogout }) => {
                 onClick={() => router.push("/cuenta")}
               />
               <MenuItem icon={<Briefcase size={14} />} label="AliExpress Business" />
-              <MenuItem icon={<PackageSearch size={14} />} label="Centro de dropshipping" />
               <MenuItem
                 icon={<LogOut size={14} />}
                 label="Cerrar sesión"

@@ -7,10 +7,7 @@ import { useAuth } from "../../hooks/useAuth";
 const regularMenuItems = [
   { label: "General", href: "/cuenta" },
   { label: "Pedidos", href: "/mis-pedidos" },
-  { label: "Pago", href: "/pago" },
-  { label: "Ajustes", href: null },
   { label: "Dirección de envío", href: "/direccion" },
-  { label: "Centro de mensajes", href: null },
 ];
 
 const adminMenuItems = [
@@ -21,11 +18,9 @@ const adminMenuItems = [
 
 const SidebarCuenta: React.FC = () => {
   const { user } = useAuth();
-  
-  // Check if user has admin role (role id 1)
-  const isAdmin = user && user.rol === "1";
-  
-  // Use appropriate menu based on role
+
+  const isAdmin = user && Number(user.rol) === 3;
+
   const menuItems = isAdmin ? adminMenuItems : regularMenuItems;
 
   return (

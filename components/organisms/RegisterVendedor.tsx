@@ -70,7 +70,7 @@ const RegisterFormRefactored: React.FC = () => {
         estado: "activo",
       });
 
-      router.push("/user");
+      router.push("/cuenta/productos");
     } catch (err: any) {
       setErrorMessage(err.message || "Error al registrarse");
     }
@@ -78,7 +78,7 @@ const RegisterFormRefactored: React.FC = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/");
+      router.push("/cuenta/productos");
     }
   }, [isAuthenticated, router]);
 

@@ -17,7 +17,7 @@ export default function AliExpressBusinessBanner() {
     async function loadProducts() {
       try {
         setLoading(true);
-        const allProducts = await productService.getAll();
+        const allProducts = await productService.getAllActive();
         setProducts(Array.isArray(allProducts) ? allProducts : []);
       } catch (error) {
         console.error("❌ Error cargando productos:", error);
@@ -30,22 +30,16 @@ export default function AliExpressBusinessBanner() {
     loadProducts();
   }, []);
 
-  const normalize = (str?: string) => str?.trim().toLowerCase();
-
   const getRandomSubset = (items: ProductoInterface[], count: number) => {
     const shuffled = [...items].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   };
 
-  const ahorroProducts = getRandomSubset(
-    products.filter((p) => normalize(p.categoria) === "ahorro"),
-    2
-  );
+  // Seleccionar 6 productos aleatorios para la zona de ahorro
+  const ahorroProducts = getRandomSubset(products, 6);
 
-  const volverProducts = getRandomSubset(
-    products.filter((p) => normalize(p.categoria) === "volver a comprar"),
-    2
-  );
+  // Seleccionar productos aleatorios para "Volver a comprar" (mantener algunos productos diferentes)
+  const volverProducts = getRandomSubset(products, 4);
 
   return (
     <div className="bg-white">

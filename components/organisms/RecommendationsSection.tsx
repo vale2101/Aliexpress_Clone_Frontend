@@ -14,7 +14,7 @@ export default function RecommendationsSection() {
         setLoading(true);
 
         // ✅ productService.getAll ya devuelve directamente el arreglo de productos
-        const data = await productService.getAll();
+        const data = await productService.getAllActive();
 
         if (!Array.isArray(data)) {
           throw new Error("El servidor no devolvió una lista de productos válida");

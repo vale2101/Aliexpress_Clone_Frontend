@@ -1,25 +1,21 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../hooks/useAuth";
 import Logo from "../molecules/Logo";
 import LoginFields from "../molecules/LoginFields";
-import LocationSelector from "..//molecules/LocationSelector";
+import LocationSelector from "../molecules/LocationSelector";
 import VendedorCarousel from "../molecules/VendedorCarousel";
 
 export default function VendedorLogin() {
-  const { login, loading, isAuthenticated } = useAuth();
+  const { login, loading } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [location, setLocation] = useState("Colombia");
   const [errorMessage, setErrorMessage] = useState("");
-
-  useEffect(() => {
-    if (isAuthenticated) router.push("/");
-  }, [isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +27,19 @@ export default function VendedorLogin() {
     }
 
     try {
-      await login(email, password);
+      const user = await login(email, password);
+
+      if (!user) {
+        setErrorMessage("Credenciales inválidas o error de conexión.");
+        return;
+      }
+
+      if (Number(user.rol) !== 3) {
+        setErrorMessage("Solo los usuarios con rol 3 pueden iniciar sesión en esta sección.");
+        return;
+      }
+
+      router.push("/cuenta/pedidos");
     } catch (err: any) {
       setErrorMessage(err?.message || "Error al iniciar sesión");
     }

@@ -17,7 +17,7 @@ export default function FeaturedProducts({ categories }: FeaturedProductsProps) 
     async function loadProducts() {
       try {
         setLoading(true);
-        const allProducts = await productService.getAll();
+        const allProducts = await productService.getAllActive();
 
         const normalize = (str?: string) => str?.trim().toLowerCase();
 

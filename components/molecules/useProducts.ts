@@ -14,7 +14,7 @@ export const useProducts = () => {
         setLoading(true);
         setError(null);
 
-        const apiProducts: ApiProduct[] = await productService.getAll();
+        const apiProducts: ApiProduct[] = await productService.getAllActive();
 
         const convertedProducts: CartProduct[] = apiProducts.map((apiProduct) => ({
           id: apiProduct.id_producto?.toString() || "0",

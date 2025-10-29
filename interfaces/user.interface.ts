@@ -6,7 +6,7 @@ export interface User {
   apellido: string;
   email: string;
   telefono?: string;
-  rol: string;
+  rol: number; // Changed from string to number to match server response
   estado: UserEstado;
 }
 

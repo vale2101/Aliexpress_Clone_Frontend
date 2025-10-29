@@ -34,7 +34,7 @@ const OffersCarousel = () => {
     async function loadOffers() {
       try {
         setLoading(true);
-        const products = await productService.getAll();
+        const products = await productService.getAllActive();
 
         const mapped = products.slice(0, 6).map((p) => ({
           title: p.nombre,

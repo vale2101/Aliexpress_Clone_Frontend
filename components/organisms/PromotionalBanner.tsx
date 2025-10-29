@@ -11,11 +11,29 @@ export default function PromotionalBanner() {
   const [promoProducts, setPromoProducts] = useState<ProductoInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Función para validar y limpiar URLs de imágenes
+  const getValidImageUrl = (url?: string): string => {
+    if (!url) return "/placeholder.jpg";
+    
+    // Si es una URL de Google con parámetros, usar placeholder
+    if (url.includes("google.com/url") || url.includes("googleusercontent.com")) {
+      return "/placeholder.jpg";
+    }
+    
+    // Si es una URL válida, usarla
+    try {
+      new URL(url);
+      return url;
+    } catch {
+      return "/placeholder.jpg";
+    }
+  };
+
   useEffect(() => {
     async function loadPromoProducts() {
       try {
         setLoading(true);
-        const allProducts = await productService.getAll();
+        const allProducts = await productService.getAllActive();
 
         const filtered = allProducts
           .filter((p) => p.categoria?.trim().toLowerCase() === "moda")
@@ -52,7 +70,7 @@ export default function PromotionalBanner() {
           {promoProducts.map((product) => (
             <div key={product.id_producto} className="bg-white rounded-lg shadow-sm overflow-hidden">
               <Image
-                src={product.imagen_url || "/placeholder.jpg"}
+                src={getValidImageUrl(product.imagen_url)}
                 alt={product.nombre}
                 width={200}
                 height={160}

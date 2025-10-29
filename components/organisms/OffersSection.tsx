@@ -12,7 +12,7 @@ export default function OffersSection() {
     async function loadProducts() {
       try {
         setLoading(true);
-        const response = await productService.getAll();
+        const response = await productService.getAllActive();
 
         const data = Array.isArray(response)
           ? response

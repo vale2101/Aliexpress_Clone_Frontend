@@ -15,15 +15,22 @@ export default function BuyAgainSection() {
     async function loadProducts() {
       try {
         setLoading(true);
-        const allProducts = await productService.getAll();
-
-        const filtered = allProducts.filter(
-          (p) => p.categoria?.trim().toLowerCase() === "volverc"
-        );
-
-        setProducts(filtered.slice(0, 6));
+        console.log("🔄 Iniciando carga de productos en BuyAgainSection...");
+        const allProducts = await productService.getAllActive();
+        console.log("✅ Productos cargados en BuyAgainSection:", allProducts.length);
+        
+        // Seleccionar 6 productos aleatorios
+        const shuffled = [...allProducts].sort(() => 0.5 - Math.random());
+        const randomProducts = shuffled.slice(0, 6);
+        console.log("🎲 Productos aleatorios seleccionados para BuyAgain:", randomProducts.length);
+        
+        setProducts(randomProducts);
       } catch (error) {
-        console.error("Error cargando productos:", error);
+        console.error("❌ Error cargando productos en BuyAgainSection:", error);
+        console.error("❌ Detalles del error:", {
+          message: error instanceof Error ? error.message : 'Error desconocido',
+          stack: error instanceof Error ? error.stack : undefined
+        });
         setProducts([]);
       } finally {
         setLoading(false);

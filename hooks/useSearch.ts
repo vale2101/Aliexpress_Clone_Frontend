@@ -19,7 +19,7 @@ export const useSearch = ({ products, autoLoad = true, initialQuery = "" }: UseS
     
     try {
       setLoading(true);
-      const data = await productService.getAll();
+      const data = await productService.getAllActive();
       setAllProducts(data);
     } catch (error) {
       console.error("Error loading products:", error);

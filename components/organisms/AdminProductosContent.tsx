@@ -2,41 +2,88 @@
 import React, { useState, useEffect } from "react";
 import { productService } from "../../services/productService";
 import { ProductoInterface } from "../../interfaces/product.interface";
+import { useAuth } from "../../hooks/useAuth";
 import Text from "../atoms/Typography";
 import Button from "../atoms/Button";
-import { Edit, Trash2, Plus, Search } from "lucide-react";
+import { Plus } from "lucide-react";
+import ProductRow from "../molecules/ProductRow";
+import SearchBar from "../molecules/SearchBar";
+import StatsCard from "../molecules/StatsCard";
+import LoadingSpinner from "../molecules/LoadingSpinner";
+import EmptyState from "../molecules/EmptyState";
+import ProductFormModal from "./ProductFormModal";
 
 const AdminProductosContent: React.FC = () => {
+  const { user } = useAuth();
   const [productos, setProductos] = useState<ProductoInterface[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
 
   useEffect(() => {
-    loadProductos();
-  }, []);
+    if (user?.id_usuario) {
+      loadProductos();
+    }
+  }, [user?.id_usuario]);
 
   const loadProductos = async () => {
     try {
       setLoading(true);
       const data = await productService.getAll();
-      setProductos(data);
+      
+      console.log("🔍 Todos los productos de la API:", data);
+      console.log("🔍 Usuario autenticado:", user);
+      console.log("🔍 ID del usuario:", user?.id_usuario);
+      
+      // Filtrar solo los productos del usuario autenticado
+      if (user?.id_usuario) {
+        console.log("🔍 Filtrando productos con id_usuario =", user.id_usuario);
+        
+        const userProducts = data.filter(producto => {
+          console.log(`🔍 Producto ${producto.id_producto}: id_usuario = ${producto.id_usuario}, coincide = ${producto.id_usuario === user.id_usuario}`);
+          return producto.id_usuario === user.id_usuario;
+        });
+        
+        setProductos(userProducts);
+        console.log(`🔍 Productos filtrados para usuario ${user.id_usuario}:`, userProducts.length, "productos");
+        console.log("🔍 Productos filtrados:", userProducts);
+      } else {
+        console.log("❌ No hay usuario autenticado");
+        setProductos([]);
+      }
     } catch (error) {
       console.error("Error loading productos:", error);
+      setProductos([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id?: number) => {
-    if (!id) return;
+  const handleToggleState = async (id: number) => {
+    const producto = productos.find(p => p.id_producto === id);
+    if (!producto) return;
     
-    if (confirm("¿Estás seguro de eliminar este producto?")) {
+    const isActive = producto.estado === "activo";
+    const newEstado = isActive ? "inactivo" : "activo";
+    const action = isActive ? "desactivar" : "activar";
+    
+    if (confirm(`¿Estás seguro de ${action} este producto?`)) {
       try {
-        await productService.delete(id);
-        loadProductos();
+        console.log(`Attempting to ${action} product with ID:`, id, "to estado:", newEstado);
+        const success = await productService.changeState(id, newEstado);
+        
+        if (success) {
+          console.log(`Product ${action} successfully`);
+          alert(`Producto ${action} correctamente`);
+          loadProductos();
+        } else {
+          console.error(`${action} operation returned false`);
+          alert(`No se pudo ${action} el producto`);
+        }
       } catch (error) {
-        console.error("Error deleting producto:", error);
-        alert("Error al eliminar el producto");
+        console.error(`Error ${action} producto:`, error);
+        const errorMessage = error instanceof Error ? error.message : "Error desconocido";
+        alert(`Error al ${action} el producto: ${errorMessage}`);
       }
     }
   };
@@ -47,12 +94,23 @@ const AdminProductosContent: React.FC = () => {
       producto.descripcion?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const activeProductos = productos.filter(p => p.estado === "activo");
+  const inactiveProductos = productos.filter(p => p.estado === "inactivo");
+
+  const handleOpenForm = () => {
+    setIsFormModalOpen(true);
+  };
+
+  const handleCloseForm = () => {
+    setIsFormModalOpen(false);
+  };
+
+  const handleProductAdded = () => {
+    loadProductos(); // Refresh the product list
+  };
+
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
@@ -66,25 +124,17 @@ const AdminProductosContent: React.FC = () => {
             Administra todos los productos del sistema
           </Text>
         </div>
-        <Button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg flex items-center gap-2">
+        <Button 
+          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg flex items-center gap-2"
+          onClick={handleOpenForm}
+        >
           <Plus className="w-5 h-5" />
           Nuevo Producto
         </Button>
       </div>
 
-      {/* Search bar */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-        <input
-          type="text"
-          placeholder="Buscar productos..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-        />
-      </div>
+      <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
-      {/* Products table */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -109,74 +159,15 @@ const AdminProductosContent: React.FC = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredProductos.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
-                    No hay productos disponibles
-                  </td>
-                </tr>
+                <EmptyState />
               ) : (
                 filteredProductos.map((producto) => (
-                  <tr key={producto.id_producto} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={producto.imagen_url || "/placeholder.jpg"}
-                          alt={producto.nombre}
-                          className="w-16 h-16 object-cover rounded-lg border border-gray-200"
-                        />
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">
-                            {producto.nombre}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {producto.categoria || "Sin categoría"}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900 font-medium">
-                        ${producto.precio}
-                      </div>
-                      {producto.precio_original && (
-                        <div className="text-xs text-gray-500 line-through">
-                          ${producto.precio_original}
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {producto.stock} unidades
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          producto.estado === "activo"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {producto.estado || "Sin estado"}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          className="text-orange-600 hover:text-orange-800 p-2"
-                          onClick={() => console.log("Edit:", producto.id_producto)}
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button
-                          className="text-red-600 hover:text-red-800 p-2"
-                          onClick={() => handleDelete(producto.id_producto)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
+                  <ProductRow
+                    key={producto.id_producto}
+                    producto={producto}
+                    onEdit={(id) => console.log("Edit:", id)}
+                    onToggleState={handleToggleState}
+                  />
                 ))
               )}
             </tbody>
@@ -184,33 +175,18 @@ const AdminProductosContent: React.FC = () => {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white p-4 rounded-lg border border-gray-200">
-          <Text variant="small" className="text-gray-600 mb-1">
-            Total de Productos
-          </Text>
-          <Text variant="subtitle" className="font-bold text-2xl text-gray-900">
-            {productos.length}
-          </Text>
-        </div>
-        <div className="bg-white p-4 rounded-lg border border-gray-200">
-          <Text variant="small" className="text-gray-600 mb-1">
-            Activos
-          </Text>
-          <Text variant="subtitle" className="font-bold text-2xl text-green-600">
-            {productos.filter(p => p.estado === "activo").length}
-          </Text>
-        </div>
-        <div className="bg-white p-4 rounded-lg border border-gray-200">
-          <Text variant="small" className="text-gray-600 mb-1">
-            Inactivos
-          </Text>
-          <Text variant="subtitle" className="font-bold text-2xl text-red-600">
-            {productos.filter(p => p.estado === "inactivo").length}
-          </Text>
-        </div>
+        <StatsCard title="Total de Productos" value={productos.length} />
+        <StatsCard title="Activos" value={activeProductos.length} color="text-green-600" />
+        <StatsCard title="Inactivos" value={inactiveProductos.length} color="text-red-600" />
       </div>
+
+      {/* Product Form Modal */}
+      <ProductFormModal
+        isOpen={isFormModalOpen}
+        onClose={handleCloseForm}
+        onProductAdded={handleProductAdded}
+      />
     </div>
   );
 };

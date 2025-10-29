@@ -16,4 +16,5 @@ export interface ProductoInterface {
   descripcionCom?: string;
   imagen_url?: string;
   categoria?: string;
+  id_usuario?: number; // ID del usuario que creó el producto
 }
