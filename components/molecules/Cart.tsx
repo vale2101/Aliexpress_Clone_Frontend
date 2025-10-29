@@ -34,7 +34,6 @@ const Cart: React.FC<CartProps> = ({
   };
 
   const handleCheckout = () => {
-    console.log('Proceder al checkout', { items, totalPrice });
   };
 
   if (items.length === 0) {

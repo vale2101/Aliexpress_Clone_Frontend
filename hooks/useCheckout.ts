@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
 import { useCartStore } from "../components/organisms/CartStore";
 import { useAuth } from "./useAuth";
 import { pedidoService } from "../services/pedidoService";
@@ -46,12 +45,7 @@ export const useCheckout = (selectedAddressId: number | null) => {
 
   const handlePlaceOrder = async () => {
     if (!user?.id_usuario || !selectedAddressId) {
-      await Swal.fire({
-        title: "Información incompleta",
-        text: "Falta el usuario o la dirección de entrega",
-        icon: "warning",
-        confirmButtonColor: "#dc2626",
-      });
+      alert("Falta el usuario o la dirección de entrega");
       return;
     }
 
@@ -66,25 +60,13 @@ export const useCheckout = (selectedAddressId: number | null) => {
       productos,
     };
 
-    console.log("📦 Enviando pedido:", pedido);
-
     const success = await pedidoService.crearPedido(pedido);
     if (success) {
-      await Swal.fire({
-        title: "Pedido realizado",
-        text: "Tu pedido fue registrado exitosamente",
-        icon: "success",
-        confirmButtonColor: "#dc2626",
-      });
+      alert("Tu pedido fue registrado exitosamente");
       clearCart();
       router.push("/cuenta");
     } else {
-      await Swal.fire({
-        title: "Error",
-        text: "No se pudo registrar el pedido. Intenta nuevamente.",
-        icon: "error",
-        confirmButtonColor: "#dc2626",
-      });
+      alert("No se pudo registrar el pedido. Intenta nuevamente.");
     }
   };
 

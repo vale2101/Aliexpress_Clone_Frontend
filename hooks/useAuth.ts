@@ -19,12 +19,10 @@ export const useAuth = (): UseAuthReturn => {
   const auth = useAuthContext();
   const { user, loading, login, logout, register, isAuthenticated } = auth;
 
-  // Verificar rol del usuario
-  const isAdmin = user?.rol === 1;     // Admin
-  const isCustomer = user?.rol === 2;  // Usuario
-  const isVendor = user?.rol === 3;    // Vendedor
+  const isAdmin = user?.rol === 1;
+  const isCustomer = user?.rol === 2;
+  const isVendor = user?.rol === 3;
 
-  // Obtener nombre completo del usuario
   const userFullName = user 
     ? `${user.nombre} ${user.apellido}`.trim()
     : "Usuario";
@@ -38,6 +36,5 @@ export const useAuth = (): UseAuthReturn => {
   };
 };
 
-// Re-exportar AuthProvider para mantener compatibilidad
 export { AuthProvider } from "../contexts/AuthContext";
  

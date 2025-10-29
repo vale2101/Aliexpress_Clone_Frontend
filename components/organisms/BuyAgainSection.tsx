@@ -15,14 +15,11 @@ export default function BuyAgainSection() {
     async function loadProducts() {
       try {
         setLoading(true);
-        console.log("🔄 Iniciando carga de productos en BuyAgainSection...");
         const allProducts = await productService.getAllActive();
-        console.log("✅ Productos cargados en BuyAgainSection:", allProducts.length);
         
-        // Seleccionar 6 productos aleatorios
+        
         const shuffled = [...allProducts].sort(() => 0.5 - Math.random());
         const randomProducts = shuffled.slice(0, 6);
-        console.log("🎲 Productos aleatorios seleccionados para BuyAgain:", randomProducts.length);
         
         setProducts(randomProducts);
       } catch (error) {

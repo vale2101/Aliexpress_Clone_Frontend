@@ -8,7 +8,6 @@ const SecurePayments: React.FC = () => {
         Pagos seguros
       </Text>
       <div className="flex flex-wrap gap-4 mb-3">
-        {/* Logos de métodos de pago */}
         <div className="text-xs text-gray-600">Visa</div>
         <div className="text-xs text-gray-600">ID Check</div>
         <div className="text-xs text-gray-600">SafeKey</div>

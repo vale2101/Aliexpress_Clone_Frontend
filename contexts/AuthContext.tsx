@@ -53,7 +53,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await UserService.logout();
       setUser(null);
     } catch (error) {
-      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -64,7 +63,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       await UserService.createUser(data);
     } catch (error) {
-      console.error("Error al registrar usuario:", error);
       throw error;
     } finally {
       setLoading(false);

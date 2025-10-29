@@ -21,13 +21,11 @@ const Price: React.FC<PriceProps> = ({
     lg: "text-3xl"
   };
 
-  // Convertir a número y manejar casos edge
   const numericPrice = typeof price === 'number' ? price : parseFloat(price?.toString() || '0');
   const numericOriginalPrice = originalPrice ? 
     (typeof originalPrice === 'number' ? originalPrice : parseFloat(originalPrice.toString())) : 
     undefined;
 
-  // Formatear precio según la moneda
   const formatPrice = (price: number, currency: string) => {
     if (currency === 'COP') {
       return `COP${price.toLocaleString('es-CO', { minimumFractionDigits: 2 })}`;

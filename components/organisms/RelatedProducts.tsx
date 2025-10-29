@@ -18,7 +18,6 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ currentProductId }) =
       try {
         setLoading(true);
       const allProducts = await productService.getAllActive();
-      console.log("Productos recibidos:", allProducts);
         const filtered = allProducts.filter(
           (product) => product.id_producto !== currentProductId
         );

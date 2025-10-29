@@ -1,8 +1,8 @@
 import React from "react";
 
 interface FormHeaderProps {
-  title?: string; // opcional para formularios como dirección
-  isLogin?: boolean; // usado en login/registro
+  title?: string;
+  isLogin?: boolean;
   showProtectionNote?: boolean;
   centered?: boolean;
 }

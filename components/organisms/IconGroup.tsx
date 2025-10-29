@@ -34,13 +34,11 @@ const IconGroup: React.FC = () => {
   return (
     <>
       <div className="flex items-center gap-1 sm:gap-2 lg:gap-4">
-        {/* Descarga la app */}
         <div className="hidden md:flex items-center gap-2 cursor-pointer hover:text-orange-500 transition-colors">
           <AppWindow size={16} className="text-gray-700" />
           <span className="text-xs lg:text-sm text-gray-700 hidden lg:inline">Descarga la app</span>
         </div>
 
-        {/* Ubicación y moneda */}
         <div
           onMouseEnter={() => setShowLocationModal(true)}
           onMouseLeave={() => setShowLocationModal(false)}
@@ -66,10 +64,8 @@ const IconGroup: React.FC = () => {
           />
         </div>
 
-        {/* Usuario */}
         <UserMenu onLogin={handleLogin} onLogout={handleLogout} />
 
-        {/* Carrito */}
         <div
           onClick={handleCartClick}
           className="flex items-center gap-1 sm:gap-2 cursor-pointer hover:text-orange-500 transition-colors relative"

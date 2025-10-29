@@ -20,7 +20,6 @@ const DireccionesPage: React.FC = () => {
   };
 
   const handleSubmit = async (data: AddressInterface) => {
-    console.log("Dirección enviada:", data);
     setShowForm(false);
     setRefreshList(!refreshList);
   };

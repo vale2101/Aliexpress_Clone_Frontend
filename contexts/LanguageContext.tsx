@@ -16,7 +16,6 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// Traducciones
 const translations = {
   es: {
     'search.placeholder': 'gafas ia inteligentes xiaomi',
@@ -276,7 +275,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [city, setCityState] = useState('Manizales');
 
   useEffect(() => {
-    // Cargar configuración guardada
     const saved = localStorage.getItem('userPreferences');
     if (saved) {
       const prefs = JSON.parse(saved);

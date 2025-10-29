@@ -12,8 +12,6 @@ export default function RecommendationsSection() {
     async function loadProducts() {
       try {
         setLoading(true);
-
-        // ✅ productService.getAll ya devuelve directamente el arreglo de productos
         const data = await productService.getAllActive();
 
         if (!Array.isArray(data)) {

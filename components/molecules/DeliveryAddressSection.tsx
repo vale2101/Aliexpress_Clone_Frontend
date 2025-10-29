@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import Text from "../atoms/Typography";
 import LinkButton from "../atoms/LinkButton";
 import { addressService } from "../../services/addressService";
 import { useAuth } from "../../hooks/useAuth";
 import { AddressInterface } from "../../interfaces/address.interface";
-
 interface DeliveryAddressSelectorProps {
   onSelect?: (address: AddressInterface) => void;
 }
@@ -49,21 +47,11 @@ const DeliveryAddressSelector: React.FC<DeliveryAddressSelectorProps> = ({ onSel
     setSelectedId(id);
     onSelect?.(address);
 
-    Swal.fire({
-      title: "Dirección seleccionada",
-      text: `${address.direccion_detalle}, ${address.ciudad}, ${address.pais}`,
-      icon: "info",
-      confirmButtonColor: "#dc2626",
-    });
+    alert(`Dirección seleccionada: ${address.direccion_detalle}, ${address.ciudad}, ${address.pais}`);
   };
 
   const handleAddAddress = () => {
-    Swal.fire({
-      title: "Añadir dirección",
-      text: "Aquí deberías abrir el flujo para añadir una nueva dirección",
-      icon: "question",
-      confirmButtonColor: "#dc2626",
-    });
+    alert("Añadir dirección: Aquí deberías abrir el flujo para añadir una nueva dirección");
   };
 
   if (loading) {

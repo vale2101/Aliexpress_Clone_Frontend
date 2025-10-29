@@ -25,21 +25,18 @@ const SearchResultsContent: React.FC<SearchResultsContentProps> = ({
   stats,
   onClearSearch
 }) => {
-  // Loading state
   if (loading) {
     return <SearchLoadingState />;
   }
 
   return (
     <>
-      {/* Header */}
       <SearchResultHeader
         searchQuery={searchQuery}
         resultCount={stats.filtered}
         onClearSearch={onClearSearch}
       />
 
-      {/* No results */}
       {stats.filtered === 0 && searchQuery && (
         <SearchEmptyState
           title="No se encontraron resultados"
@@ -47,7 +44,6 @@ const SearchResultsContent: React.FC<SearchResultsContentProps> = ({
         />
       )}
 
-      {/* Empty state (no search yet) */}
       {!searchQuery && stats.total === 0 && (
         <SearchEmptyState
           title="Busca productos"
@@ -55,7 +51,6 @@ const SearchResultsContent: React.FC<SearchResultsContentProps> = ({
         />
       )}
 
-      {/* Products grid */}
       {filteredProducts.length > 0 && (
         <ProductGrid products={filteredProducts} />
       )}

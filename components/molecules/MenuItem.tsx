@@ -3,10 +3,10 @@ import Link from "next/link";
 import Icon from "../atoms/Icon";
 
 interface MenuItemProps {
-  icon: any; // LucideIcon
+  icon: any;
   label: string;
   href: string;
-  active?: boolean; // Para resaltar el ítem seleccionado
+  active?: boolean;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ icon, label, href, active = false }) => {

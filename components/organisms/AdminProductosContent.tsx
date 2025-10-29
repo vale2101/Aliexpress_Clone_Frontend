@@ -31,24 +31,14 @@ const AdminProductosContent: React.FC = () => {
       setLoading(true);
       const data = await productService.getAll();
       
-      console.log("🔍 Todos los productos de la API:", data);
-      console.log("🔍 Usuario autenticado:", user);
-      console.log("🔍 ID del usuario:", user?.id_usuario);
       
-      // Filtrar solo los productos del usuario autenticado
       if (user?.id_usuario) {
-        console.log("🔍 Filtrando productos con id_usuario =", user.id_usuario);
-        
         const userProducts = data.filter(producto => {
-          console.log(`🔍 Producto ${producto.id_producto}: id_usuario = ${producto.id_usuario}, coincide = ${producto.id_usuario === user.id_usuario}`);
           return producto.id_usuario === user.id_usuario;
         });
         
         setProductos(userProducts);
-        console.log(`🔍 Productos filtrados para usuario ${user.id_usuario}:`, userProducts.length, "productos");
-        console.log("🔍 Productos filtrados:", userProducts);
       } else {
-        console.log("❌ No hay usuario autenticado");
         setProductos([]);
       }
     } catch (error) {
@@ -69,11 +59,9 @@ const AdminProductosContent: React.FC = () => {
     
     if (confirm(`¿Estás seguro de ${action} este producto?`)) {
       try {
-        console.log(`Attempting to ${action} product with ID:`, id, "to estado:", newEstado);
         const success = await productService.changeState(id, newEstado);
         
         if (success) {
-          console.log(`Product ${action} successfully`);
           alert(`Producto ${action} correctamente`);
           loadProductos();
         } else {
@@ -106,7 +94,7 @@ const AdminProductosContent: React.FC = () => {
   };
 
   const handleProductAdded = () => {
-    loadProductos(); // Refresh the product list
+    loadProductos();
   };
 
   if (loading) {
@@ -165,7 +153,7 @@ const AdminProductosContent: React.FC = () => {
                   <ProductRow
                     key={producto.id_producto}
                     producto={producto}
-                    onEdit={(id) => console.log("Edit:", id)}
+                    onEdit={() => {}}
                     onToggleState={handleToggleState}
                   />
                 ))
@@ -181,7 +169,6 @@ const AdminProductosContent: React.FC = () => {
         <StatsCard title="Inactivos" value={inactiveProductos.length} color="text-red-600" />
       </div>
 
-      {/* Product Form Modal */}
       <ProductFormModal
         isOpen={isFormModalOpen}
         onClose={handleCloseForm}

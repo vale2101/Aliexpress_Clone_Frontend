@@ -20,7 +20,6 @@ export default function AliExpressBusinessBanner() {
         const allProducts = await productService.getAllActive();
         setProducts(Array.isArray(allProducts) ? allProducts : []);
       } catch (error) {
-        console.error("❌ Error cargando productos:", error);
         setProducts([]);
       } finally {
         setLoading(false);
@@ -35,10 +34,8 @@ export default function AliExpressBusinessBanner() {
     return shuffled.slice(0, count);
   };
 
-  // Seleccionar 6 productos aleatorios para la zona de ahorro
   const ahorroProducts = getRandomSubset(products, 6);
 
-  // Seleccionar productos aleatorios para "Volver a comprar" (mantener algunos productos diferentes)
   const volverProducts = getRandomSubset(products, 4);
 
   return (
@@ -53,7 +50,6 @@ export default function AliExpressBusinessBanner() {
         ></div>
 
         <div className="relative max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
-          {/* Header */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-center mb-4 sm:mb-6">
             <div className="text-center md:text-left">
               <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3">

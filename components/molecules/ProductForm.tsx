@@ -41,8 +41,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ onSave, onCancel, loading = f
       ...prev,
       [field]: value
     }));
-    
-    // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -88,7 +86,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ onSave, onCancel, loading = f
 
     const success = await onSave(formData);
     if (success) {
-      // Reset form on success
       setFormData({
         nombre: "",
         descripcion: "",

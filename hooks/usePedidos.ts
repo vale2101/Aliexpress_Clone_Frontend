@@ -25,9 +25,7 @@ export const usePedidos = (): UsePedidosReturn => {
     try {
       setLoading(true);
       setError(null);
-      console.log("Making API call to:", `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000"}/api/pedidoV/vendedor/${idVendedor}`);
       const data = await PedidoVService.getPedidosPorVendedor(idVendedor);
-      console.log("Received data:", data);
       setPedidos(data);
     } catch (err) {
       console.error("Error loading pedidos:", err);
@@ -45,15 +43,9 @@ export const usePedidos = (): UsePedidosReturn => {
   };
 
   useEffect(() => {
-    console.log("usePedidos - User:", user);
-    console.log("usePedidos - User role:", user?.rol);
-    console.log("usePedidos - User ID:", user?.id_usuario);
-    
     if (user?.rol === 3 && user.id_usuario) {
-      console.log("Loading pedidos for vendor:", user.id_usuario);
       loadPedidos(user.id_usuario);
     } else {
-      console.log("Not loading pedidos - user role:", user?.rol, "user ID:", user?.id_usuario);
       setLoading(false);
     }
   }, [user]);

@@ -16,7 +16,6 @@ const AdminPedidosContent: React.FC = () => {
     setSelectedEstado,
   } = usePedidos();
 
-  // If user is not a vendor, show access denied message
   if (user && user.rol !== 3) {
     return (
       <div className="space-y-6">
@@ -32,7 +31,6 @@ const AdminPedidosContent: React.FC = () => {
     );
   }
 
-  // If no user is logged in
   if (!user) {
     return (
       <div className="space-y-6">
@@ -48,7 +46,6 @@ const AdminPedidosContent: React.FC = () => {
     );
   }
 
-  // If there's an error, show error message
   if (error) {
     return (
       <div className="space-y-6">
@@ -66,7 +63,6 @@ const AdminPedidosContent: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <div>
           <Text variant="title" className="font-bold text-gray-900 mb-2">
@@ -78,13 +74,11 @@ const AdminPedidosContent: React.FC = () => {
         </div>
       </div>
 
-      {/* Filter Component */}
       <PedidoFilter
         selectedEstado={selectedEstado}
         onEstadoChange={setSelectedEstado}
       />
 
-      {/* Orders List Component */}
       <PedidoList pedidos={filteredPedidos} loading={loading} />
     </div>
   );

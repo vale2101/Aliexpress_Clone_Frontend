@@ -13,9 +13,8 @@ export const useSearch = ({ products, autoLoad = true, initialQuery = "" }: UseS
   const [allProducts, setAllProducts] = useState<ProductoInterface[]>(products || []);
   const [loading, setLoading] = useState(autoLoad);
 
-  // Cargar productos si autoLoad está activado y no se proporcionaron productos
   const loadProducts = async () => {
-    if (products) return; // Ya tenemos productos
+    if (products) return;
     
     try {
       setLoading(true);
@@ -29,7 +28,6 @@ export const useSearch = ({ products, autoLoad = true, initialQuery = "" }: UseS
     }
   };
 
-  // Filtrar productos basándose en la query de búsqueda
   const filteredProducts = useMemo(() => {
     if (!searchQuery.trim()) {
       return allProducts;
@@ -47,7 +45,6 @@ export const useSearch = ({ products, autoLoad = true, initialQuery = "" }: UseS
     });
   }, [allProducts, searchQuery]);
 
-  // Calcular estadísticas
   const stats = useMemo(() => {
     return {
       total: allProducts.length,
@@ -56,12 +53,10 @@ export const useSearch = ({ products, autoLoad = true, initialQuery = "" }: UseS
     };
   }, [allProducts.length, filteredProducts.length, searchQuery]);
 
-  // Limpiar búsqueda
   const clearSearch = () => {
     setSearchQuery("");
   };
 
-  // Actualizar productos externamente
   const updateProducts = (newProducts: ProductoInterface[]) => {
     setAllProducts(newProducts);
   };

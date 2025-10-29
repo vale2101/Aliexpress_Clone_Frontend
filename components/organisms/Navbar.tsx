@@ -11,8 +11,8 @@ const Navbar: React.FC = () => {
           <Logo />
         </div>
         
-        <div className="flex-1 flex justify-center max-w-xs sm:max-w-md lg:max-w-2xl mx-2">
-          <SearchBar />
+        <div className="flex-1 flex justify-center max-w-sm sm:max-w-lg lg:max-w-4xl xl:max-w-5xl mx-2">
+          <SearchBar className="w-full" />
         </div>
         
         <div className="flex-shrink-0">

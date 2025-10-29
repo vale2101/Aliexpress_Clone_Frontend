@@ -12,7 +12,6 @@ const CheckoutItemList: React.FC = () => {
   };
 
   const handleAddMoreItems = () => {
-    console.log("🛒 Redirigir a productos");
   };
 
   return (

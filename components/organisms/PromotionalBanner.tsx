@@ -10,17 +10,13 @@ export default function PromotionalBanner() {
   const { t } = useLanguage();
   const [promoProducts, setPromoProducts] = useState<ProductoInterface[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Función para validar y limpiar URLs de imágenes
   const getValidImageUrl = (url?: string): string => {
     if (!url) return "/placeholder.jpg";
     
-    // Si es una URL de Google con parámetros, usar placeholder
     if (url.includes("google.com/url") || url.includes("googleusercontent.com")) {
       return "/placeholder.jpg";
     }
     
-    // Si es una URL válida, usarla
     try {
       new URL(url);
       return url;
@@ -37,7 +33,7 @@ export default function PromotionalBanner() {
 
         const filtered = allProducts
           .filter((p) => p.categoria?.trim().toLowerCase() === "moda")
-          .slice(0, 3); // Mostrar máximo 3
+          .slice(0, 3);
 
         setPromoProducts(filtered);
       } catch (error) {

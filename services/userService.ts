@@ -90,4 +90,3 @@ async getCurrentUser(): Promise<User | null> {
     return response.data;
   },
 };
-

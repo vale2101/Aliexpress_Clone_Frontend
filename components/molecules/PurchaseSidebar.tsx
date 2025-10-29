@@ -14,7 +14,7 @@ interface PurchaseSidebarProps {
   productName?: string;
   productImage?: string;
   productDescription?: string;
-  onAddToCart?: (productId: number, quantity: number) => void; // ✅ AGREGA ESTO
+  onAddToCart?: (productId: number, quantity: number) => void;
   onAddToWishlist?: (productId: number) => void;
   onShare?: (productId: number) => void;
   onContact?: (productId: number) => void;
@@ -59,7 +59,6 @@ const PurchaseSidebar: React.FC<PurchaseSidebarProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Información del vendedor */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-600">Vendido por</span>
@@ -76,7 +75,6 @@ const PurchaseSidebar: React.FC<PurchaseSidebarProps> = ({
         </div>
       </div>
 
-      {/* Choice Compromiso de AliExpress */}
       <div className="border border-gray-200 rounded-lg p-4 space-y-3">
         <h3 className="font-medium text-gray-900">Choice Compromiso de AliExpress</h3>
         
@@ -108,7 +106,6 @@ const PurchaseSidebar: React.FC<PurchaseSidebarProps> = ({
         </button>
       </div>
 
-      {/* Seguridad y Privacidad */}
       <div className="bg-gray-50 p-4 rounded-lg">
         <h4 className="font-medium text-gray-900 mb-2 flex items-center gap-2">
           <Shield className="w-4 h-4" />
@@ -120,7 +117,6 @@ const PurchaseSidebar: React.FC<PurchaseSidebarProps> = ({
         </div>
       </div>
 
-      {/* Selector de cantidad */}
       <div className="space-y-2">
         <span className="text-sm font-medium text-gray-700">Cantidad:</span>
         <QuantitySelector
@@ -132,7 +128,6 @@ const PurchaseSidebar: React.FC<PurchaseSidebarProps> = ({
         <div className="text-sm text-gray-600">18 disponible(s)</div>
       </div>
 
-      {/* Botones de acción */}
       <div className="space-y-3">
         <Button
           onClick={handleAddToCart}
@@ -150,7 +145,6 @@ const PurchaseSidebar: React.FC<PurchaseSidebarProps> = ({
         </Button>
       </div>
 
-      {/* Acciones sociales */}
       <div className="flex items-center justify-between pt-4 border-t border-gray-200">
         <button
           onClick={handleShare}

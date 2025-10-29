@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState(3600); // 1 hora
+  const [timeLeft, setTimeLeft] = useState(3600);
 
   useEffect(() => {
     const timer = setInterval(() => {

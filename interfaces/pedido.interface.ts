@@ -2,7 +2,7 @@ export interface ProductoPedido {
   id_producto: number;
   nombre: string;
   imagen: string;
-  precio: string; // Changed from number to string to match server response
+  precio: string; 
   cantidad: number;
 }
 

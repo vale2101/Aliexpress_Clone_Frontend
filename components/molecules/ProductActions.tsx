@@ -46,7 +46,6 @@ const ProductActions: React.FC<ProductActionsProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Selector de talla */}
       {availableSizes.length > 0 && (
         <SizeSelector
           sizes={availableSizes}
@@ -55,7 +54,6 @@ const ProductActions: React.FC<ProductActionsProps> = ({
         />
       )}
 
-      {/* Selector de cantidad */}
       <div className="space-y-2">
         <h4 className="text-sm font-medium text-gray-700">Cantidad:</h4>
         <QuantitySelector
@@ -66,7 +64,6 @@ const ProductActions: React.FC<ProductActionsProps> = ({
         />
       </div>
 
-      {/* Botones principales */}
       <div className="space-y-3">
         <Button
           onClick={handleAddToCart}
@@ -101,7 +98,6 @@ const ProductActions: React.FC<ProductActionsProps> = ({
         </div>
       </div>
 
-      {/* Información adicional */}
       <div className="text-sm text-gray-600 space-y-1">
         <p>✓ Envío gratis en pedidos superiores a $25</p>
         <p>✓ Devolución gratuita en 30 días</p>

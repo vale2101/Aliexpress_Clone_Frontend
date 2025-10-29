@@ -43,7 +43,6 @@ export default function VendedorCarousel() {
         </div>
       ))}
 
-      {/* Glass card bottom-left */}
       <div className="absolute left-12 bottom-12">
         <div className="max-w-lg bg-white/10 backdrop-blur-md rounded-3xl p-8 shadow-2xl border border-white/10">
           <h3 className="text-3xl font-extrabold text-white mb-2 drop-shadow">
@@ -56,7 +55,6 @@ export default function VendedorCarousel() {
         </div>
       </div>
 
-      {/* Dots centered bottom */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-3">
         {IMAGES.map((_, i) => (
           <button

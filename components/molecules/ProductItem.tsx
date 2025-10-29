@@ -43,7 +43,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
   return (
     <div className={`bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow ${className}`}>
       <div className="flex gap-4">
-        {/* Imagen del producto */}
         <div className="flex-shrink-0">
           <img
             src={product.image}
@@ -52,7 +51,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
           />
         </div>
 
-        {/* Información del producto */}
         <div className="flex-1 min-w-0">
           <h3 className="text-lg font-medium text-gray-900 line-clamp-2 mb-1">
             {product.name}
@@ -64,7 +62,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
             </p>
           )}
 
-          {/* Rating */}
           {product.rating && (
             <div className="flex items-center gap-2 mb-2">
               <Rating rating={product.rating} />
@@ -76,7 +73,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
             </div>
           )}
 
-          {/* Precio */}
           <div className="mb-3">
             <Price 
               price={product.price} 
@@ -85,7 +81,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
             />
           </div>
 
-          {/* Controles de cantidad y acciones */}
           <div className="flex items-center justify-between">
             {showQuantityControls && currentQuantity > 0 ? (
               <div className="flex items-center gap-2">
@@ -121,7 +116,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
               </div>
             )}
 
-            {/* Botón de eliminar si está en el carrito */}
             {currentQuantity > 0 && (
               <button
                 onClick={handleRemove}

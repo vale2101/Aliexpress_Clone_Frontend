@@ -3,10 +3,10 @@ import Button from "../atoms/Button";
 import LoadingSpinner from "../atoms/LoadingSpinner";
 
 interface SubmitButtonProps {
-  isLogin?: boolean; // si es login o registro
+  isLogin?: boolean;
   isLoading?: boolean;
   disabled?: boolean;
-  label?: string; // texto personalizado si no es login/registro
+  label?: string;
   className?: string;
 }
 

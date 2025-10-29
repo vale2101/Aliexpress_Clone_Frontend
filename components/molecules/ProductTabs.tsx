@@ -23,7 +23,6 @@ const ProductTabs: React.FC<ProductTabsProps> = ({
 
   return (
     <div className="w-full">
-      {/* Tab headers */}
       <div className="border-b border-gray-200">
         <nav className="flex space-x-8">
           {tabs.map((tab) => (
@@ -42,7 +41,6 @@ const ProductTabs: React.FC<ProductTabsProps> = ({
         </nav>
       </div>
 
-      {/* Tab content */}
       <div className="py-6">
         {activeTabContent}
       </div>

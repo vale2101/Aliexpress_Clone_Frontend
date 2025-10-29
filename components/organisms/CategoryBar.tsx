@@ -88,7 +88,6 @@ const CategoriesBar: React.FC = () => {
           )}
         </div>
 
-        {/* Links responsive */}
         <nav className="flex items-center gap-2 sm:gap-4 lg:gap-6 text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap overflow-x-auto no-scrollbar flex-1 justify-center">
           {items.map((it) => (
             <button
@@ -98,7 +97,6 @@ const CategoriesBar: React.FC = () => {
                 it.label === t("header.packs_offers") ? "text-red-500 font-semibold" : ""
               }`}
             >
-              {/* Texto abreviado en móvil para algunos elementos */}
               <span className="hidden sm:inline">{it.label}</span>
               <span className="sm:hidden">
                 {it.label === t("header.packs_offers") ? "Packs" :

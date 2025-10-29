@@ -4,16 +4,13 @@ const ProductSkeleton: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Breadcrumb skeleton */}
         <div className="flex items-center space-x-2 mb-6">
           <div className="h-4 w-16 bg-gray-200 rounded animate-pulse"></div>
           <div className="h-4 w-4 bg-gray-200 rounded animate-pulse"></div>
           <div className="h-4 w-32 bg-gray-200 rounded animate-pulse"></div>
         </div>
 
-        {/* Main content skeleton */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Image gallery skeleton */}
           <div className="space-y-4">
             <div className="aspect-square bg-gray-200 rounded-lg animate-pulse"></div>
             <div className="flex gap-2">
@@ -23,7 +20,6 @@ const ProductSkeleton: React.FC = () => {
             </div>
           </div>
 
-          {/* Product info skeleton */}
           <div className="space-y-6">
             <div className="space-y-4">
               <div className="h-8 bg-gray-200 rounded animate-pulse w-3/4"></div>
@@ -47,7 +43,6 @@ const ProductSkeleton: React.FC = () => {
           </div>
         </div>
 
-        {/* Tabs skeleton */}
         <div className="mt-12 bg-white rounded-lg shadow-sm">
           <div className="px-6 py-4">
             <div className="flex space-x-8">

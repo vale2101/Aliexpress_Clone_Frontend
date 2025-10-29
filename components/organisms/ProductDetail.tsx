@@ -52,19 +52,15 @@ const ProductDetail: React.FC = () => {
   }, [fetchProduct]);
 
   const handleAddToCart = (productId: number, quantity: number, size?: string) => {
-    console.log("🛒 Añadir al carrito:", { productId, quantity, size });
   };
 
   const handleAddToWishlist = (productId: number) => {
-    console.log("💖 Añadir a favoritos:", productId);
   };
 
   const handleShare = (productId: number) => {
-    console.log("🔗 Compartir producto:", productId);
   };
 
   const handleContact = (productId: number) => {
-    console.log("📞 Contactar vendedor:", productId);
   };
 
   if (loading) return <ProductSkeleton />;

@@ -5,19 +5,15 @@ const SocialLoginButtons: React.FC = () => {
   const [showMoreOptions, setShowMoreOptions] = useState(false);
 
   const handleGoogleLogin = () => {
-    console.log("Google login");
   };
 
   const handleFacebookLogin = () => {
-    console.log("Facebook login");
   };
 
   const handleAppleLogin = () => {
-    console.log("Apple login");
   };
 
   const handleTwitterLogin = () => {
-    console.log("Twitter login");
   };
 
   return (
@@ -55,7 +51,6 @@ const SocialLoginButtons: React.FC = () => {
         }
       />
 
-      {/* Más opciones / Twitter */}
       <div className="text-center mt-4">
         {!showMoreOptions ? (
           <button 

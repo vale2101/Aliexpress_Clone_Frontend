@@ -25,7 +25,7 @@ interface CheckoutLayoutProps {
   onPlaceOrder: () => void;
   onQuantityChange?: (index: number, quantity: number) => void;
   onAddMoreItems?: () => void;
-  onAddressSelect?: (address: AddressInterface) => void; // ✅ prop para subir dirección
+  onAddressSelect?: (address: AddressInterface) => void;
 }
 
 const CheckoutLayout: React.FC<CheckoutLayoutProps> = ({
@@ -41,7 +41,6 @@ const CheckoutLayout: React.FC<CheckoutLayoutProps> = ({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <div className="bg-gray-800 py-3">
         <div className="container mx-auto px-4">
           <div className="text-xl font-bold">
@@ -51,12 +50,9 @@ const CheckoutLayout: React.FC<CheckoutLayoutProps> = ({
         </div>
       </div>
 
-      {/* Main content */}
       <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {/* Columna izquierda */}
           <div className="lg:col-span-2 space-y-6">
-            {/* ✅ Conexión: el selector de direcciones notifica hacia arriba */}
             <DeliveryAddressSelector onSelect={onAddressSelect} />  
 
             <PaymentMethodsSection />
@@ -64,7 +60,6 @@ const CheckoutLayout: React.FC<CheckoutLayoutProps> = ({
             <CheckoutItemList />
           </div>
 
-          {/* Columna derecha */}
           <div className="space-y-6">
             <OrderSummary
               subtotal={subtotal}

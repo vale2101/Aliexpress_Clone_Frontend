@@ -16,14 +16,11 @@ export default function BatchSavingZone() {
     async function loadProducts() {
       try {
         setLoading(true);
-        console.log("🔄 Iniciando carga de productos en BatchSavingZone...");
         const data = await productService.getAllActive();
-        console.log("✅ Productos cargados en BatchSavingZone:", data.length);
         
-        // Seleccionar 6 productos aleatorios
+        
         const shuffled = [...data].sort(() => 0.5 - Math.random());
         const randomProducts = shuffled.slice(0, 6);
-        console.log("🎲 Productos aleatorios seleccionados:", randomProducts.length);
         
         setProducts(randomProducts);
       } catch (error) {

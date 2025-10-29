@@ -28,7 +28,6 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
 
   return (
     <div className="flex gap-4">
-      {/* Miniaturas laterales */}
       {images.length > 1 && (
         <div className="flex flex-col gap-2 w-16">
           {images.map((image, index) => (
@@ -51,7 +50,6 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
         </div>
       )}
 
-      {/* Imagen principal */}
       <div className="flex-1 relative aspect-square overflow-hidden rounded-lg border border-gray-200">
         <img
           src={images[currentIndex]}
@@ -59,7 +57,6 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
           className="w-full h-full object-cover"
         />
         
-        {/* Navegación */}
         {images.length > 1 && (
           <>
             <button
@@ -77,7 +74,6 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
           </>
         )}
 
-        {/* Botón de video (opcional) */}
         <div className="absolute top-4 left-4">
           <button className="bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-2 rounded-full transition-all duration-300">
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">

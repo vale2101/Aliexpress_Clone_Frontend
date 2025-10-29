@@ -9,9 +9,6 @@ interface UsePedidoReturn {
   error: string | null;
 }
 
-/**
- * Hook para obtener un pedido específico del usuario autenticado
- */
 export const usePedido = (pedidoId: number): UsePedidoReturn => {
   const [pedido, setPedido] = useState<Pedido | null>(null);
   const [loading, setLoading] = useState(true);

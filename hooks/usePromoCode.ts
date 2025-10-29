@@ -6,11 +6,10 @@ export interface PromoCodeResult {
   message?: string;
 }
 
-// Simulación de códigos promocionales válidos
 const VALID_PROMO_CODES: Record<string, number> = {
-  WELCOME10: 10, // 10% de descuento
-  BLACKFRIDAY: 25, // 25% de descuento
-  PRIMERA: 50, // $50 de descuento
+  WELCOME10: 10,
+  BLACKFRIDAY: 25,
+  PRIMERA: 50,
 };
 
 export const usePromoCode = () => {
@@ -55,12 +54,10 @@ export const usePromoCode = () => {
 
     const discount = promoResult.discount;
     
-    // Si el descuento es mayor a 50, asumimos que es un monto fijo
     if (discount >= 50) {
       return Math.max(0, subtotal - discount);
     }
-    
-    // Si no, es un porcentaje
+
     return subtotal * (1 - discount / 100);
   }, [promoResult]);
 
