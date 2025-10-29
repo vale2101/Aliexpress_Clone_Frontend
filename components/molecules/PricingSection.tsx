@@ -7,7 +7,7 @@ import Select from "../atoms/Select";
 
 interface PricingSectionProps {
   data: ProductoInterface;
-  errors: Partial<ProductoInterface>;
+  errors: Partial<Record<keyof ProductoInterface, string>>;
   onChange: (field: keyof ProductoInterface, value: string | number) => void;
 }
 

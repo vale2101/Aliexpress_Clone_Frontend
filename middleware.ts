@@ -7,7 +7,6 @@ export function middleware(req: NextRequest) {
   const isAuth = !!token;
   const { pathname } = req.nextUrl;
 
-  // Define protected routes
   const protectedRoutes = [
     "/carrito",
     "/cuenta",
@@ -16,7 +15,6 @@ export function middleware(req: NextRequest) {
     "/mis-pedidos"
   ];
 
-  // Check if the current path matches any protected route
   const isProtectedRoute = protectedRoutes.some(route => 
     pathname.startsWith(route)
   );

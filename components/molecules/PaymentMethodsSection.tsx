@@ -30,12 +30,8 @@ const PaymentMethodsSection: React.FC<PaymentMethodsSectionProps> = ({
           onChange={() => handleChange("card")}
         >
           <div className="flex items-center gap-2 mt-2">
-            <img src="/visa.svg" alt="Visa" className="h-6" />
-            <img src="/mastercard.svg" alt="Mastercard" className="h-6" />
-            <img src="/amex.svg" alt="Amex" className="h-6" />
-            <img src="/discover.svg" alt="Discover" className="h-6" />
-            <img src="/diners.svg" alt="Diners" className="h-6" />
-            <img src="/jcb.svg" alt="JCB" className="h-6" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" className="h-6" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
           </div>
         </RadioButton>
 

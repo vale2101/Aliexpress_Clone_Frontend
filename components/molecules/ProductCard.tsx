@@ -1,13 +1,13 @@
 import React from "react";
-import { ShoppingCart, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "../organisms/CartStore";
 import { Product } from "../atoms/ProductTypes";
-import ActionButton from "../atoms/ActionButton";
-import DiscountBadge from "../atoms/DiscountBadge";
-import ProductLabel from "../atoms/ProductLabel";
-import Price from "../atoms/Price";
-import Rating from "../atoms/Rating";
+import ProductCardImage from "./ProductCardImage";
+import ProductCardActions from "./ProductCardActions";
+import ProductCardInfo from "./ProductCardInfo";
+import ProductCardPrice from "./ProductCardPrice";
+import ProductCardMeta from "./ProductCardMeta";
+import ProductCardCTA from "./ProductCardCTA";
 
 interface ProductCardProps {
   id?: number;
@@ -68,74 +68,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
       onClick={handleCardClick}
     >
       <div className="relative aspect-square overflow-hidden">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        
-        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="flex flex-col gap-1">
-            <ActionButton icon={Heart} />
-            <ActionButton icon={ShoppingCart} onClick={handleAddToCart} />
-          </div>
-        </div>
-
-        {discount && (
-          <DiscountBadge discount={discount} />
-        )}
-
-        {label && (
-          <ProductLabel label={label} />
-        )}
+        <ProductCardImage src={image} alt={title} discount={discount} label={label} />
+        <ProductCardActions onAddToCart={handleAddToCart} />
       </div>
 
       <div className="p-3">
-        <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-2 min-h-[2.5rem]">
-          {title}
-        </h3>
+        <ProductCardInfo title={title} store={store} features={features} />
 
-        {store && (
-          <p className="text-xs text-gray-500 mb-1">{store}</p>
-        )}
+        <ProductCardPrice 
+          price={parseFloat(price.replace(/[^0-9.-]+/g, ""))}
+          originalPrice={oldPrice ? parseFloat(oldPrice.replace(/[^0-9.-]+/g, "")) : undefined}
+          currency="$"
+          savings={savings}
+        />
 
-        {features && features.length > 0 && (
-          <div className="flex flex-wrap gap-1 mb-2">
-            {features.map((feature, index) => (
-              <span key={index} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                {feature}
-              </span>
-            ))}
-          </div>
-        )}
+        <ProductCardMeta rating={rating} sold={sold} />
 
-        <div className="space-y-1">
-          <Price 
-            price={parseFloat(price.replace(/[^0-9.-]+/g, ""))} 
-            originalPrice={oldPrice ? parseFloat(oldPrice.replace(/[^0-9.-]+/g, "")) : undefined}
-            currency="$"
-            size="sm"
-          />
-
-          {savings && (
-            <p className="text-xs text-green-600 font-medium">{savings}</p>
-          )}
-        </div>
-
-        {rating && (
-          <div className="flex items-center justify-between mt-2">
-            <Rating rating={rating} />
-            {sold && (
-              <span className="text-xs text-gray-500">{sold} vendidos</span>
-            )}
-          </div>
-        )}
-
-        {button && (
-          <button className="w-full text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-3 rounded mt-2 transition-colors">
-            {button}
-          </button>
-        )}
+        <ProductCardCTA label={button} />
       </div>
     </div>
   );

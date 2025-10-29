@@ -22,7 +22,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ onSave, onCancel, loading = f
     precio: 0,
     precio_original: 0,
     descuento: 0,
-    moneda: "USD",
+    moneda: "COP",
     stock: 0,
     estado: "activo",
     material: "",

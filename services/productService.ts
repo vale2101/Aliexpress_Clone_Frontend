@@ -88,7 +88,6 @@ export const productService = {
       const url = `${API_URL}/producto/crearProducto`;
       console.log("🔍 productService.create - URL completa:", url);
       
-      // Limpiar el producto antes de enviarlo
       const cleanProducto = {
         nombre: producto.nombre,
         descripcion: producto.descripcion || "",
@@ -112,7 +111,6 @@ export const productService = {
       console.log("🔍 productService.create - Producto limpio:", cleanProducto);
       console.log("🔍 productService.create - Request body:", requestBody);
       
-      // Intentar primero con un solo producto
       let response = await fetch(url, {
         method: "POST",
         headers: {
@@ -122,7 +120,6 @@ export const productService = {
         body: requestBody,
       });
       
-      // Si falla, intentar con un array
       if (!response.ok) {
         console.log("🔄 Primer intento falló, intentando con array...");
         const arrayBody = JSON.stringify([cleanProducto]);
@@ -145,8 +142,6 @@ export const productService = {
       if (!response.ok) {
         const errorText = await response.text();
         console.error("❌ productService.create - Error response:", errorText);
-        console.error("❌ productService.create - Status:", response.status);
-        console.error("❌ productService.create - Status Text:", response.statusText);
         console.error("❌ productService.create - Headers:", Object.fromEntries(response.headers.entries()));
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }

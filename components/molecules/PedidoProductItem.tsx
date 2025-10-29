@@ -1,62 +1,47 @@
+"use client";
 import React from "react";
 import Text from "../atoms/Typography";
 
-interface PedidoProductItemProps {
-  imagen: string;
+interface PedidoProductoItem {
+  imagen?: string | null;
   nombre: string;
-  precio: number;
-  cantidad: number;
+  cantidad: number | string;
+  precio: string | number;
 }
 
-const PedidoProductItem: React.FC<PedidoProductItemProps> = ({
-  imagen,
-  nombre,
-  precio,
-  cantidad
-}) => {
-  const subtotal = precio * cantidad;
+interface PedidoProductItemProps {
+  producto: PedidoProductoItem;
+}
+
+const PedidoProductItem: React.FC<PedidoProductItemProps> = ({ producto }) => {
+  const priceNumber = typeof producto.precio === "string" ? parseFloat(producto.precio) : producto.precio;
 
   return (
-    <div className="flex gap-4 items-center bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition-colors">
+    <div className="flex items-center gap-3 bg-white p-3 rounded-lg border border-gray-200 min-w-[200px]">
       <img
-        src={imagen || "/placeholder.jpg"}
-        alt={nombre}
-        className="w-24 h-24 object-cover rounded-lg border-2 border-white shadow-sm"
+        src={producto.imagen || "/placeholder.jpg"}
+        alt={producto.nombre}
+        className="w-12 h-12 object-cover rounded"
       />
-      <div className="flex-1">
-        <Text variant="body" className="font-medium text-gray-900 mb-2">
-          {nombre}
+      <div className="flex-1 min-w-0">
+        <Text
+          variant="body"
+          className="text-sm font-medium text-gray-900 truncate"
+        >
+          {producto.nombre}
         </Text>
-        <div className="flex items-center gap-6 text-sm">
-          <div className="flex items-center gap-2">
-            <Text variant="small" className="text-gray-600">
-              Cantidad:
-            </Text>
-            <span className="font-semibold text-gray-900">
-              {cantidad}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Text variant="small" className="text-gray-600">
-              Precio unitario:
-            </Text>
-            <Text variant="body" className="font-semibold text-gray-900">
-              ${precio}
-            </Text>
-          </div>
+        <div className="flex items-center gap-2 text-xs text-gray-600">
+          <span>Cant: {producto.cantidad}</span>
+          <span>·</span>
+          <span className="text-orange-500 font-medium">
+            ${priceNumber.toLocaleString("es-CO")}
+          </span>
         </div>
-      </div>
-      <div className="text-right">
-        <Text variant="small" className="text-gray-600 mb-1">
-          Subtotal
-        </Text>
-        <Text variant="subtitle" className="font-bold text-2xl text-orange-500">
-          ${subtotal}
-        </Text>
       </div>
     </div>
   );
 };
 
 export default PedidoProductItem;
+
 

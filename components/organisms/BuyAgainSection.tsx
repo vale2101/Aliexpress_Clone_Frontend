@@ -23,8 +23,8 @@ export default function BuyAgainSection() {
         
         setProducts(randomProducts);
       } catch (error) {
-        console.error("❌ Error cargando productos en BuyAgainSection:", error);
-        console.error("❌ Detalles del error:", {
+        console.error("Error cargando productos en BuyAgainSection:", error);
+        console.error("Detalles del error:", {
           message: error instanceof Error ? error.message : 'Error desconocido',
           stack: error instanceof Error ? error.stack : undefined
         });

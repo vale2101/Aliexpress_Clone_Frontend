@@ -34,10 +34,7 @@ const PedidoProductList: React.FC<PedidoProductListProps> = ({ productos }) => {
         {productos.map((producto, index) => (
           <PedidoProductItem
             key={index}
-            imagen={producto.imagen}
-            nombre={producto.nombre}
-            precio={producto.precio}
-            cantidad={producto.cantidad}
+            producto={producto}
           />
         ))}
       </div>

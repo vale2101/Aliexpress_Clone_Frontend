@@ -30,7 +30,7 @@ export default function FeaturedProducts({ categories }: FeaturedProductsProps) 
 
         setProducts(filtered);
       } catch (error) {
-        console.error("❌ Error cargando productos:", error);
+        console.error("Error cargando productos:", error);
         setProducts([]);
       } finally {
         setLoading(false);
