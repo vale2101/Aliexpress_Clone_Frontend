@@ -21,7 +21,7 @@ const CategoryPageContent: React.FC<CategoryPageContentProps> = ({
       <div className="max-w-7xl mx-auto px-4 py-8">
         <PageHeader title={title} description={description} titleColor={titleColor} />
         
-        <FeaturedProducts categories={category} />
+        <FeaturedProducts categories={["Moda", "Ropa deportiva", "Accesorios", "SuperOfertas", "Informática y escuela", "Telefonía y comunicación"]} />
         
         <RecommendationsSection />
       </div>

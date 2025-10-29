@@ -6,18 +6,6 @@ export const metadata: Metadata = {
   title: "AliExpress - Compra online de Electrónica, Moda, Hogar y más",
   description:
     "Descubre millones de productos en AliExpress: moda, electrónica, hogar, belleza, deportes y mucho más. Disfruta de superofertas, envíos rápidos y precios increíbles en tu tienda online de confianza.",
-  keywords: [
-    "AliExpress",
-    "compras online",
-    "moda",
-    "electrónica",
-    "hogar",
-    "belleza",
-    "deportes",
-    "ofertas",
-    "accesorios",
-    "tienda online",
-  ],
 };
 
 
